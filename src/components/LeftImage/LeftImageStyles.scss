@@ -1,0 +1,38 @@
+@import "../../assets/styles/variables";
+
+$color-default: #866118;
+
+.left-image {
+  height: 100vh;
+  width: 500px;
+  display: flex;
+  background-color: #f2d184;
+  position: relative;
+
+  &__header {
+    position: absolute;
+    width: 85%;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: $font-bold-2;
+    display: flex;
+    flex-direction: column;
+    top: 10%;
+    color: $color-default;
+
+    h2>q {
+        font-size: 3.9rem;
+    }
+  }
+
+  &__cnt {
+    display: block;
+    margin: auto;
+    height: 500px;
+    width: inherit;
+    background-image: url("../../assets/images/sign-up.png");
+    background-position: center;
+    background-size: cover;
+  }
+}

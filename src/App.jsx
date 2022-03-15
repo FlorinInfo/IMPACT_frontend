@@ -1,23 +1,25 @@
 import { Routes, Route, Link } from "react-router-dom";
 
 import "./App.scss";
-import { Test } from "./components/TestComponent/TestComponent";
-import { useCookies } from "react-cookie";
-import { useEffect, useState } from "react";
+import SignUp from "./Pages/SignUp/SignUp";
+import Homepage from "./Pages/Homepage/Homepage";
+import { useEffect } from "react";
+import { Cookies, useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 function App() {
-  const [cookies, setCookie] = useCookies(["token"]);
+  let navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["token", "userid"]);
 
-  function setCookieBtn() {
-    setCookie("token", "1234", { path: "/" });
-  }
+  useEffect(() => {
+    if (!cookies.token || !cookies.userid) navigate("/login");
+  }, [cookies.token, cookies.userid]);
 
   return (
     <div className="App">
-      <button onClick={setCookieBtn}>Test</button>
       <Routes>
-        <Route path="/login" element={<Test />} />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/login" element={<SignUp />} />
       </Routes>
     </div>
   );
