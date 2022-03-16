@@ -1,0 +1,32 @@
+@import "../../assets/styles/variables";
+
+.search-dropdown {
+  position: relative;
+
+  &__responses {
+    list-style: none;
+    display: block;
+    padding: 8px 0;
+    overflow: auto;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    background: #fff;
+    -webkit-box-shadow: 0px 3px 5px rgb(0 0 0 / 4%);
+    box-shadow: 0px 3px 5px rgb(0 0 0 / 4%);
+    position: absolute;
+    width: 100%;
+    top: 5rem;
+    z-index: 9000;
+  }
+
+  &__response {
+    font-family: $font-regular;
+    padding: 1rem 1.5rem;
+    font-size: 1.3rem;
+
+    &:hover {
+        background-color: #e7e7e9;
+        cursor: pointer;
+    }
+  }
+}

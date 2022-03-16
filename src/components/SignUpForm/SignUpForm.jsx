@@ -2,12 +2,14 @@ import "./SignUpFormStyles.scss";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { createRef } from "react";
 
+import SearchDropdown from "../SearchDropdown/SearchDropdown";
+
 const SignUpForm = () => {
   const fileInput = createRef();
 
-  const openUpload = ()=> {
+  const openUpload = () => {
     fileInput.current.click();
-  }
+  };
   return (
     <>
       <form action="submit" className="signup-form">
@@ -37,7 +39,7 @@ const SignUpForm = () => {
         <label htmlFor="email" className="label-default">
           Adresa din buletin
         </label>
-        <input type="text" className="input-default" name="email" />
+        <SearchDropdown/>
         <span className="error-default"></span>
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
@@ -55,7 +57,7 @@ const SignUpForm = () => {
         </div>
         <input type="file" ref={fileInput} className="file-input" />
         <span className="error-default"></span>
-        <label htmlFor="parola" className="label-default" > 
+        <label htmlFor="parola" className="label-default">
           Parola
         </label>
         <input
@@ -65,7 +67,9 @@ const SignUpForm = () => {
           placeholder="6+ caractere"
         />
         <span className="error-default"></span>
-        <button type="button" className="button-default submit-btn">Inregistreaza-te</button>
+        <button type="button" className="button-default submit-btn">
+          Inregistreaza-te
+        </button>
       </form>
     </>
   );
