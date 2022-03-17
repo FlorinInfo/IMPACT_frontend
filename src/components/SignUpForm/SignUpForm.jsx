@@ -4,6 +4,7 @@ import { createRef } from "react";
 import axios from "../../assets/axios/axios";
 import { useState } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
+import FormData from "form-data";
 
 const SignUpForm = () => {
   const [image, setImage] = useState("");
@@ -16,9 +17,14 @@ const SignUpForm = () => {
   const createImage = (e) => {
     let formData = new FormData();
     formData.append("image", e.target.files[0]);
-    console.log(formData);
     axios
-      .post("/upload-image", { image:formData })
+      .post("/upload-image", formData, {
+        headers: {
+          accept: "application/json",
+          "Accept-Language": "en-US,en;q=0.8",
+          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+        },
+      })
       .then((response) => {
         // handle success
         console.log(response);
@@ -30,7 +36,6 @@ const SignUpForm = () => {
       .then(() => {
         // always executed
       });
-    console.log(e.target.files[0]);
   };
 
   return (
