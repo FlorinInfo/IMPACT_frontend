@@ -1,0 +1,16 @@
+@mixin form-redirect {
+  font-family: $font-regular;
+  display: block;
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  a {
+    color: $default-color;
+    text-decoration: none;
+    font-size: inherit;
+  }
+
+  @media only screen and (max-width: 1060px){
+      text-align: center;
+  }
+}

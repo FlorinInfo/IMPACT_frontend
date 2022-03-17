@@ -1,9 +1,25 @@
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/variables";
+
 .login {
     display: flex;
     flex-direction: row;
+    height: 100vh;
 
     &__form {
         width: 50rem;
         margin: auto;
+        margin: auto;
+        padding: 0 2rem;
+    }
+
+    &__signup-redirect {
+        @include form-redirect;
     }
 }
+
+@media only screen and (max-width: 1060px) {
+    .login__left {
+      display: none;
+    }
+  }
