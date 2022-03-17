@@ -1,15 +1,35 @@
 import "./SignUpFormStyles.scss";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { createRef } from "react";
-
+import axios from "../../assets/axios/axios";
+import { useState } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 
 const SignUpForm = () => {
+  const [image, setImage] = useState("");
   const fileInput = createRef();
 
   const openUpload = () => {
     fileInput.current.click();
   };
+
+  const createImage = (e) => {
+    axios
+      .get("posts")
+      .then( (response)=> {
+        // handle success
+        console.log(response);
+      })
+      .catch((error)=> {
+        // handle error
+        console.log(error);
+      })
+      .then(()=> {
+        // always executed
+      });
+    console.log(e.target.files[0]);
+  };
+
   return (
     <>
       <form action="submit" className="signup-form">
@@ -39,7 +59,7 @@ const SignUpForm = () => {
         <label htmlFor="email" className="label-default">
           Adresa din buletin
         </label>
-        <SearchDropdown/>
+        <SearchDropdown />
         <span className="error-default"></span>
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
@@ -55,7 +75,12 @@ const SignUpForm = () => {
           />
           <FaCloudUploadAlt className="file-icon" />
         </div>
-        <input type="file" ref={fileInput} className="file-input" />
+        <input
+          type="file"
+          onChange={createImage}
+          ref={fileInput}
+          className="file-input"
+        />
         <span className="error-default"></span>
         <label htmlFor="parola" className="label-default">
           Parola
