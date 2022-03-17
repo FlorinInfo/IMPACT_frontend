@@ -14,17 +14,20 @@ const SignUpForm = () => {
   };
 
   const createImage = (e) => {
+    let formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    console.log(formData);
     axios
-      .get("posts")
-      .then( (response)=> {
+      .post("/upload-image", { image:formData })
+      .then((response) => {
         // handle success
         console.log(response);
       })
-      .catch((error)=> {
+      .catch((error) => {
         // handle error
         console.log(error);
       })
-      .then(()=> {
+      .then(() => {
         // always executed
       });
     console.log(e.target.files[0]);
