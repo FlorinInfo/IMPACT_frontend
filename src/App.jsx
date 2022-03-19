@@ -7,24 +7,27 @@ import Login from "./Pages/Login/Login";
 import Pending from "./Pages/Pending/Pending";
 import { useEffect } from "react";
 import { Cookies, useCookies } from "react-cookie";
-import { useNavigate , useLocation} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Admins from "./Pages/Admins/Admins";
 
 function App() {
   let navigate = useNavigate();
   const location = useLocation();
   const [cookies, setCookie, removeCookie] = useCookies(["token", "userid"]);
 
-  // useEffect(() => { 
+  // useEffect(() => {
   //   if ((!cookies.token || !cookies.userid)&&(location.pathname!="/login"&&location.pathname!="/signup")) navigate("/login");
   // }, [cookies.token, cookies.userid]);
 
   return (
     <div className="App">
+      
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/pending" element={<Pending />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/pending" element={<Pending />} />
+          <Route path="/create-admins" element={<Admins/>}></Route>
       </Routes>
     </div>
   );

@@ -3,12 +3,12 @@
 .signup {
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  min-height: 100vh;
 
   &__form {
     width: 50rem;
     margin: auto;
-    padding: 0 2rem;
+    padding: 2rem;
   }
 
   &__login-redirect {
@@ -19,5 +19,9 @@
 @media only screen and (max-width: 1060px) {
   .signup__left {
     display: none;
+  }
+
+  .signup__form {
+    padding: 4rem 2rem;
   }
 }

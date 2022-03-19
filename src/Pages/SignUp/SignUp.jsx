@@ -4,6 +4,7 @@ import SignUpForm from "../../components/SignUpForm/SignUpForm";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
+
   return (
     <div className="signup">
       <div className="signup__left">

@@ -6,6 +6,8 @@ import { useState } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 import FormData from "form-data";
 
+import logoBlack from "../../assets/images/logo-black.svg"
+
 const SignUpForm = () => {
   const [image, setImage] = useState("");
   const fileInput = createRef();
@@ -41,6 +43,7 @@ const SignUpForm = () => {
   return (
     <>
       <form action="submit" className="signup-form">
+        <img src= {logoBlack} alt="logo" className="signup-form__logo" />
         <h3 className="signup-form__title">Inregistreaza-te pe Impact</h3>
         <div className="signup-form__h-line"></div>
         <div className="signup-form__double">
@@ -94,7 +97,7 @@ const SignUpForm = () => {
           Parola
         </label>
         <input
-          type="text"
+          type="password"
           className="input-default"
           name="parola"
           placeholder="6+ caractere"

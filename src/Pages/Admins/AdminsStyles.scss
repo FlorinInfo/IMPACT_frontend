@@ -1,0 +1,6 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.create-admins {
+    @include default-logged-container;
+}

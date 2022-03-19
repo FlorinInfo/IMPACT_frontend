@@ -18,7 +18,7 @@ $color-default: #866118;
     font-family: $font-bold-2;
     display: flex;
     flex-direction: column;
-    top: 10%;
+    top: 14%;
     color: $color-default;
 
     h2>q {
@@ -34,5 +34,13 @@ $color-default: #866118;
     background-image: url("../../assets/images/sign-up.png");
     background-position: center;
     background-size: cover;
+  }
+
+  &__logo {
+    display: block;
+    width: 12rem;
+    position: absolute;
+    top: 5%;
+    left: 4rem;
   }
 }

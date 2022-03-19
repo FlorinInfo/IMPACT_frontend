@@ -3,6 +3,10 @@
 .signup-form {
   width: 100%;
 
+  &__logo {
+    display: none;
+  }
+
   label {
     margin-top: 4rem;
   }
@@ -75,6 +79,11 @@
         }
       }
     }
+  }
+  .signup-form__logo {
+    display: block;
+    width: 13rem;
+    padding-bottom: 2rem;
   }
   .submit-btn {
       width: 100%;
