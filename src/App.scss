@@ -1,4 +1,5 @@
 @import "assets/styles/variables";
+@import "assets/styles/mixins";
 
 *,
 html,
@@ -48,34 +49,15 @@ body {
   font-size: 1.4rem;
 }
 
-.button-default {
-  color: white;
+.button-default-form {
+  @include btn-default;
   display: inline-block;
-  position: relative;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   height: 40px;
   padding: 1rem 3.5rem;
-  -webkit-transition: color 200ms ease;
-  transition: color 200ms ease;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  background: $default-color;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  font-family: $font-regular;
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 20px;
-
-  &:hover {
-    background-color: $default-color-light-1;
-  }
+  border-radius: 8px;
 }
 
 

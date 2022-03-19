@@ -21,7 +21,7 @@ const LoginForm = () => {
           placeholder="6+ caractere"
         />
         <span className="error-default"></span>
-        <button type="button" className="button-default submit-btn">Logheaza-te</button>
+        <button type="button" className="button-default-form  submit-btn">Logheaza-te</button>
       </form>
     </>
   );
