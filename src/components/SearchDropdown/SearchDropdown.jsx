@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 
 const locations = ["Iasi", "Bucuresti", "Valea Lupului"];
 
-const SearchDropDown = () => {
+const SearchDropDown = ({onClick}) => {
   const [location, setLocation] = useState("");
   const [selectedLocation, setSelectedLocations] = useState([]);
 
@@ -13,6 +13,12 @@ const SearchDropDown = () => {
     let newLocations = locations.filter((l) => l.toLowerCase().includes(event.target.value.toLowerCase()))
     setSelectedLocations(newLocations);
   };
+
+  const updateLocation = (loc)=> {
+    console.log(loc)
+    // setLocation(loc);
+    // setSelectedLocations([]);
+  }
 
   return (
     <div className="search-dropdown">
@@ -26,7 +32,7 @@ const SearchDropDown = () => {
         <ul className="search-dropdown__responses">
           {
             selectedLocation.map((l) => (
-              <li className="search-dropdown__response" key={nanoid()}>
+              <li className="search-dropdown__response" key={nanoid()} onClick={onClick}>
                 {l}
               </li>
             ))}

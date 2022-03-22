@@ -1,5 +1,6 @@
 import "./SignUpFormStyles.scss";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import { BsCloudCheckFill } from "react-icons/bs"
 import { createRef } from "react";
 import axios from "../../assets/axios/axios";
 import { useState } from "react";
@@ -29,10 +30,12 @@ const SignUpForm = () => {
       })
       .then((response) => {
         // handle success
+        setImage(response.data.photoUrl);
         console.log(response);
       })
       .catch((error) => {
         // handle error
+        setImage("");
         console.log(error);
       })
       .then(() => {
@@ -70,7 +73,7 @@ const SignUpForm = () => {
         <label htmlFor="email" className="label-default">
           Adresa din buletin
         </label>
-        <SearchDropdown />
+        <SearchDropdown onClick={()=>{console.log(1)}}/>
         <span className="error-default"></span>
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
@@ -80,11 +83,13 @@ const SignUpForm = () => {
             type="text"
             name="buletin"
             className="input-default file-fake-input"
-            placeholder="Incarca poza"
+            placeholder={image ? 'Poza incarcata' : "Incarca poza"}
             readOnly
             onClick={openUpload}
           />
-          <FaCloudUploadAlt className="file-icon" />
+          {
+            image ? <BsCloudCheckFill className="file-icon"/> : <FaCloudUploadAlt className="file-icon" />
+          }
         </div>
         <input
           type="file"
