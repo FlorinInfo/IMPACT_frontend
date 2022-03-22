@@ -1,41 +1,28 @@
 import "./SearchDropdownStyles.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
-const locations = ["Iasi", "Bucuresti", "Valea Lupului"];
 
-const SearchDropDown = ({onClick}) => {
-  const [location, setLocation] = useState("");
-  const [selectedLocation, setSelectedLocations] = useState([]);
-
-  const updateSelectedLocations = (event) => {
-    setLocation(event.target.value);
-    let newLocations = locations.filter((l) => l.toLowerCase().includes(event.target.value.toLowerCase()))
-    setSelectedLocations(newLocations);
-  };
-
-  const updateLocation = (loc)=> {
-    console.log(loc)
-    // setLocation(loc);
-    // setSelectedLocations([]);
-  }
-
+const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
   return (
     <div className="search-dropdown">
       <input
         type="text"
         className="input-default"
-        value={location}
-        onInput={updateSelectedLocations}
+        value={selected}
+        onInput={(e)=>onSearch(e.target.value)}
       />
-      {location != "" && selectedLocation.length ? (
+      {list.length ? (
         <ul className="search-dropdown__responses">
-          {
-            selectedLocation.map((l) => (
-              <li className="search-dropdown__response" key={nanoid()} onClick={onClick}>
-                {l}
-              </li>
-            ))}
+          {list.map((l) => (
+            <li
+              className="search-dropdown__response"
+              key={nanoid()}
+              onClick={() => onSelect(l.nume)}
+            >
+              {l.nume} 
+            </li>
+          ))}
         </ul>
       ) : (
         ""

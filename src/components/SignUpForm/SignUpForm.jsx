@@ -1,21 +1,88 @@
 import "./SignUpFormStyles.scss";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { BsCloudCheckFill } from "react-icons/bs"
+import { BsCloudCheckFill } from "react-icons/bs";
 import { createRef } from "react";
 import axios from "../../assets/axios/axios";
 import { useState } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 import FormData from "form-data";
 
-import logoBlack from "../../assets/images/logo-black.svg"
+import logoBlack from "../../assets/images/logo-black.svg";
+
+let apiLocations = [
+  {
+    "nume": "Barcea"
+    },
+    {
+    "nume": "Bereşti",
+    "simplu": "Beresti"
+    },
+    {
+    "nume": "Bereşti-Meria",
+    "simplu": "Beresti-Meria"
+    },
+    {
+    "nume": "Braniştea",
+    "simplu": "Branistea"
+    },
+    {
+    "nume": "Brăhăşeşti",
+    "simplu": "Brahasesti"
+    },
+    {
+    "nume": "Buciumeni"
+    },
+    {
+    "nume": "Băleni",
+    "simplu": "Baleni"
+    },
+    {
+    "nume": "Bălăbăneşti",
+    "simplu": "Balabanesti"
+    },
+    {
+    "nume": "Bălăşeşti",
+    "simplu": "Balasesti"
+    },
+    {
+    "nume": "Băneasa",
+    "simplu": "Baneasa"
+    },
+    {
+    "nume": "Cavadineşti",
+    "simplu": "Cavadinesti"
+    },
+    {
+    "nume": "Cerţeşti",
+    "simplu": "Certesti"
+    },
+    {
+    "nume": "Corni"
+    }
+]
+let locations = [];
 
 const SignUpForm = () => {
   const [image, setImage] = useState("");
+  const [location, setLocation] = useState("");
   const fileInput = createRef();
 
   const openUpload = () => {
     fileInput.current.click();
   };
+
+  const updateLocation = (loc) => {
+    console.log(loc);
+    setLocation(loc);
+    locations = apiLocations.filter((l)=>l.nume.toLowerCase().includes(loc.toLowerCase()));
+  };
+
+  const selectLocation = (value)=> {
+    // alert(value)
+    setLocation(value);
+    locations = [];
+    console.log(location);
+  }
 
   const createImage = (e) => {
     let formData = new FormData();
@@ -46,7 +113,7 @@ const SignUpForm = () => {
   return (
     <>
       <form action="submit" className="signup-form">
-        <img src= {logoBlack} alt="logo" className="signup-form__logo" />
+        <img src={logoBlack} alt="logo" className="signup-form__logo" />
         <h3 className="signup-form__title">Inregistreaza-te pe Impact</h3>
         <div className="signup-form__h-line"></div>
         <div className="signup-form__double">
@@ -73,7 +140,12 @@ const SignUpForm = () => {
         <label htmlFor="email" className="label-default">
           Adresa din buletin
         </label>
-        <SearchDropdown onClick={()=>{console.log(1)}}/>
+        <SearchDropdown
+          onSelect={selectLocation}
+          list={locations}
+          selected={location}
+          onSearch={updateLocation}
+        />
         <span className="error-default"></span>
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
@@ -83,13 +155,15 @@ const SignUpForm = () => {
             type="text"
             name="buletin"
             className="input-default file-fake-input"
-            placeholder={image ? 'Poza incarcata' : "Incarca poza"}
+            placeholder={image ? "Poza incarcata" : "Incarca poza"}
             readOnly
             onClick={openUpload}
           />
-          {
-            image ? <BsCloudCheckFill className="file-icon"/> : <FaCloudUploadAlt className="file-icon" />
-          }
+          {image ? (
+            <BsCloudCheckFill className="file-icon" style={{color:"#74c4ba"}} />
+          ) : (
+            <FaCloudUploadAlt className="file-icon"  />
+          )}
         </div>
         <input
           type="file"
