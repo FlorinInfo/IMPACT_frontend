@@ -1,4 +1,4 @@
-import "./UserManager.scss";
+import "./UserManagerStyles.scss";
 
 import userProfile from "../../assets/images/admin-avatar.png"
 

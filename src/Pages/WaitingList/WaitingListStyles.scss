@@ -1,0 +1,11 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.waiting-list {
+    @include default-logged-container;
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+}

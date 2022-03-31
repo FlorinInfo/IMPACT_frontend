@@ -1,4 +1,4 @@
-import "./Pending.scss";
+import "./PendingStyles.scss";
 import Lottie from "react-lottie";
 import pendingAnimation from "../../assets/lotties/pending.json";
 

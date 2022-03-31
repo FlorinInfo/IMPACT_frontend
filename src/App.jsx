@@ -5,6 +5,7 @@ import SignUp from "./Pages/SignUp/SignUp";
 import Homepage from "./Pages/Homepage/Homepage";
 import Login from "./Pages/Login/Login";
 import Pending from "./Pages/Pending/Pending";
+import WaitingList from "./Pages/WaitingList/WaitingList";
 import { useEffect } from "react";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/pending" element={<Pending />} />
           <Route path="/create-admins" element={<Admins/>}></Route>
+          <Route path="/waiting-list" element={<WaitingList/>}></Route>
       </Routes>
     </div>
   );
