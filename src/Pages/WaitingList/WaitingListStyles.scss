@@ -2,10 +2,20 @@
 @import "../../assets/styles/mixins";
 
 .waiting-list {
-    @include default-logged-container;
+    // @include default-logged-container;
 
     img {
         display: block;
         max-width: 100%;
+    }
+
+    &__table {
+        height: 100vh;
+        color: red;
+        font-size: 16px!important;
+
+        * {
+            font-size: 12px!important;
+        }
     }
 }
