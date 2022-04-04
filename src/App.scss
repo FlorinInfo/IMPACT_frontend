@@ -11,6 +11,10 @@ body {
   // font-family: $font-light;
 }
 
+body {
+  background-color: #dae0e6;
+}
+
 .input-default {
   border: 1px solid transparent;
   background-color: #f3f3f4;
@@ -60,12 +64,11 @@ body {
   border-radius: 8px;
 }
 
-
 .error-default {
   display: block;
   color: red;
   font-family: $font-light;
   font-size: 1.1rem;
-  margin-top: .2rem;
-  margin-left: .2rem;
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
 }

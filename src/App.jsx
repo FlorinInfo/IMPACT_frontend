@@ -22,14 +22,13 @@ function App() {
 
   return (
     <div className="App">
-      
       <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/pending" element={<Pending />} />
-          <Route path="/create-admins" element={<Admins/>}></Route>
-          <Route path="/waiting-list" element={<WaitingList/>}></Route>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/pending" element={<Pending />} />
+        <Route path="/create-admins" element={<Admins />}></Route>
+        <Route path="/waiting-list" element={<WaitingList />}></Route>
       </Routes>
     </div>
   );

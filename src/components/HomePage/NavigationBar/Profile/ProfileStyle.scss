@@ -1,0 +1,28 @@
+.profile {
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  margin-left: 10px;
+
+  svg {
+    margin-top: 7px;
+    height: 25px;
+    width: 50px;
+    color: rgb(53, 44, 44);
+  }
+
+  &:hover {
+    border-color: rgb(220, 220, 220);
+    // background-color: black;
+  }
+}
+
+.person {
+  margin-right: 5px;
+}
+.username {
+  font-size: 15px;
+  // font-weight: ;
+  margin-top: 12px;
+  color: rgb(53, 44, 44);
+}

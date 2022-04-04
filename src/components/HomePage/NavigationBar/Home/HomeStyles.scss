@@ -1,0 +1,36 @@
+.homeButton {
+  display: flex;
+  padding: 3px;
+  width: 230px;
+  height: 35px;
+  margin-top: 5px;
+  margin-left: 10px;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid rgb(220, 220, 220);
+  }
+
+  h1 {
+    font-size: 15px;
+    font-weight: 90;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+
+  svg {
+    font-size: 25px;
+  }
+}
+
+.homeIcon {
+  font-size: 50px;
+}
+
+.arrow {
+  margin-left: 130px;
+  width: 30px;
+  height: 30px;
+}
