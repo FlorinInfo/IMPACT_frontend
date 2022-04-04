@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;CAQpB;;AAVD,AAIE,KAJG,CAIH,GAAG,CAAC;EACF,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,YAAY,EAAE,GAAG;EACjB,KAAK,EAAE,OAAO;CACf",
-    "sources": [
-        "LogoStyles.scss"
-    ],
-    "names": [],
-    "file": "LogoStyles.css"
-}
