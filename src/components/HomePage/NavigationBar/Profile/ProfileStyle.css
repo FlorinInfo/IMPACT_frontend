@@ -1,0 +1,29 @@
+.profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+
+.profile svg {
+  margin-top: 7px;
+  height: 25px;
+  width: 50px;
+  color: #866118;
+}
+
+.profile:hover {
+  border-color: #efc665;
+}
+
+.person {
+  margin-right: 7px;
+}
+
+.username {
+  font-size: 15px;
+  margin-top: 12px;
+  color: #866118;
+}
+/*# sourceMappingURL=ProfileStyle.css.map */

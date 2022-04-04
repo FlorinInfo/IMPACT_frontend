@@ -1,0 +1,15 @@
+.actionsContainer {
+  margin-left: 10px;
+  svg {
+    // color: #444444;
+    // color: #866118;
+    width: 25px;
+    height: 30px;
+    margin-top: 7px;
+    margin-left: 10px;
+
+    &:hover {
+      background-color: rgb(230, 230, 230);
+    }
+  }
+}

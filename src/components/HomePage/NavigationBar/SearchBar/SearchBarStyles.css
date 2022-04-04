@@ -1,0 +1,42 @@
+.searchbar {
+  position: relative;
+  padding-top: 5px;
+}
+
+.searchbar input {
+  font-size: 120%;
+  width: 500px;
+  padding: 10px;
+  padding-left: 40px;
+  border-radius: 7px;
+  border: 1px solid #e6e6e6;
+  background-color: #e1e1e1;
+}
+
+.searchbar input:hover {
+  border-color: #866118;
+}
+
+.searchbar .searchbar input:hover {
+  border-color: blue;
+}
+
+.searchbar label {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  margin-left: 5px;
+}
+
+.searchbar label svg {
+  color: #866118;
+  width: 100%;
+  height: 60%;
+  margin-bottom: 7px;
+}
+/*# sourceMappingURL=SearchBarStyles.css.map */

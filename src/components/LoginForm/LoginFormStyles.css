@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'FontLight';
+  src: url("../fonts/HelveticaNeueLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontMedium';
+  src: url("../fonts/HelveticaNeueMedium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontMedium2';
+  src: url("../fonts/NHaasGroteskTXPro-65Md.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontRegular';
+  src: url("../fonts/NHaasGroteskTXPro-55Rg.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontBold';
+  src: url("../fonts/HelveticaNeueBd.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontBold2';
+  src: url("../fonts/NHaasGroteskTXPro-75Bd.ttf") format("truetype");
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-form label {
+  margin-top: 4rem;
+}
+
+.login-form__title {
+  font-family: "FontBold2", Georgia, "Times New Roman", Times, serif;
+  font-size: 2.5rem;
+}
+
+.login-form__h-line {
+  width: 100%;
+  height: 1px;
+  background-color: #dfe3ee;
+  margin: 2rem 0;
+}
+
+.login-form__double {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.login-form__double div {
+  width: 45%;
+}
+
+.login-form__double div label {
+  margin-top: 1rem;
+}
+
+.submit-btn {
+  margin-top: 2.5rem;
+}
+/*# sourceMappingURL=LoginFormStyles.css.map */

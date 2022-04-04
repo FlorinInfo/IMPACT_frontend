@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'FontLight';
+  src: url("../fonts/HelveticaNeueLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontMedium';
+  src: url("../fonts/HelveticaNeueMedium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontMedium2';
+  src: url("../fonts/NHaasGroteskTXPro-65Md.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontRegular';
+  src: url("../fonts/NHaasGroteskTXPro-55Rg.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontBold';
+  src: url("../fonts/HelveticaNeueBd.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontBold2';
+  src: url("../fonts/NHaasGroteskTXPro-75Bd.ttf") format("truetype");
+}
+
+.navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 5px 20px;
+  background-color: #f2d184;
+}
+/*# sourceMappingURL=NavigationBarStyles.css.map */

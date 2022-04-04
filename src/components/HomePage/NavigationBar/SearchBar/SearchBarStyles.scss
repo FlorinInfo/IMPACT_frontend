@@ -1,0 +1,39 @@
+.searchbar {
+  input {
+    // font-size: 120%;
+    width: 850px;
+    padding: 10px;
+    margin-left: 10px;
+    padding-left: 40px;
+    border-radius: 3px;
+    border: 1px solid rgb(230, 230, 230);
+    background-color: rgb(245, 245, 245);
+
+    &:hover {
+      border-color: rgb(0, 120, 210);
+    }
+  }
+
+  // .searchbar input:hover {
+  //   border-color: blue;
+  // }
+
+  position: relative;
+  padding-top: 5px;
+
+  label {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 5px;
+
+    svg {
+      color: rgb(130, 130, 130);
+      width: 30px;
+      height: 20px;
+      margin-bottom: 7px;
+      margin-left: 10px;
+    }
+  }
+}
