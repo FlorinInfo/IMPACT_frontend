@@ -1,8 +1,9 @@
 .searchbar {
-  max-width: 850px;
+  max-width: 70vw;
+  width: calc(100vw - 700px);
   input {
     // font-size: 120%;
-    width: 100%;
+    width: 100%; 
     display: block;
     padding: 10px;
     margin-left: 10px;
@@ -10,8 +11,10 @@
     border-radius: 3px;
     border: 1px solid rgb(230, 230, 230);
     background-color: rgb(245, 245, 245);
+    outline: none;
 
-    &:hover {
+    &:hover, 
+    &:focus {
       border-color: rgb(0, 120, 210);
     }
   }
