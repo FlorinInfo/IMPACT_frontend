@@ -11,55 +11,55 @@ import logoBlack from "../../assets/images/logo-black.svg";
 
 let apiLocations = [
   {
-    "nume": "Barcea"
-    },
-    {
-    "nume": "Bereşti",
-    "simplu": "Beresti"
-    },
-    {
-    "nume": "Bereşti-Meria",
-    "simplu": "Beresti-Meria"
-    },
-    {
-    "nume": "Braniştea",
-    "simplu": "Branistea"
-    },
-    {
-    "nume": "Brăhăşeşti",
-    "simplu": "Brahasesti"
-    },
-    {
-    "nume": "Buciumeni"
-    },
-    {
-    "nume": "Băleni",
-    "simplu": "Baleni"
-    },
-    {
-    "nume": "Bălăbăneşti",
-    "simplu": "Balabanesti"
-    },
-    {
-    "nume": "Bălăşeşti",
-    "simplu": "Balasesti"
-    },
-    {
-    "nume": "Băneasa",
-    "simplu": "Baneasa"
-    },
-    {
-    "nume": "Cavadineşti",
-    "simplu": "Cavadinesti"
-    },
-    {
-    "nume": "Cerţeşti",
-    "simplu": "Certesti"
-    },
-    {
-    "nume": "Corni"
-    }
-]
+    nume: "Barcea",
+  },
+  {
+    nume: "Bereşti",
+    simplu: "Beresti",
+  },
+  {
+    nume: "Bereşti-Meria",
+    simplu: "Beresti-Meria",
+  },
+  {
+    nume: "Braniştea",
+    simplu: "Branistea",
+  },
+  {
+    nume: "Brăhăşeşti",
+    simplu: "Brahasesti",
+  },
+  {
+    nume: "Buciumeni",
+  },
+  {
+    nume: "Băleni",
+    simplu: "Baleni",
+  },
+  {
+    nume: "Bălăbăneşti",
+    simplu: "Balabanesti",
+  },
+  {
+    nume: "Bălăşeşti",
+    simplu: "Balasesti",
+  },
+  {
+    nume: "Băneasa",
+    simplu: "Baneasa",
+  },
+  {
+    nume: "Cavadineşti",
+    simplu: "Cavadinesti",
+  },
+  {
+    nume: "Cerţeşti",
+    simplu: "Certesti",
+  },
+  {
+    nume: "Corni",
+  },
+];
 let locations = [];
 
 const SignUpForm = () => {
@@ -74,15 +74,17 @@ const SignUpForm = () => {
   const updateLocation = (loc) => {
     console.log(loc);
     setLocation(loc);
-    locations = apiLocations.filter((l)=>l.nume.toLowerCase().includes(loc.toLowerCase()));
+    locations = apiLocations.filter((l) =>
+      l.nume.toLowerCase().includes(loc.toLowerCase())
+    );
   };
 
-  const selectLocation = (value)=> {
+  const selectLocation = (value) => {
     // alert(value)
     setLocation(value);
     locations = [];
     console.log(location);
-  }
+  };
 
   const createImage = (e) => {
     let formData = new FormData();
@@ -103,6 +105,45 @@ const SignUpForm = () => {
       .catch((error) => {
         // handle error
         setImage("");
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  };
+
+  const registerUser = () => {
+    const userData = {
+      password: 123456,
+      address: "Iasi",
+      lastName: "Florin",
+      firstName: "Bucataru",
+      photoUrl: image,
+      email: "testemail@test.com",
+    };
+    axios
+      .post(
+        "/users",
+        {
+          password: "alexalea",
+          address: "Iasi",
+          lastName: "Florin",
+          firstName: "Bucataru",
+          photoUrl: image,
+          email: "testemail@test.com",
+        },
+        {
+          headers: {
+            accept: "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
         console.log(error);
       })
       .then(() => {
@@ -160,9 +201,12 @@ const SignUpForm = () => {
             onClick={openUpload}
           />
           {image ? (
-            <BsCloudCheckFill className="file-icon" style={{color:"#74c4ba"}} />
+            <BsCloudCheckFill
+              className="file-icon"
+              style={{ color: "#74c4ba" }}
+            />
           ) : (
-            <FaCloudUploadAlt className="file-icon"  />
+            <FaCloudUploadAlt className="file-icon" />
           )}
         </div>
         <input
@@ -182,7 +226,11 @@ const SignUpForm = () => {
           placeholder="6+ caractere"
         />
         <span className="error-default"></span>
-        <button type="button" className="button-default-form submit-btn">
+        <button
+          type="button"
+          className="button-default-form submit-btn"
+          onClick={registerUser}
+        >
           Inregistreaza-te
         </button>
       </form>
