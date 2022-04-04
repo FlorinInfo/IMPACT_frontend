@@ -7,7 +7,7 @@ const userType = "administrator";
 
 const Home = () => {
   return (
-    <div>
+    <div className="homeButton-container">
       <button className="homeButton">
         <HomeIcon className="homeIcon" />
         <spam>
