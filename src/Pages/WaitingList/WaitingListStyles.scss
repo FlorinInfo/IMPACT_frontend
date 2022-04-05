@@ -2,20 +2,71 @@
 @import "../../assets/styles/mixins";
 
 .waiting-list {
-    // @include default-logged-container;
+//   @include default-logged-container;
+@include default-admin-container;
 
-    img {
-        display: block;
-        max-width: 100%;
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  &__table {
+    height: 100vh;
+    color: red;
+    font-size: 16px !important;
+
+    * {
+      font-size: 12px !important;
     }
+  }
 
-    &__table {
-        height: 100vh;
-        color: red;
-        font-size: 16px!important;
+  &__column-title {
+    font-family: $font-bold !important;
+  }
 
-        * {
-            font-size: 12px!important;
+  &__row {
+    font-family: $font-regular !important;
+
+    &--f-column {
+      display: flex !important;
+      flex-direction: column !important;
+
+      & > button {
+        margin: 0.3rem;
+
+        &:nth-child(2) {
+          color: red !important;
+          border-color: red;
+
+          &:hover {
+            background-color: rgba(210, 25, 25, 0.04);
+          }
         }
+      }
     }
+  }
+
+  &__proof-btn {
+    svg {
+      font-size: 16px !important;
+      fill: $default-color;
+    }
+  }
+
+  &__search {
+    //   margin-top: 2rem!important;
+
+    label {
+        font-size: 13px!important;
+    }
+      input {
+        font-size: 16px!important;
+        font-family: $font-regular;
+      }
+
+      &-btn {
+          margin-top: auto!important;
+          font-size: 11px!important;
+      }
+  }
 }

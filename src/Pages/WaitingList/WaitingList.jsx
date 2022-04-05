@@ -1,80 +1,214 @@
 import "./WaitingListStyles.scss";
-
+import React from "react";
 import buletin from "../../assets/images/buletine-840x500.jpg";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
 // import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import IconButton from "@mui/material/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Button from "@mui/material/Button";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import Stack from '@mui/material/Stack';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { useState } from "react";
+import { nanoid } from "nanoid";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 100 },
-  // { field: "firstName", headerName: "First name", width: 170 },
-  // { field: "lastName", headerName: "Last name", width: 170 },
-  // {
-  //   field: "age",
-  //   headerName: "Age",
-  //   // type: "number",
-  //   width: 90,
-  // },
+  { field: "id", headerName: "ID" },
   {
     field: "fullName",
     headerName: "Nume Prenume",
-    // description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 250,
-    // valueGetter: (params) =>
-    //   `${params.row.firstName || ""} ${params.row.lastName || ""}`,
   },
   {
     field: "registerTime",
     headerName: "Data si ora inregistrarii",
-    // type: "number",
-    width: 250,
   },
   {
     field: "locationRegister",
     headerName: "Zona",
-    // type: "number",
-    width: 130,
   },
   {
     field: "proof",
     headerName: "Dovada",
-    // type: "number",
-    width: 130,
+  },
+  {
+    field:"rank",
+    headerName:"Rank"
+  },
+  {
+    field: "action",
+    headerName: "Actiuni",
   },
 ];
 
 const rows = [
   {
-    id: 1,
+    id: nanoid(),
     fullName: "Florin Bucataru",
     registerTime: "12.06.2022 15:00",
     locationRegister: "Iasi, Copou",
     proof: "https://imgur.com/gallery/zFUN42E",
   },
-  // { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  // { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  // { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  // { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  // { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  // { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  // { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  // { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+  {
+    id: nanoid(),
+    fullName: "Florin Bucataru",
+    registerTime: "12.06.2022 15:00",
+    locationRegister: "Iasi, Copou",
+    proof: "https://imgur.com/gallery/zFUN42E",
+  },
 ];
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const WaitingList = () => {
+  const [open, setOpen] = useState(false);
+  const [notification, setNotification] = useState('');
+
+  const dialogAction = () => {
+    setOpen(!open);
+  };
+
+  const approveUser = ()=> {
+    setNotification('success')
+  }
+
+  const unapproveUser = () => {
+    setNotification('error')
+  }
+
   return (
     <div className="waiting-list">
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <TextField
+          className="waiting-list__search"
+          id="standard-basic"
+          label="Cauta utilizatori"
+          variant="standard"
+        />
+        <Button variant="contained" component="span" className="waiting-list__search-btn" endIcon={<PersonSearchIcon />}>
+          Cauta
+        </Button>
+      </Stack>
       <div className="waiting-list__table">
-        <DataGrid
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    className="waiting-list__column-title"
+                    align="left"
+                    key={nanoid()}
+                  >
+                    {column.headerName}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  {/* <TableCell component="th" scope="row">
+                    {row.id}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell> */}
+                  <TableCell align="left" className="waiting-list__row">
+                    {row.id}
+                  </TableCell>
+                  <TableCell align="left" className="waiting-list__row">
+                    {row.fullName}
+                  </TableCell>
+                  <TableCell align="left" className="waiting-list__row">
+                    {row.registerTime}
+                  </TableCell>
+                  <TableCell align="left" className="waiting-list__row">
+                    {row.locationRegister}
+                  </TableCell>
+                  <TableCell align="left" className="waiting-list__row">
+                    <IconButton
+                      onClick={dialogAction}
+                      className="waiting-list__proof-btn"
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <VisibilityIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align="left" className="waiting-list__row">
+                    Select
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    className="waiting-list__row waiting-list__row--f-column"
+                  >
+                    <Button variant="outlined" startIcon={<ThumbUpAltIcon />} onClick={approveUser}>
+                      Aproba
+                    </Button>
+                    <Button variant="outlined" startIcon={<ThumbDownAltIcon />} onClick={unapproveUser}>
+                      Respinge
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* <DataGrid
           rows={rows}
           columns={columns}
           //   rowsPerPageOptions={[5]}
           checkboxSelection
-        />
+        /> */}
       </div>
-      {/* <InnerImageZoom src={buletin} zoomScale={2} zoomSrc={buletin} /> */}
+      <Dialog
+        open={open}
+        onClose={dialogAction}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <InnerImageZoom src={buletin} zoomScale={2} zoomSrc={buletin} />
+        </DialogContent>
+      </Dialog>
+      <Snackbar open={notification} autoHideDuration={6000} >
+        <Alert  severity={notification} sx={{ width: '100%' }}>
+        {
+        {
+          'success': "Utilizatorul a fost aprobat cu succes",
+          'error': "Cererea utilizatorului a fost respinsa",
+          'info': "rank"
+        }[notification]
+      }
+          {/* {
+            notification == 'success' ? 'Utilizatorul a fost aprobat cu succes' : "Cererea utilizatorului a fost respinsa"
+          } */}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
