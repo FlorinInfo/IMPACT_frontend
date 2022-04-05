@@ -1,10 +1,10 @@
 .actionsContainer {
   margin-left: 10px;
-  width: 120px;
+  width: 130px;
   svg {
     // color: #444444;
     // color: #866118;
-    width: 25px;
+    width: 28px;
     height: 30px;
     margin-top: 7px;
     margin-left: 10px;
@@ -12,5 +12,17 @@
     &:hover {
       background-color: rgb(230, 230, 230);
     }
+  }
+
+  .action {
+    padding: 1px;
+    width: 33px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  .action:nth-child(2) {
+    width: 33px;
+    padding: 5px;
   }
 }

@@ -10,9 +10,9 @@ const Home = () => {
     <div className="homeButton-container">
       <button className="homeButton">
         <HomeIcon className="homeIcon" />
-        <spam>
+        <span>
           <h1>Home</h1>
-        </spam>
+        </span>
         {/* {userType === "administrator"} */}
         <RiArrowDropDownLine className="arrow" />
       </button>

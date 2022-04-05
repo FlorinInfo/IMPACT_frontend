@@ -5,16 +5,16 @@ import "./NavBarActionsStyles.scss";
 // import Add from "@material-ui/icons/Add";
 
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { MdFavoriteBorder } from "react-icons/md";
-import { AiOutlinePlus } from "react-icons/ai";
+import { BsHeart } from "react-icons/bs";
+import { IoAddSharp } from "react-icons/io5"; 
 
 const NavBarActions = () => {
   return (
     <div className="actionsContainer">
       {/* <Notifications className="action" /> */}
       <IoIosNotificationsOutline className="action" />
-      <MdFavoriteBorder className="action" />
-      <AiOutlinePlus className="action" />
+      <BsHeart className="action" />
+      <IoAddSharp className="action" />
     </div>
   );
 };
