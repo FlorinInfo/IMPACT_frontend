@@ -14,11 +14,11 @@ import Admins from "./Pages/Admins/Admins";
 function App() {
   let navigate = useNavigate();
   const location = useLocation();
-  const [cookies, setCookie, removeCookie] = useCookies(["token", "userid"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
-  // useEffect(() => {
-  //   if ((!cookies.token || !cookies.userid)&&(location.pathname!="/login"&&location.pathname!="/signup")) navigate("/login");
-  // }, [cookies.token, cookies.userid]);
+  useEffect(() => {
+    if ((!cookies.token)&&(location.pathname!="/login"&&location.pathname!="/signup")) navigate("/login");
+  }, [cookies.token]);
 
   return (
     <div className="App">
