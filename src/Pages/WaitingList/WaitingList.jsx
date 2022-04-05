@@ -1,5 +1,5 @@
 import "./WaitingListStyles.scss";
-
+import React from "react";
 import buletin from "../../assets/images/buletine-840x500.jpg";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
@@ -22,6 +22,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import Stack from '@mui/material/Stack';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { useState } from "react";
 import { nanoid } from "nanoid";
 
@@ -42,6 +47,10 @@ const columns = [
   {
     field: "proof",
     headerName: "Dovada",
+  },
+  {
+    field:"rank",
+    headerName:"Rank"
   },
   {
     field: "action",
@@ -66,15 +75,39 @@ const rows = [
   },
 ];
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const WaitingList = () => {
   const [open, setOpen] = useState(false);
+  const [notification, setNotification] = useState('');
 
   const dialogAction = () => {
     setOpen(!open);
   };
 
+  const approveUser = ()=> {
+    setNotification('success')
+  }
+
+  const unapproveUser = () => {
+    setNotification('error')
+  }
+
   return (
     <div className="waiting-list">
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <TextField
+          className="waiting-list__search"
+          id="standard-basic"
+          label="Cauta utilizatori"
+          variant="standard"
+        />
+        <Button variant="contained" component="span" className="waiting-list__search-btn" endIcon={<PersonSearchIcon />}>
+          Cauta
+        </Button>
+      </Stack>
       <div className="waiting-list__table">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -126,14 +159,17 @@ const WaitingList = () => {
                       <VisibilityIcon />
                     </IconButton>
                   </TableCell>
+                  <TableCell align="left" className="waiting-list__row">
+                    Select
+                  </TableCell>
                   <TableCell
                     align="left"
                     className="waiting-list__row waiting-list__row--f-column"
                   >
-                    <Button variant="outlined" startIcon={<ThumbUpAltIcon />}>
+                    <Button variant="outlined" startIcon={<ThumbUpAltIcon />} onClick={approveUser}>
                       Aproba
                     </Button>
-                    <Button variant="outlined" startIcon={<ThumbDownAltIcon />}>
+                    <Button variant="outlined" startIcon={<ThumbDownAltIcon />} onClick={unapproveUser}>
                       Respinge
                     </Button>
                   </TableCell>
@@ -159,6 +195,20 @@ const WaitingList = () => {
           <InnerImageZoom src={buletin} zoomScale={2} zoomSrc={buletin} />
         </DialogContent>
       </Dialog>
+      <Snackbar open={notification} autoHideDuration={6000} >
+        <Alert  severity={notification} sx={{ width: '100%' }}>
+        {
+        {
+          'success': "Utilizatorul a fost aprobat cu succes",
+          'error': "Cererea utilizatorului a fost respinsa",
+          'info': "rank"
+        }[notification]
+      }
+          {/* {
+            notification == 'success' ? 'Utilizatorul a fost aprobat cu succes' : "Cererea utilizatorului a fost respinsa"
+          } */}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

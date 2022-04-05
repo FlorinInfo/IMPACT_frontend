@@ -2,7 +2,8 @@
 @import "../../assets/styles/mixins";
 
 .waiting-list {
-  // @include default-logged-container;
+//   @include default-logged-container;
+@include default-admin-container;
 
   img {
     display: block;
@@ -50,5 +51,22 @@
       font-size: 16px !important;
       fill: $default-color;
     }
+  }
+
+  &__search {
+    //   margin-top: 2rem!important;
+
+    label {
+        font-size: 13px!important;
+    }
+      input {
+        font-size: 16px!important;
+        font-family: $font-regular;
+      }
+
+      &-btn {
+          margin-top: auto!important;
+          font-size: 11px!important;
+      }
   }
 }

@@ -10,8 +10,8 @@
     font-size: inherit;
   }
 
-  @media only screen and (max-width: 1060px){
-      text-align: center;
+  @media only screen and (max-width: 1060px) {
+    text-align: center;
   }
 }
 
@@ -19,6 +19,14 @@
   display: block;
   max-width: 65rem;
   margin: 0 auto;
+}
+
+@mixin default-admin-container {
+  padding: 2rem;
+
+  @media only screen and (max-width: 600px) {
+    padding: 1rem;
+  }
 }
 
 @mixin btn-default {
