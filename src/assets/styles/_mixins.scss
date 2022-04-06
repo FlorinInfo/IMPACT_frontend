@@ -17,8 +17,22 @@
 
 @mixin default-logged-container {
   display: block;
-  max-width: 65rem;
+  max-width: 85rem;
   margin: 0 auto;
+  padding: 2rem 0;
+}
+
+@mixin default-logged-container--left {
+  width: 65rem;
+}
+
+@mixin default-logged-container--right {
+  width: 15rem;
+}
+
+@mixin logged-page {
+  background-color: $default-color-light-3!important;
+  min-height: 100vh;
 }
 
 @mixin default-admin-container {

@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import Admins from "./Pages/Admins/Admins";
+import CreatePost from "./Pages/CreatePost/CreatePost";
 
 function App() {
   let navigate = useNavigate();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/pending" element={<Pending />} />
         <Route path="/create-admins" element={<Admins />}></Route>
         <Route path="/waiting-list" element={<WaitingList />}></Route>
+        <Route path="/create-post" element={<CreatePost />}></Route>
       </Routes>
     </div>
   );

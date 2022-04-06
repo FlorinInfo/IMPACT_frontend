@@ -1,1 +1,6 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
 
+.homepage {
+    @include logged-page;
+}
