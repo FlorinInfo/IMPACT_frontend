@@ -31,7 +31,7 @@ const LoginForm = () => {
       // handle success
       if(response.data.token) {
         setCookie('token', response.data.token);
-        navigate("/")
+        navigate("/")  
       }
       else if(response.data.errors) {
         if(response.data.errors.email) setEmailError(response.data.errors.email.details);
