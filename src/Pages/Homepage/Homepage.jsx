@@ -5,7 +5,7 @@ import AddPost from "./../../components/HomePage/AddPost/AddPost";
 
 const Homepage = () => {
   return (
-    <div className="container">
+    <div className="homepage">
       <NavigationBar />
       <AddPost />
     </div>

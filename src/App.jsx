@@ -10,15 +10,16 @@ import { useEffect } from "react";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import Admins from "./Pages/Admins/Admins";
+import CreatePost from "./Pages/CreatePost/CreatePost";
 
 function App() {
   let navigate = useNavigate();
   const location = useLocation();
-  const [cookies, setCookie, removeCookie] = useCookies(["token", "userid"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
-  // useEffect(() => {
-  //   if ((!cookies.token || !cookies.userid)&&(location.pathname!="/login"&&location.pathname!="/signup")) navigate("/login");
-  // }, [cookies.token, cookies.userid]);
+  useEffect(() => {
+    if ((!cookies.token)&&(location.pathname!="/login"&&location.pathname!="/signup")) navigate("/login");
+  }, [cookies.token]);
 
   return (
     <div className="App">
@@ -29,6 +30,7 @@ function App() {
         <Route path="/pending" element={<Pending />} />
         <Route path="/create-admins" element={<Admins />}></Route>
         <Route path="/waiting-list" element={<WaitingList />}></Route>
+        <Route path="/create-post" element={<CreatePost />}></Route>
       </Routes>
     </div>
   );
