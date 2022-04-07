@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 
 const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
   return (
-    <div className="search-dropdown">
+    <div className="search-dropdown" >
       <input
         type="text"
         className="input-default"
@@ -18,9 +18,9 @@ const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
             <li
               className="search-dropdown__response"
               key={nanoid()}
-              onClick={() => onSelect(l.nume)}
+              onClick={() => onSelect(l)}
             >
-              {l.nume} 
+              {l.name} 
             </li>
           ))}
         </ul>
