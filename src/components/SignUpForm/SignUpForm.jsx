@@ -179,7 +179,7 @@ const SignUpForm = () => {
         <input type="text" className="input-default" name="email" />
         <span className="error-default"></span>
         <label htmlFor="email" className="label-default">
-          Adresa din buletin
+          Judet
         </label>
         <SearchDropdown
           onSelect={selectLocation}
@@ -187,6 +187,15 @@ const SignUpForm = () => {
           selected={location}
           onSearch={updateLocation}
         />
+        {/* <label htmlFor="email" className="label-default">
+          Oras / Comuna
+        </label>
+        <SearchDropdown
+          onSelect={selectLocation}
+          list={locations}
+          selected={location}
+          onSearch={updateLocation}
+        /> */}
         <span className="error-default"></span>
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">

@@ -33,19 +33,23 @@ const LoginForm = () => {
         setCookie('token', response.data.token);
         navigate("/")
       }
-      console.log(response);
+      else if(response.data.errors) {
+        if(response.data.errors.email) setEmailError(response.data.errors.email.details);
+        if(response.data.errors.password) setEmailError(response.data.errors.email.password);
+      }
+      // console.log(response.data.errors.email);
     })
     .catch((error) => {
       // handle error
       console.log(error.response);
-      if(error.response.data.description.includes('email')) {
-        setEmailError(error.response.data.description);
-        setPasswordError("");
-      }
-      else {
-        setEmailError("");
-        setPasswordError(error.response.data.description);
-      }
+      // if(error.response.data.description.includes('email')) {
+      //   setEmailError(error.response.data.description);
+      //   setPasswordError("");
+      // }
+      // else {
+      //   setEmailError("");
+      //   setPasswordError(error.response.data.description);
+      // }
     })
     .then(() => {
       // always executed
