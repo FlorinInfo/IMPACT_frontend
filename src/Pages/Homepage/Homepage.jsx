@@ -7,7 +7,12 @@ const Homepage = () => {
   return (
     <div className="homepage">
       <NavigationBar />
-      <AddPost />
+      <div className="homepage__container">
+        <div className="homepage__left">
+          <AddPost />
+        </div>
+        <div className="homepage__right">xxx</div>
+      </div>
     </div>
   );
 };

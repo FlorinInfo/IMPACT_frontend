@@ -17,7 +17,7 @@
 
 @mixin default-logged-container {
   display: block;
-  max-width: 85rem;
+  max-width: 95rem;
   margin: 0 auto;
   padding: 2rem 0;
 }
@@ -27,7 +27,8 @@
 }
 
 @mixin default-logged-container--right {
-  width: 15rem;
+  width: calc(100% - 70rem);
+  margin-left: auto;
 }
 
 @mixin logged-page {

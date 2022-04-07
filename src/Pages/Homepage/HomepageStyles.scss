@@ -3,4 +3,23 @@
 
 .homepage {
   @include logged-page;
+
+  &__container {
+    @include default-logged-container;
+    // background-color: red;
+    display: flex;
+  }
+
+  &__left {
+    @include default-logged-container--left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__right {
+    @include default-logged-container--right;
+    display: flex;
+    flex-direction: column;
+    background-color: $default-color;
+  }
 }
