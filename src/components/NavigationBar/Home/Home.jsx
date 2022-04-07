@@ -10,9 +10,7 @@ const Home = () => {
     <div className="homeButton-container">
       <button className="homeButton">
         <HomeIcon className="homeIcon" />
-        <span>
-          <h1>Home</h1>
-        </span>
+        <h1 className="homeicon--text">Home</h1>
         {/* {userType === "administrator"} */}
         <RiArrowDropDownLine className="arrow" />
       </button>

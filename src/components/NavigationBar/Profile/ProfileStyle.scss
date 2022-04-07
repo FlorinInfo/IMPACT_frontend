@@ -1,0 +1,53 @@
+@import "./../../../assets/styles/variables";
+
+.profile {
+  cursor: pointer;
+  display: flex;
+  border-radius: 5px;
+  border: 0.5px solid transparent;
+  margin-left: 10px;
+  width: 180px;
+
+  .arrowDropDown {
+    margin-top: 8px;
+    height: 25px;
+    width: 50px;
+    color: rgb(53, 44, 44);
+    margin-left: 40px;
+  }
+
+  &:hover {
+    border-color: rgb(220, 220, 220);
+    //   // background-color: black;
+  }
+}
+
+.pic {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  margin-top: 9px;
+  margin-left: 5px;
+}
+
+.person {
+  margin-right: 5px;
+}
+.username {
+  font-size: 15px;
+  font-weight: 120;
+  margin-top: 5px;
+  margin-left: 10px;
+  color: rgb(53, 44, 44);
+  font-family: $font-light;
+}
+
+.rank {
+  margin-left: 10px;
+  color: rgb(160, 160, 160);
+  font-family: $font-medium;
+}
+
+.active {
+  border: 0.5px solid rgb(220, 220, 220);
+}

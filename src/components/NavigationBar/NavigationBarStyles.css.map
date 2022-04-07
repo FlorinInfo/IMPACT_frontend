@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,OAAO,CAAC;EACN,OAAO,EAAE,IAAI;EAEb,KAAK,EAAE,IAAI;EACX,OAAO,EAAE,QAAQ;EACjB,gBAAgB,EAAE,KAAK;CAExB",
+    "sources": [
+        "NavigationBarStyles.scss"
+    ],
+    "names": [],
+    "file": "NavigationBarStyles.css"
+}

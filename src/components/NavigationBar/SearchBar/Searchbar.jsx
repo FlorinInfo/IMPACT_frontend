@@ -8,7 +8,7 @@ const SearchBar = () => {
       <label htmlFor="searchbar">
         <SearchIcon />
       </label>
-      <input id="searchbar" placeholder="Caută" />
+      <input className="input-default" id="searchbar" placeholder="Caută" />
     </div>
   );
 };

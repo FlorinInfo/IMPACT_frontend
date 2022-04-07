@@ -1,0 +1,41 @@
+@import "./../../../assets//styles//variables";
+
+.main-container {
+  width: 640px;
+}
+
+.section--create-post {
+  margin: auto;
+  border-radius: 4px;
+  border-color: 2px solid #dfdfdf;
+  align-items: center;
+  display: flex;
+  height: 58px;
+  margin-top: 16px;
+  background-color: white;
+  padding: 8px;
+
+  img {
+    height: 38px;
+    border-radius: 50%;
+    border-bottom: 2px solid rgb(220, 220, 220);
+  }
+
+  input {
+    margin-left: 8px;
+    width: 100%;
+    height: 35px;
+    // font-size: 13px;
+    // font-family: $font-regular;
+    // padding: 6px;
+    // border-radius: 3px;
+    border: 1px solid rgb(230, 230, 230);
+    // background-color: rgb(245, 245, 245);
+
+    // &:hover,
+    // &:focus {
+    //   border-color: rgb(0, 120, 210);
+    //   background-color: white;
+    // }
+  }
+}

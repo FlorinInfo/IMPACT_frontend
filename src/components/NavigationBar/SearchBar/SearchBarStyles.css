@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'FontLight';
+  src: url("../fonts/HelveticaNeueLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontMedium';
+  src: url("../fonts/HelveticaNeueMedium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontMedium2';
+  src: url("../fonts/NHaasGroteskTXPro-65Md.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontRegular';
+  src: url("../fonts/NHaasGroteskTXPro-55Rg.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontBold';
+  src: url("../fonts/HelveticaNeueBd.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FontBold2';
+  src: url("../fonts/NHaasGroteskTXPro-75Bd.ttf") format("truetype");
+}
+
+.searchbar {
+  max-width: 70vw;
+  width: calc(100vw - 730px);
+  position: relative;
+  padding-top: 5px;
+}
+
+.searchbar input {
+  font-size: 15px;
+  font-family: "FontLight", Georgia, "Times New Roman", Times, serif;
+  width: 100%;
+  display: block;
+  padding: 6px;
+  margin-left: 10px;
+  padding-left: 40px;
+  border-radius: 3px;
+  border: 1px solid #e6e6e6;
+  background-color: whitesmoke;
+  outline: none;
+}
+
+.searchbar input:hover, .searchbar input:focus {
+  border-color: #0078d2;
+}
+
+.searchbar label {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  margin-left: 5px;
+}
+
+.searchbar label svg {
+  color: #828282;
+  width: 30px;
+  height: 20px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+/*# sourceMappingURL=SearchBarStyles.css.map */
