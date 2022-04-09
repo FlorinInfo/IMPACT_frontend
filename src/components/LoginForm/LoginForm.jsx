@@ -29,19 +29,21 @@ const LoginForm = () => {
     )
     .then((response) => {
       // handle success
+      setEmailError("");
+      setPasswordError("");
       if(response.data.token) {
         setCookie('token', response.data.token);
         navigate("/")  
       }
       else if(response.data.errors) {
         if(response.data.errors.email) setEmailError(response.data.errors.email.details);
-        if(response.data.errors.password) setEmailError(response.data.errors.email.password);
+        if(response.data.errors.password) setPasswordError(response.data.errors.password.details);
       }
-      // console.log(response.data.errors.email);
+      console.log(response.data.errors);
     })
     .catch((error) => {
       // handle error
-      console.log(error.response);
+      console.log(error);
       // if(error.response.data.description.includes('email')) {
       //   setEmailError(error.response.data.description);
       //   setPasswordError("");

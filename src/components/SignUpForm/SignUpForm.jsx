@@ -3,94 +3,118 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { BsCloudCheckFill } from "react-icons/bs";
 import { createRef } from "react";
 import axios from "../../assets/axios/axios";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 import FormData from "form-data";
+import { Cookies, useCookies } from "react-cookie";
+import { useNavigate, useLocation } from "react-router-dom";
+import Select from "react-select";
+import AsyncSelect from "react-select/async";
+import { AsyncPaginate } from "react-select-async-paginate";
 
 import logoBlack from "../../assets/images/logo-black.svg";
 
-let apiLocations = [
-  {
-    nume: "Barcea",
-  },
-  {
-    nume: "Bereşti",
-    simplu: "Beresti",
-  },
-  {
-    nume: "Bereşti-Meria",
-    simplu: "Beresti-Meria",
-  },
-  {
-    nume: "Braniştea",
-    simplu: "Branistea",
-  },
-  {
-    nume: "Brăhăşeşti",
-    simplu: "Brahasesti",
-  },
-  {
-    nume: "Buciumeni",
-  },
-  {
-    nume: "Băleni",
-    simplu: "Baleni",
-  },
-  {
-    nume: "Bălăbăneşti",
-    simplu: "Balabanesti",
-  },
-  {
-    nume: "Bălăşeşti",
-    simplu: "Balasesti",
-  },
-  {
-    nume: "Băneasa",
-    simplu: "Baneasa",
-  },
-  {
-    nume: "Cavadineşti",
-    simplu: "Cavadinesti",
-  },
-  {
-    nume: "Cerţeşti",
-    simplu: "Certesti",
-  },
-  {
-    nume: "Corni",
-  },
+let judete = [];
+let orase = []; // + comune
+let localitati = [];
+const options = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" },
 ];
-let locations = [];
 
 const SignUpForm = () => {
+  let navigate = useNavigate();
   const [image, setImage] = useState("");
-  const [location, setLocation] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+
+  // Errors
+  const [imageError, setImageError] = useState("");
+  const [locationError, setLocationError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [judetError, setJudetError] = useState("");
+  const [orasError, setOrasError] = useState("");
+
+  // Locations
+  const [judet, setJudet] = useState({
+    name: "",
+    id: null,
+  });
+
+  const [oras, setOras] = useState({
+    name: "",
+    id: null,
+  });
+
+  const [localitate, setLocalitate] = useState({
+    name: "",
+    id: null,
+  });
+
+  const loadJudete = async () => {
+    const response = await axios.get("/counties");
+    let options = [];
+    if (Array.isArray(response.data)) options = [...response.data];
+    return {
+      options,
+    };
+  };
+
+  const loadOrase = async () => {
+    const response = await axios.get(`/villages?countyId=${judet.id}`);
+    let options = [];
+    if (Array.isArray(response.data)) options = [...response.data];
+    return {
+      options,
+    };
+  };
+
+  const loadLocalitati = async () => {
+    const response = await axios.get(`/localities?villageId=${oras.id}`);
+    let options = [];
+    if (Array.isArray(response.data)) options = [...response.data];
+    return {
+      options,
+    };
+  };
+
+  useEffect(() => {
+    setLocalitate({
+      name: "",
+      id: null,
+    });
+  }, [oras.id]);
+
+  useEffect(() => {
+    setLocalitate({
+      name: "",
+      id: null,
+    });
+    setOras({
+      name: "",
+      id: null,
+    });
+  }, [judet.id]);
+
+  // Image Upload
   const fileInput = createRef();
 
   const openUpload = () => {
     fileInput.current.click();
   };
 
-  const updateLocation = (loc) => {
-    console.log(loc);
-    setLocation(loc);
-    locations = apiLocations.filter((l) =>
-      l.nume.toLowerCase().includes(loc.toLowerCase())
-    );
-  };
-
-  const selectLocation = (value) => {
-    // alert(value)
-    setLocation(value);
-    locations = [];
-    console.log(location);
-  };
-
   const createImage = (e) => {
     let formData = new FormData();
     formData.append("image", e.target.files[0]);
     axios
-      .post("/upload-image", formData, {
+      .post("/upload-document", formData, {
         headers: {
           accept: "application/json",
           "Accept-Language": "en-US,en;q=0.8",
@@ -112,25 +136,21 @@ const SignUpForm = () => {
       });
   };
 
+  // Register user
   const registerUser = () => {
-    const userData = {
-      password: 123456,
-      address: "Iasi",
-      lastName: "Florin",
-      firstName: "Bucataru",
-      photoUrl: image,
-      email: "testemail@test.com",
-    };
     axios
       .post(
         "/users",
         {
-          password: "alexalea",
+          password,
           address: "Iasi",
-          lastName: "Florin",
-          firstName: "Bucataru",
+          lastName,
+          firstName,
           photoUrl: image,
-          email: "testemail@test.com",
+          email,
+          countyId: judet.id,
+          villageId: oras.id,
+          localityId: localitate.id,
         },
         {
           headers: {
@@ -140,6 +160,33 @@ const SignUpForm = () => {
       )
       .then((response) => {
         // handle success
+        setEmailError("");
+        setFirstNameError("");
+        setLastNameError("");
+        setPasswordError("");
+        setImageError("");
+        setJudetError("");
+        setOrasError("");
+        if (response.data.token) {
+          setCookie("token", response.data.token);
+          navigate("/");
+        } else if (response.data.errors) {
+          console.log(response.data.errors);
+          if (response.data.errors.email)
+            setEmailError(response.data.errors.email.details);
+          if (response.data.errors.firstName)
+            setFirstNameError(response.data.errors.firstName.details);
+          if (response.data.errors.lastName)
+            setLastNameError(response.data.errors.lastName.details);
+          if (response.data.errors.password)
+            setPasswordError(response.data.errors.password.details);
+          if (response.data.errors.photo)
+            setImageError(response.data.errors.photo.details);
+          if (response.data.errors.county)
+            setJudetError(response.data.errors.county.details);
+          if (response.data.errors.village)
+            setOrasError(response.data.errors.village.details);
+        }
         console.log(response);
       })
       .catch((error) => {
@@ -162,41 +209,112 @@ const SignUpForm = () => {
             <label htmlFor="email" className="label-default">
               Nume
             </label>
-            <input type="text" className="input-default" name="nume" />
-            <span className="error-default"></span>
+            <input
+              type="text"
+              className="input-default"
+              name="nume"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <span className="error-default">{lastNameError}</span>
           </div>
           <div>
             <label htmlFor="prenume" className="label-default">
               Prenume
             </label>
-            <input type="text" className="input-default" name="prenume" />
-            <span className="error-default"></span>
+            <input
+              type="text"
+              className="input-default"
+              name="prenume"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <span className="error-default">{firstNameError}</span>
           </div>
         </div>
         <label htmlFor="email" className="label-default">
           Adresa de email
         </label>
-        <input type="text" className="input-default" name="email" />
-        <span className="error-default"></span>
-        <label htmlFor="email" className="label-default">
+        <input
+          type="text"
+          className="input-default"
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <span className="error-default">{emailError}</span>
+        <label htmlFor="judet" className="label-default">
           Judet
         </label>
-        <SearchDropdown
-          onSelect={selectLocation}
-          list={locations}
-          selected={location}
-          onSearch={updateLocation}
+        <AsyncPaginate
+          getOptionLabel={(option) => option.name}
+          getOptionValue={(option) => option.id}
+          options={judete}
+          classNamePrefix="react-select"
+          className="react-select"
+          value={judet}
+          onChange={setJudet}
+          loadOptions={loadJudete}
+          placeholder={""}
         />
-        {/* <label htmlFor="email" className="label-default">
-          Oras / Comuna
-        </label>
-        <SearchDropdown
-          onSelect={selectLocation}
-          list={locations}
-          selected={location}
-          onSearch={updateLocation}
-        /> */}
-        <span className="error-default"></span>
+        {/* <SearchDropdown
+            onSelect={selectJudet}
+            list={judeteFilter}
+            selected={judet}
+            onSearch={updateJudete}
+          /> */}
+        <span className="error-default">{judetError}</span>
+        {judet.id ? (
+          <>
+            <label htmlFor="oras" className="label-default">
+              Oras / Comuna
+            </label>
+            <AsyncPaginate
+              key={judet.id}
+              getOptionLabel={(option) => option.name}
+              getOptionValue={(option) => option.id}
+              classNamePrefix="react-select"
+              className="react-select"
+              value={oras}
+              onChange={setOras}
+              loadOptions={loadOrase}
+              placeholder={""}
+            />
+            {/* <SearchDropdown
+              onSelect={selectOras}
+              list={oraseFilter}
+              selected={oras}
+              onSearch={updateOrase}
+            /> */}
+            <span className="error-default">{orasError}</span>
+          </>
+        ) : (
+          ""
+        )}
+        {oras.id ? (
+          <>
+            <label htmlFor="localitate" className="label-default">
+              Localitate
+            </label>
+            <AsyncPaginate
+              key={oras.id}
+              getOptionLabel={(option) => option.name}
+              getOptionValue={(option) => option.id}
+              classNamePrefix="react-select"
+              className="react-select"
+              value={localitate}
+              onChange={setLocalitate}
+              loadOptions={loadLocalitati}
+              placeholder={""}
+            />
+            {/* <SearchDropdown
+              onSelect={selectLocalitate}
+              list={localitatiFilter}
+              selected={localitate}
+              onSearch={updateLocalitati}
+            /> */}
+            <span className="error-default"></span>
+          </>
+        ) : (
+          ""
+        )}
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
             Poza actului de identitate
@@ -224,7 +342,7 @@ const SignUpForm = () => {
           ref={fileInput}
           className="file-input"
         />
-        <span className="error-default"></span>
+        <span className="error-default">{imageError}</span>
         <label htmlFor="parola" className="label-default">
           Parola
         </label>
@@ -233,8 +351,9 @@ const SignUpForm = () => {
           className="input-default"
           name="parola"
           placeholder="6+ caractere"
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <span className="error-default"></span>
+        <span className="error-default">{passwordError}</span>
         <button
           type="button"
           className="button-default-form submit-btn"

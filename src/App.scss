@@ -73,7 +73,65 @@ body {
   margin-left: 0.2rem;
 }
 
-.MuiAlert-message  {
+.MuiAlert-message {
   font-size: 1.2rem;
   font-family: $font-regular;
+}
+
+.react-select {
+  &-container {
+    margin-top: 200px !important;
+  }
+}
+
+.react-select__single-value {
+  color: #0d0c22 !important;
+  font-weight: 400 !important;
+  line-height: 28px !important;
+  font-size: 1.4rem !important;
+  font-family: $font-regular !important;
+}
+
+.react-select__option {
+  font-family: $font-regular!important;;
+  padding: 1rem 1.5rem!important;;
+  font-size: 1.3rem!important;;
+
+  &:focus, &:hover {
+    background-color: $default-color-light-2!important;
+    cursor: pointer;
+  }
+}
+
+.react-select__menu {
+  z-index: 10000!important;
+}
+
+.react-select__control {
+  background-color: #f3f3f4 !important;
+  color: #0d0c22 !important;
+  height: 40px !important;
+  font-weight: 400 !important;
+  line-height: 28px !important;
+  // padding: 10px 16px;
+  -webkit-transition: background-color 200ms ease, outline 200ms ease,
+    color 200ms ease, -webkit-box-shadow 200ms ease !important;
+  transition: background-color 200ms ease, outline 200ms ease, color 200ms ease,
+    -webkit-box-shadow 200ms ease !important;
+  transition: background-color 200ms ease, outline 200ms ease, color 200ms ease,
+    box-shadow 200ms ease !important;
+  transition: background-color 200ms ease, outline 200ms ease, color 200ms ease,
+    box-shadow 200ms ease, -webkit-box-shadow 200ms ease !important;
+  border-radius: 8px !important;
+  outline: none !important;
+  font-size: 1.4rem !important;
+  font-family: $font-regular !important;
+  width: 100% !important;
+
+  &--is-focused {
+    border-color: $default-color-light-1 !important;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 0 4px rgba(20, 94, 255, 0.1) !important;
+    box-shadow: 0 0 0 4px rgba(19, 23, 255, 0.1) !important;
+  }
 }
