@@ -1,16 +1,23 @@
 import "./SearchDropdownStyles.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { nanoid } from "nanoid";
-
+import listenForOutsideClick from "../../utils/outside-click";
 
 const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
+  // const inputRef = useRef(null);
+  // const [listening, setListening] = useState(false);
+
+  // useEffect(
+  //   listenForOutsideClick(listening, setListening, inputRef, onSearch)
+  // );
+
   return (
-    <div className="search-dropdown" >
+    <div  className="search-dropdown">
       <input
         type="text"
         className="input-default"
         value={selected}
-        onInput={(e)=>onSearch(e.target.value)}
+        onInput={(e) => onSearch(e.target.value)}
       />
       {list.length ? (
         <ul className="search-dropdown__responses">
@@ -20,7 +27,7 @@ const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
               key={nanoid()}
               onClick={() => onSelect(l)}
             >
-              {l.name} 
+              {l.name}
             </li>
           ))}
         </ul>

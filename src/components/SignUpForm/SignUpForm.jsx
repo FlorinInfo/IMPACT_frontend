@@ -6,70 +6,23 @@ import axios from "../../assets/axios/axios";
 import { useState, useEffect } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 import FormData from "form-data";
+import { Cookies, useCookies } from "react-cookie";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import logoBlack from "../../assets/images/logo-black.svg";
 
-// let apiLocations = [
-//   {
-//     nume: "Barcea",
-//   },
-//   {
-//     nume: "Bereşti",
-//     simplu: "Beresti",
-//   },
-//   {
-//     nume: "Bereşti-Meria",
-//     simplu: "Beresti-Meria",
-//   },
-//   {
-//     nume: "Braniştea",
-//     simplu: "Branistea",
-//   },
-//   {
-//     nume: "Brăhăşeşti",
-//     simplu: "Brahasesti",
-//   },
-//   {
-//     nume: "Buciumeni",
-//   },
-//   {
-//     nume: "Băleni",
-//     simplu: "Baleni",
-//   },
-//   {
-//     nume: "Bălăbăneşti",
-//     simplu: "Balabanesti",
-//   },
-//   {
-//     nume: "Bălăşeşti",
-//     simplu: "Balasesti",
-//   },
-//   {
-//     nume: "Băneasa",
-//     simplu: "Baneasa",
-//   },
-//   {
-//     nume: "Cavadineşti",
-//     simplu: "Cavadinesti",
-//   },
-//   {
-//     nume: "Cerţeşti",
-//     simplu: "Certesti",
-//   },
-//   {
-//     nume: "Corni",
-//   },
-// ];
-// let judete = [];
-
 let judete = [];
+let orase = []; // + comune
+let localitati = [];
 
 const SignUpForm = () => {
+  let navigate = useNavigate();
   const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   // Errors
   const [imageError, setImageError] = useState("");
@@ -78,27 +31,111 @@ const SignUpForm = () => {
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [judetError, setJudetError] = useState("");
+  const [orasError, setOrasError] = useState("");
 
   // Locations
   const [judet, setJudet] = useState("");
-  // const [judete, setJudete] = useState([]);
+  const [judetId, setJudetId] = useState("");
   const [judeteFilter, setJudeteFilter] = useState([]);
+
+  const [oras, setOras] = useState("");
+  const [orasId, setOrasId] = useState("");
+  const [oraseFilter, setOraseFilter] = useState([]);
+
+  const [localitate, setLocalitate] = useState("");
+  const [localitateId, setLocalitateId] = useState("");
+  const [localitatiFilter, setLocalitatiFilter] = useState([]);
 
   const updateJudete = (loc) => {
     // console.log(loc);
     setJudet(loc);
+    setJudetId("");
     setJudeteFilter(
-      judete.filter((l) => l.name.toLowerCase().includes(loc.toLowerCase()))
+      judete.filter(
+        (l) => l.name.toLowerCase().includes(loc.toLowerCase()) && loc != ""
+      )
     );
-    console.log(judete);
+    // console.log(judete);
   };
 
   const selectJudet = (value) => {
     // alert(value)
     setJudet(value.name);
+    setJudetId(value.id);
     setJudeteFilter([]);
+    setOras("");
     // console.log(location);
   };
+
+  const updateOrase = (loc) => {
+    // console.log(loc);
+    setOras(loc);
+    setOrasId("");
+    setOraseFilter(
+      orase.filter(
+        (l) => l.name.toLowerCase().includes(loc.toLowerCase()) && loc != ""
+      )
+    );
+    // console.log(judete);
+  };
+
+  const selectOras = (value) => {
+    // alert(value)
+    setOras(value.name);
+    setOrasId(value.id);
+    setOraseFilter([]);
+    // console.log(location);
+  };
+
+  const updateLocalitati = (loc) => {
+    console.log(loc);
+    setLocalitate(loc);
+    setLocalitateId("");
+    setLocalitatiFilter(
+      localitati.filter(
+        (l) => l.name.toLowerCase().includes(loc.toLowerCase()) && loc != ""
+      )
+    );
+    // console.log(judete);
+  };
+
+  const selectLocalitate = (value) => {
+    // alert(value)
+    setLocalitate(value.name);
+    setLocalitateId(value.id);
+    setLocalitatiFilter([]);
+    // console.log(location);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`/villages?countyId=${judetId}`)
+      .then((response) => {
+        // handle success
+        orase = [...response.data];
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
+  }, [judetId]);
+
+  useEffect(() => {
+    // alert(orasId)
+    axios
+      .get(`/localities?villageId=${orasId}`)
+      .then((response) => {
+        // handle success
+        console.log("test", response);
+        if (!response.data.errors) localitati = [...response.data];
+        console.log("xxxx", localitati);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
+  }, [orasId]);
 
   useEffect(() => {
     axios
@@ -126,7 +163,7 @@ const SignUpForm = () => {
     let formData = new FormData();
     formData.append("image", e.target.files[0]);
     axios
-      .post("/upload-image", formData, {
+      .post("/upload-document", formData, {
         headers: {
           accept: "application/json",
           "Accept-Language": "en-US,en;q=0.8",
@@ -150,14 +187,6 @@ const SignUpForm = () => {
 
   // Register user
   const registerUser = () => {
-    // const userData = {
-    //   password: 123456,
-    //   address: "Iasi",
-    //   lastName: "Florin",
-    //   firstName: "Bucataru",
-    //   photoUrl: image,
-    //   email: "testemail@test.com",
-    // };
     axios
       .post(
         "/users",
@@ -168,6 +197,8 @@ const SignUpForm = () => {
           firstName,
           photoUrl: image,
           email,
+          countyId: judetId,
+          villageId: orasId,
         },
         {
           headers: {
@@ -177,7 +208,17 @@ const SignUpForm = () => {
       )
       .then((response) => {
         // handle success
-        if (response.data.errors) {
+        setEmailError("");
+        setFirstNameError("");
+        setLastNameError("");
+        setPasswordError("");
+        setImageError("");
+        setJudetError("");
+        setOrasError("");
+        if (response.data.token) {
+          setCookie("token", response.data.token);
+          navigate("/");
+        } else if (response.data.errors) {
           console.log(response.data.errors);
           if (response.data.errors.email)
             setEmailError(response.data.errors.email.details);
@@ -189,6 +230,10 @@ const SignUpForm = () => {
             setPasswordError(response.data.errors.password.details);
           if (response.data.errors.photo)
             setImageError(response.data.errors.photo.details);
+          if (response.data.errors.county)
+            setJudetError(response.data.errors.county.details);
+          if (response.data.errors.village)
+            setOrasError(response.data.errors.village.details);
         }
         console.log(response);
       })
@@ -243,7 +288,7 @@ const SignUpForm = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <span className="error-default">{emailError}</span>
-        <label htmlFor="email" className="label-default">
+        <label htmlFor="judet" className="label-default">
           Judet
         </label>
         <SearchDropdown
@@ -252,16 +297,39 @@ const SignUpForm = () => {
           selected={judet}
           onSearch={updateJudete}
         />
-        {/* <label htmlFor="email" className="label-default">
-          Oras / Comuna
-        </label>
-        <SearchDropdown
-          onSelect={selectLocation}
-          list={locations}
-          selected={location}
-          onSearch={updateLocation}
-        /> */}
-        <span className="error-default"></span>
+        <span className="error-default">{judetError}</span>
+        {judetId ? (
+          <>
+            <label htmlFor="oras" className="label-default">
+              Oras / Comuna
+            </label>
+            <SearchDropdown
+              onSelect={selectOras}
+              list={oraseFilter}
+              selected={oras}
+              onSearch={updateOrase}
+            />
+            <span className="error-default">{orasError}</span>
+          </>
+        ) : (
+          ""
+        )}
+        {orasId ? (
+          <>
+            <label htmlFor="localitate" className="label-default">
+              Localitate
+            </label>
+            <SearchDropdown
+              onSelect={selectLocalitate}
+              list={localitatiFilter}
+              selected={localitate}
+              onSearch={updateLocalitati}
+            />
+            <span className="error-default"></span>
+          </>
+        ) : (
+          ""
+        )}
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
             Poza actului de identitate
