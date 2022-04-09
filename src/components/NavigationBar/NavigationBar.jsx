@@ -14,11 +14,11 @@ import { BiLogOut } from "react-icons/bi";
 const NavigationBar = () => {
   return (
     <div className="navbar">
-      <Logo className="navbar--component" />
-      <Home className="navbar--component" />
-      <SearchBar className="navbar--component" />
-      <NavBarActions className="navbar--component" />
-      <Profile className="navbar--component">
+      <Logo />
+      <Home />
+      <SearchBar />
+      <NavBarActions />
+      <Profile>
         <DropDownMenu />
       </Profile>
     </div>

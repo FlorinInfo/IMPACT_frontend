@@ -1,0 +1,80 @@
+@import "./../../../assets/styles/variables";
+
+.top-users {
+  margin-top: 16px;
+  background-color: white;
+  width: 310px;
+  //   height: 250px;
+  border-radius: 4px;
+  border-color: 2px solid #dfdfdf;
+
+  &__title {
+    height: 80px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0, transparent),
+      url("./../../../assets/images/bgtop.png");
+
+    &__text {
+      margin-left: 7px;
+      font-size: 20px;
+      color: white;
+      font-family: $font-bold-2;
+    }
+  }
+
+  &__section {
+    display: flex;
+    height: 50px;
+    border-bottom: 1px solid #dfdfdf;
+
+    &__number {
+      color: #1c1c1c;
+      margin-top: 13px;
+      margin-left: 13px;
+      font-family: $font-regular;
+      font-size: 18px;
+      font-weight: 300;
+    }
+
+    &__mark {
+      margin-top: 14px;
+      margin-left: 13px;
+      color: $default-color;
+      //   font-weight: bold;
+      font-size: 20px;
+    }
+
+    &__profile-image {
+      margin-left: 13px;
+      margin-top: 9px;
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+    }
+
+    &__username {
+      margin-left: 16px;
+      font-size: 15px;
+      font-family: $font-medium;
+      margin-top: 13px;
+      color: #1a1a1b;
+    }
+
+    &__button {
+      width: 90px;
+      margin: auto;
+      height: 26px;
+      border: 0 solid transparent;
+      border-radius: 9999px;
+      background-color: #0079d3;
+      color: white;
+      font-family: $font-medium;
+      font-size: 13px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
