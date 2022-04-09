@@ -3,17 +3,25 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { BsCloudCheckFill } from "react-icons/bs";
 import { createRef } from "react";
 import axios from "../../assets/axios/axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 import FormData from "form-data";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
+import Select from "react-select";
+import AsyncSelect from "react-select/async";
+import { AsyncPaginate } from "react-select-async-paginate";
 
 import logoBlack from "../../assets/images/logo-black.svg";
 
 let judete = [];
 let orase = []; // + comune
 let localitati = [];
+const options = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" },
+];
 
 const SignUpForm = () => {
   let navigate = useNavigate();
@@ -35,122 +43,65 @@ const SignUpForm = () => {
   const [orasError, setOrasError] = useState("");
 
   // Locations
-  const [judet, setJudet] = useState("");
-  const [judetId, setJudetId] = useState("");
-  const [judeteFilter, setJudeteFilter] = useState([]);
+  const [judet, setJudet] = useState({
+    name: "",
+    id: null,
+  });
 
-  const [oras, setOras] = useState("");
-  const [orasId, setOrasId] = useState("");
-  const [oraseFilter, setOraseFilter] = useState([]);
+  const [oras, setOras] = useState({
+    name: "",
+    id: null,
+  });
 
-  const [localitate, setLocalitate] = useState("");
-  const [localitateId, setLocalitateId] = useState("");
-  const [localitatiFilter, setLocalitatiFilter] = useState([]);
+  const [localitate, setLocalitate] = useState({
+    name: "",
+    id: null,
+  });
 
-  const updateJudete = (loc) => {
-    // console.log(loc);
-    setJudet(loc);
-    setJudetId("");
-    setJudeteFilter(
-      judete.filter(
-        (l) => l.name.toLowerCase().includes(loc.toLowerCase()) && loc != ""
-      )
-    );
-    // console.log(judete);
+  const loadJudete = async () => {
+    const response = await axios.get("/counties");
+    let options = [];
+    if (Array.isArray(response.data)) options = [...response.data];
+    return {
+      options,
+    };
   };
 
-  const selectJudet = (value) => {
-    // alert(value)
-    setJudet(value.name);
-    setJudetId(value.id);
-    setJudeteFilter([]);
-    setOras("");
-    // console.log(location);
+  const loadOrase = async () => {
+    const response = await axios.get(`/villages?countyId=${judet.id}`);
+    let options = [];
+    if (Array.isArray(response.data)) options = [...response.data];
+    return {
+      options,
+    };
   };
 
-  const updateOrase = (loc) => {
-    // console.log(loc);
-    setOras(loc);
-    setOrasId("");
-    setOraseFilter(
-      orase.filter(
-        (l) => l.name.toLowerCase().includes(loc.toLowerCase()) && loc != ""
-      )
-    );
-    // console.log(judete);
-  };
-
-  const selectOras = (value) => {
-    // alert(value)
-    setOras(value.name);
-    setOrasId(value.id);
-    setOraseFilter([]);
-    // console.log(location);
-  };
-
-  const updateLocalitati = (loc) => {
-    console.log(loc);
-    setLocalitate(loc);
-    setLocalitateId("");
-    setLocalitatiFilter(
-      localitati.filter(
-        (l) => l.name.toLowerCase().includes(loc.toLowerCase()) && loc != ""
-      )
-    );
-    // console.log(judete);
-  };
-
-  const selectLocalitate = (value) => {
-    // alert(value)
-    setLocalitate(value.name);
-    setLocalitateId(value.id);
-    setLocalitatiFilter([]);
-    // console.log(location);
+  const loadLocalitati = async () => {
+    const response = await axios.get(`/localities?villageId=${oras.id}`);
+    let options = [];
+    if (Array.isArray(response.data)) options = [...response.data];
+    return {
+      options,
+    };
   };
 
   useEffect(() => {
-    axios
-      .get(`/villages?countyId=${judetId}`)
-      .then((response) => {
-        // handle success
-        orase = [...response.data];
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      });
-  }, [judetId]);
+    setLocalitate({
+      name: "",
+      id: null,
+    });
+  }, [oras.id]);
 
   useEffect(() => {
-    // alert(orasId)
-    axios
-      .get(`/localities?villageId=${orasId}`)
-      .then((response) => {
-        // handle success
-        console.log("test", response);
-        if (!response.data.errors) localitati = [...response.data];
-        console.log("xxxx", localitati);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      });
-  }, [orasId]);
-
-  useEffect(() => {
-    axios
-      .get("/counties")
-      .then((response) => {
-        // handle success
-        judete = [...response.data];
-        console.log(judete);
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-  }, []);
+    setLocalitate({
+      name: "",
+      id: null,
+    });
+    setOras({
+      name: "",
+      id: null,
+    });
+  }, [judet.id]);
 
   // Image Upload
   const fileInput = createRef();
@@ -197,8 +148,9 @@ const SignUpForm = () => {
           firstName,
           photoUrl: image,
           email,
-          countyId: judetId,
-          villageId: orasId,
+          countyId: judet.id,
+          villageId: oras.id,
+          localityId: localitate.id,
         },
         {
           headers: {
@@ -291,40 +243,73 @@ const SignUpForm = () => {
         <label htmlFor="judet" className="label-default">
           Judet
         </label>
-        <SearchDropdown
-          onSelect={selectJudet}
-          list={judeteFilter}
-          selected={judet}
-          onSearch={updateJudete}
+        <AsyncPaginate
+          getOptionLabel={(option) => option.name}
+          getOptionValue={(option) => option.id}
+          options={judete}
+          classNamePrefix="react-select"
+          className="react-select"
+          value={judet}
+          onChange={setJudet}
+          loadOptions={loadJudete}
+          placeholder={""}
         />
+        {/* <SearchDropdown
+            onSelect={selectJudet}
+            list={judeteFilter}
+            selected={judet}
+            onSearch={updateJudete}
+          /> */}
         <span className="error-default">{judetError}</span>
-        {judetId ? (
+        {judet.id ? (
           <>
             <label htmlFor="oras" className="label-default">
               Oras / Comuna
             </label>
-            <SearchDropdown
+            <AsyncPaginate
+              key={judet.id}
+              getOptionLabel={(option) => option.name}
+              getOptionValue={(option) => option.id}
+              classNamePrefix="react-select"
+              className="react-select"
+              value={oras}
+              onChange={setOras}
+              loadOptions={loadOrase}
+              placeholder={""}
+            />
+            {/* <SearchDropdown
               onSelect={selectOras}
               list={oraseFilter}
               selected={oras}
               onSearch={updateOrase}
-            />
+            /> */}
             <span className="error-default">{orasError}</span>
           </>
         ) : (
           ""
         )}
-        {orasId ? (
+        {oras.id ? (
           <>
             <label htmlFor="localitate" className="label-default">
               Localitate
             </label>
-            <SearchDropdown
+            <AsyncPaginate
+              key={oras.id}
+              getOptionLabel={(option) => option.name}
+              getOptionValue={(option) => option.id}
+              classNamePrefix="react-select"
+              className="react-select"
+              value={localitate}
+              onChange={setLocalitate}
+              loadOptions={loadLocalitati}
+              placeholder={""}
+            />
+            {/* <SearchDropdown
               onSelect={selectLocalitate}
               list={localitatiFilter}
               selected={localitate}
               onSearch={updateLocalitati}
-            />
+            /> */}
             <span className="error-default"></span>
           </>
         ) : (

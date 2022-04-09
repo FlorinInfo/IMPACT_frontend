@@ -4,15 +4,15 @@ import { nanoid } from "nanoid";
 import listenForOutsideClick from "../../utils/outside-click";
 
 const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
-  // const inputRef = useRef(null);
-  // const [listening, setListening] = useState(false);
+  const inputRef = useRef();
+  const [listening, setListening] = useState(false);
 
-  // useEffect(
-  //   listenForOutsideClick(listening, setListening, inputRef, onSearch)
-  // );
+  listenForOutsideClick(inputRef, () => {
+    alert('You clicked outside')
+  });
 
   return (
-    <div  className="search-dropdown">
+    <div  className="search-dropdown" >
       <input
         type="text"
         className="input-default"
@@ -20,7 +20,7 @@ const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
         onInput={(e) => onSearch(e.target.value)}
       />
       {list.length ? (
-        <ul className="search-dropdown__responses">
+        <ul className="search-dropdown__responses"  >
           {list.map((l) => (
             <li
               className="search-dropdown__response"

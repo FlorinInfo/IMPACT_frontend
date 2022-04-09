@@ -1,20 +1,19 @@
-export default function listenForOutsideClicks(
-  listening,
-  setListening,
-  menuRef,
-  setIsOpen
-) {
-  return () => {
-    if (listening) return;
-    if (!menuRef.current) return;
-    setListening(true);
-    [`click`, `touchstart`].forEach((type) => {
-      document.addEventListener(`click`, (evt) => {
-        const cur = menuRef.current;
-        const node = evt.target;
-        if (cur.contains(node)) return;
-        setIsOpen("");
-      });
-    });
+import { useEffect } from "react";
+
+const useOutsideClick = (ref, callback) => {
+  const handleClick = e => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      callback();
+    }
   };
-}
+
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  });
+};
+
+export default useOutsideClick;
