@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
+import logoBlack from "../../assets/images/logo-black.svg";
 
 const LoginForm = () => {
   let navigate = useNavigate();
@@ -15,58 +16,65 @@ const LoginForm = () => {
 
   const loginUser = () => {
     axios
-    .post(
-      "/login",
-      {
-        email,
-        password
-      },
-      {
-        headers: {
-          accept: "application/json",
+      .post(
+        "/login",
+        {
+          email,
+          password,
         },
-      }
-    )
-    .then((response) => {
-      // handle success
-      setEmailError("");
-      setPasswordError("");
-      if(response.data.token) {
-        setCookie('token', response.data.token);
-        navigate("/")  
-      }
-      else if(response.data.errors) {
-        if(response.data.errors.email) setEmailError(response.data.errors.email.details);
-        if(response.data.errors.password) setPasswordError(response.data.errors.password.details);
-      }
-      console.log(response.data.errors);
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error);
-      // if(error.response.data.description.includes('email')) {
-      //   setEmailError(error.response.data.description);
-      //   setPasswordError("");
-      // }
-      // else {
-      //   setEmailError("");
-      //   setPasswordError(error.response.data.description);
-      // }
-    })
-    .then(() => {
-      // always executed
-    });
-  }
+        {
+          headers: {
+            accept: "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        // handle success
+        setEmailError("");
+        setPasswordError("");
+        if (response.data.token) {
+          setCookie("token", response.data.token);
+          navigate("/");
+        } else if (response.data.errors) {
+          if (response.data.errors.email)
+            setEmailError(response.data.errors.email.details);
+          if (response.data.errors.password)
+            setPasswordError(response.data.errors.password.details);
+        }
+        console.log(response.data.errors);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+        // if(error.response.data.description.includes('email')) {
+        //   setEmailError(error.response.data.description);
+        //   setPasswordError("");
+        // }
+        // else {
+        //   setEmailError("");
+        //   setPasswordError(error.response.data.description);
+        // }
+      })
+      .then(() => {
+        // always executed
+      });
+  };
 
   return (
     <>
       <form action="submit" className="login-form">
+        <img src={logoBlack} alt="logo" className="login-form__logo" />
         <h3 className="login-form__title">Logheaza-te pe Impact</h3>
         <div className="login-form__h-line"></div>
         <label htmlFor="email" className="label-default">
-          Adresa de email 
+          Adresa de email
         </label>
-        <input type="text" className="input-default" name="email" onChange={e => setEmail(e.target.value)}/>
+        <input
+          type="text"
+          className="input-default"
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <span className="error-default">{emailError}</span>
         <label htmlFor="parola" className="label-default">
           Parola
@@ -76,10 +84,16 @@ const LoginForm = () => {
           className="input-default"
           name="parola"
           placeholder="6+ caractere"
-          onChange={e=>setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <span className="error-default">{passwordError}</span>
-        <button type="button" className="button-default-form  submit-btn" onClick={loginUser}>Logheaza-te</button>
+        <button
+          type="button"
+          className="button-default-form  submit-btn"
+          onClick={loginUser}
+        >
+          Logheaza-te
+        </button>
       </form>
     </>
   );

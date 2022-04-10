@@ -150,7 +150,7 @@ const SignUpForm = () => {
           email,
           countyId: judet.id,
           villageId: oras.id,
-          localityId: localitate.id ,
+          localityId: localitate.id,
         },
         {
           headers: {
@@ -240,33 +240,36 @@ const SignUpForm = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <span className="error-default">{emailError}</span>
-        <label htmlFor="judet" className="label-default">
-          Judet
-        </label>
-        <AsyncPaginate
-          getOptionLabel={(option) => option.name}
-          getOptionValue={(option) => option.id}
-          options={judete}
-          classNamePrefix="react-select"
-          className="react-select"
-          value={judet}
-          onChange={setJudet}
-          loadOptions={loadJudete}
-          placeholder={""}
-        />
-        {/* <SearchDropdown
+        <div className="signup-form__locations">
+          <div style={{width:"30%"}}>
+            <label htmlFor="judet" className="label-default">
+              Judet
+            </label>
+            <AsyncPaginate
+              getOptionLabel={(option) => option.name}
+              getOptionValue={(option) => option.id}
+              options={judete}
+              classNamePrefix="react-select"
+              className="react-select"
+              value={judet}
+              onChange={setJudet}
+              loadOptions={loadJudete}
+              placeholder={""}
+            />
+            {/* <SearchDropdown
             onSelect={selectJudet}
             list={judeteFilter}
             selected={judet}
             onSearch={updateJudete}
           /> */}
-        <span className="error-default">{judetError}</span>
-        {judet.id ? (
-          <>
+            <span className="error-default">{judetError}</span>
+          </div>
+          <div style={{width:"30%"}}>
             <label htmlFor="oras" className="label-default">
               Oras / Comuna
             </label>
             <AsyncPaginate
+              isDisabled={judet.id==null}
               key={judet.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
@@ -284,16 +287,13 @@ const SignUpForm = () => {
               onSearch={updateOrase}
             /> */}
             <span className="error-default">{orasError}</span>
-          </>
-        ) : (
-          ""
-        )}
-        {oras.id ? (
-          <>
-            <label htmlFor="localitate" className="label-default">
+          </div>
+          <div style={{width:"30%"}}>
+          <label htmlFor="localitate" className="label-default">
               Localitate
             </label>
             <AsyncPaginate
+            isDisabled={oras.id==null}
               key={oras.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
@@ -311,10 +311,8 @@ const SignUpForm = () => {
               onSearch={updateLocalitati}
             /> */}
             <span className="error-default"></span>
-          </>
-        ) : (
-          ""
-        )}
+          </div>
+          </div>
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
             Poza actului de identitate
