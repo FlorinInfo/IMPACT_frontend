@@ -139,24 +139,12 @@ const SignUpForm = () => {
 
   // Register user
   const registerUser = () => {
-    let x =         {
-      password,
-      address: "Iasi",
-      lastName,
-      firstName,
-      photoUrl: image,
-      email,
-      countyId: judet.id,
-      villageId: oras.id,
-      ...(localitate.id && { localityId: localitate.id }),
-    }
-    console.log("xxxxxxxxx",x)
     axios
       .post(
         "/users",
         {
           password,
-          address: "Iasi",
+          // address: "Iasi",
           lastName,
           firstName,
           photoUrl: image,
