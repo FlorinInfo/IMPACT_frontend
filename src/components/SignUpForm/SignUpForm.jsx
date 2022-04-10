@@ -55,7 +55,7 @@ const SignUpForm = () => {
 
   const [localitate, setLocalitate] = useState({
     name: "",
-    id: null,
+    id: "",
   });
 
   const loadJudete = async () => {
@@ -88,14 +88,14 @@ const SignUpForm = () => {
   useEffect(() => {
     setLocalitate({
       name: "",
-      id: null,
+      id: "",
     });
   }, [oras.id]);
 
   useEffect(() => {
     setLocalitate({
       name: "",
-      id: null,
+      id: "",
     });
     setOras({
       name: "",
@@ -150,7 +150,7 @@ const SignUpForm = () => {
           email,
           countyId: judet.id,
           villageId: oras.id,
-          localityId: localitate.id,
+          localityId: localitate.id ,
         },
         {
           headers: {
