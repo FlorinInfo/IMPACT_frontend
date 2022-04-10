@@ -59,28 +59,40 @@ const SignUpForm = () => {
     id: "",
   });
 
-  const loadJudete = async () => {
+  const loadJudete = async (search) => {
     const response = await axios.get("/counties");
     let options = [];
-    if (Array.isArray(response.data)) options = [...response.data];
+    if (Array.isArray(response.data)) {
+      options = response.data.filter((l) =>
+        l.name.toLowerCase().startsWith(search.toLowerCase())
+      );
+    }
     return {
       options,
     };
   };
 
-  const loadOrase = async () => {
+  const loadOrase = async (search) => {
     const response = await axios.get(`/villages?countyId=${judet.id}`);
     let options = [];
-    if (Array.isArray(response.data)) options = [...response.data];
+    if (Array.isArray(response.data)) {
+      options = response.data.filter((l) =>
+        l.name.toLowerCase().startsWith(search.toLowerCase())
+      );
+    }
     return {
       options,
     };
   };
 
-  const loadLocalitati = async () => {
+  const loadLocalitati = async (search) => {
     const response = await axios.get(`/localities?villageId=${oras.id}`);
     let options = [];
-    if (Array.isArray(response.data)) options = [...response.data];
+    if (Array.isArray(response.data)) {
+      options = response.data.filter((l) =>
+        l.name.toLowerCase().startsWith(search.toLowerCase())
+      );
+    }
     return {
       options,
     };
