@@ -84,6 +84,10 @@ body {
   }
 }
 
+.react-select--is-disabled {
+  opacity: .7;
+}
+
 .react-select__single-value {
   color: #0d0c22 !important;
   font-weight: 400 !important;

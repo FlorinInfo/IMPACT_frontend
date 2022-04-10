@@ -15,7 +15,6 @@ import { AsyncPaginate } from "react-select-async-paginate";
 import logoBlack from "../../assets/images/logo-black.svg";
 
 let judete = [];
-let orase = []; // + comune
 let localitati = [];
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -49,11 +48,13 @@ const SignUpForm = () => {
     id: null,
   });
 
+  const [orase, setOrase] = useState([]);
   const [oras, setOras] = useState({
     name: "",
     id: null,
   });
 
+  const [localitati, setLocalitati] = useState([]);
   const [localitate, setLocalitate] = useState({
     name: "",
     id: "",
@@ -80,6 +81,7 @@ const SignUpForm = () => {
         l.name.toLowerCase().startsWith(search.toLowerCase())
       );
     }
+    setOrase(options);
     return {
       options,
     };
@@ -93,6 +95,7 @@ const SignUpForm = () => {
         l.name.toLowerCase().startsWith(search.toLowerCase())
       );
     }
+    setLocalitati(options);
     return {
       options,
     };
@@ -103,6 +106,7 @@ const SignUpForm = () => {
       name: "",
       id: "",
     });
+    loadLocalitati("");
   }, [oras.id]);
 
   useEffect(() => {
@@ -114,6 +118,7 @@ const SignUpForm = () => {
       name: "",
       id: null,
     });
+    loadOrase("");
   }, [judet.id]);
 
   // Image Upload
@@ -264,7 +269,6 @@ const SignUpForm = () => {
             <AsyncPaginate
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
-              options={judete}
               classNamePrefix="react-select"
               className="react-select"
               value={judet}
@@ -285,7 +289,7 @@ const SignUpForm = () => {
               Oras / Comuna
             </label>
             <AsyncPaginate
-              isDisabled={judet.id == null}
+              isDisabled={judet.id == null || orase.length==0}
               key={judet.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
@@ -309,7 +313,7 @@ const SignUpForm = () => {
               Localitate
             </label>
             <AsyncPaginate
-              isDisabled={oras.id == null}
+              isDisabled={oras.id == null || localitati.length==0}
               key={oras.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
