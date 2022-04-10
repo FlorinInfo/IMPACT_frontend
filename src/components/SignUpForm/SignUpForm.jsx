@@ -41,6 +41,7 @@ const SignUpForm = () => {
   const [passwordError, setPasswordError] = useState("");
   const [judetError, setJudetError] = useState("");
   const [orasError, setOrasError] = useState("");
+  const [localitateError, setLocalitateError] = useState("");
 
   // Locations
   const [judet, setJudet] = useState({
@@ -138,6 +139,18 @@ const SignUpForm = () => {
 
   // Register user
   const registerUser = () => {
+    let x =         {
+      password,
+      address: "Iasi",
+      lastName,
+      firstName,
+      photoUrl: image,
+      email,
+      countyId: judet.id,
+      villageId: oras.id,
+      ...(localitate.id && { localityId: localitate.id }),
+    }
+    console.log("xxxxxxxxx",x)
     axios
       .post(
         "/users",
@@ -150,7 +163,7 @@ const SignUpForm = () => {
           email,
           countyId: judet.id,
           villageId: oras.id,
-          localityId: localitate.id,
+          ...(localitate.id && { localityId: localitate.id }),
         },
         {
           headers: {
@@ -167,6 +180,7 @@ const SignUpForm = () => {
         setImageError("");
         setJudetError("");
         setOrasError("");
+        setLocalitateError("");
         if (response.data.token) {
           setCookie("token", response.data.token);
           navigate("/");
@@ -186,6 +200,8 @@ const SignUpForm = () => {
             setJudetError(response.data.errors.county.details);
           if (response.data.errors.village)
             setOrasError(response.data.errors.village.details);
+          if (response.data.errors.locality)
+            setLocalitateError(response.data.errors.locality.details);
         }
         console.log(response);
       })
@@ -241,7 +257,7 @@ const SignUpForm = () => {
         />
         <span className="error-default">{emailError}</span>
         <div className="signup-form__locations">
-          <div style={{width:"30%"}}>
+          <div style={{ width: "30%" }}>
             <label htmlFor="judet" className="label-default">
               Judet
             </label>
@@ -264,12 +280,12 @@ const SignUpForm = () => {
           /> */}
             <span className="error-default">{judetError}</span>
           </div>
-          <div style={{width:"30%"}}>
+          <div style={{ width: "30%" }}>
             <label htmlFor="oras" className="label-default">
               Oras / Comuna
             </label>
             <AsyncPaginate
-              isDisabled={judet.id==null}
+              isDisabled={judet.id == null}
               key={judet.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
@@ -288,12 +304,12 @@ const SignUpForm = () => {
             /> */}
             <span className="error-default">{orasError}</span>
           </div>
-          <div style={{width:"30%"}}>
-          <label htmlFor="localitate" className="label-default">
+          <div style={{ width: "30%" }}>
+            <label htmlFor="localitate" className="label-default">
               Localitate
             </label>
             <AsyncPaginate
-            isDisabled={oras.id==null}
+              isDisabled={oras.id == null}
               key={oras.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
@@ -310,9 +326,9 @@ const SignUpForm = () => {
               selected={localitate}
               onSearch={updateLocalitati}
             /> */}
-            <span className="error-default"></span>
+            <span className="error-default">{localitateError}</span>
           </div>
-          </div>
+        </div>
         <div className="upload-file-cnt">
           <label htmlFor="buletin" className="label-default">
             Poza actului de identitate
