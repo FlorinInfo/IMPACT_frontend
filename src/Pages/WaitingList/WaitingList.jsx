@@ -1,5 +1,5 @@
 import "./WaitingListStyles.scss";
-import React from "react";
+import React, { useEffect } from "react";
 import buletin from "../../assets/images/buletine-840x500.jpg";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
@@ -23,12 +23,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-import Stack from '@mui/material/Stack';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import Stack from "@mui/material/Stack";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import axios from "../../assets/axios/axios";
+import { Cookies, useCookies } from "react-cookie";
 
 const columns = [
   { field: "id", headerName: "ID" },
@@ -49,8 +51,8 @@ const columns = [
     headerName: "Dovada",
   },
   {
-    field:"rank",
-    headerName:"Rank"
+    field: "rank",
+    headerName: "Rank",
   },
   {
     field: "action",
@@ -80,20 +82,50 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const WaitingList = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [open, setOpen] = useState(false);
-  const [notification, setNotification] = useState('');
+  const [notification, setNotification] = useState("");
+  const [users, setUsers] = useState("");
+  const [doc, setDoc] = useState("");
 
-  const dialogAction = () => {
+  const dialogAction = (url) => {
+    setDoc(url);
     setOpen(!open);
   };
 
-  const approveUser = ()=> {
-    setNotification('success')
-  }
+  const approveUser = () => {
+    setNotification("success");
+  };
 
   const unapproveUser = () => {
-    setNotification('error')
-  }
+    setNotification("error");
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        `/users?offset=&limit=&countyId=&villageId&localityId=&search=&role=`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // handle success
+        setUsers(response.data);
+        console.log(users);
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  }, []);
 
   return (
     <div className="waiting-list">
@@ -104,7 +136,12 @@ const WaitingList = () => {
           label="Cauta utilizatori"
           variant="standard"
         />
-        <Button variant="contained" component="span" className="waiting-list__search-btn" endIcon={<PersonSearchIcon />}>
+        <Button
+          variant="contained"
+          component="span"
+          className="waiting-list__search-btn"
+          endIcon={<PersonSearchIcon />}
+        >
           Cauta
         </Button>
       </Stack>
@@ -125,56 +162,67 @@ const WaitingList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  {/* <TableCell component="th" scope="row">
+              {users.length
+                ? users.map((user) => (
+                    <TableRow
+                      key={user.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      {/* <TableCell component="th" scope="row">
                     {row.id}
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell> */}
-                  <TableCell align="left" className="waiting-list__row">
-                    {row.id}
-                  </TableCell>
-                  <TableCell align="left" className="waiting-list__row">
-                    {row.fullName}
-                  </TableCell>
-                  <TableCell align="left" className="waiting-list__row">
-                    {row.registerTime}
-                  </TableCell>
-                  <TableCell align="left" className="waiting-list__row">
-                    {row.locationRegister}
-                  </TableCell>
-                  <TableCell align="left" className="waiting-list__row">
-                    <IconButton
-                      onClick={dialogAction}
-                      className="waiting-list__proof-btn"
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell align="left" className="waiting-list__row">
-                    Select
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    className="waiting-list__row waiting-list__row--f-column"
-                  >
-                    <Button variant="outlined" startIcon={<ThumbUpAltIcon />} onClick={approveUser}>
-                      Aproba
-                    </Button>
-                    <Button variant="outlined" startIcon={<ThumbDownAltIcon />} onClick={unapproveUser}>
-                      Respinge
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      <TableCell align="left" className="waiting-list__row">
+                        {user.id}
+                      </TableCell>
+                      <TableCell align="left" className="waiting-list__row">
+                        {user.lastName} {user.firstName}
+                      </TableCell>
+                      <TableCell align="left" className="waiting-list__row">
+                        {user.createTime}
+                      </TableCell>
+                      <TableCell align="left" className="waiting-list__row">
+                        {user.County?.name},{user.Village?.name}
+                        {user.Locality?.name}
+                      </TableCell>
+                      <TableCell align="left" className="waiting-list__row">
+                        <IconButton
+                          onClick={()=>dialogAction(user.photoUrl)}
+                          className="waiting-list__proof-btn"
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell align="left" className="waiting-list__row">
+                        Select
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        className="waiting-list__row waiting-list__row--f-column"
+                      >
+                        <Button
+                          variant="outlined"
+                          startIcon={<ThumbUpAltIcon />}
+                          onClick={approveUser}
+                        >
+                          Aproba
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          startIcon={<ThumbDownAltIcon />}
+                          onClick={unapproveUser}
+                        >
+                          Respinge
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : ""}
             </TableBody>
           </Table>
         </TableContainer>
@@ -187,23 +235,23 @@ const WaitingList = () => {
       </div>
       <Dialog
         open={open}
-        onClose={dialogAction}
+        onClose={()=>dialogAction("")}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <InnerImageZoom src={buletin} zoomScale={2} zoomSrc={buletin} />
+          <InnerImageZoom src={doc} zoomScale={2} zoomSrc={doc} />
         </DialogContent>
       </Dialog>
-      <Snackbar open={notification} autoHideDuration={6000} >
-        <Alert  severity={notification} sx={{ width: '100%' }}>
-        {
-        {
-          'success': "Utilizatorul a fost aprobat cu succes",
-          'error': "Cererea utilizatorului a fost respinsa",
-          'info': "rank"
-        }[notification]
-      }
+      <Snackbar open={notification} autoHideDuration={6000}>
+        <Alert severity={notification} sx={{ width: "100%" }}>
+          {
+            {
+              success: "Utilizatorul a fost aprobat cu succes",
+              error: "Cererea utilizatorului a fost respinsa",
+              info: "rank",
+            }[notification]
+          }
           {/* {
             notification == 'success' ? 'Utilizatorul a fost aprobat cu succes' : "Cererea utilizatorului a fost respinsa"
           } */}

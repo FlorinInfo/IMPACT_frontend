@@ -1,13 +1,11 @@
 import "./HomepageStyles.scss";
 
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import AddPost from "./../../components/HomePage/AddPost/AddPost";
 import TopUsers from "../../components/HomePage/TopUsers/TopUsers";
 
 const Homepage = () => {
   return (
     <div className="homepage">
-      <NavigationBar />
       <div className="homepage__container">
         <div className="homepage__left">
           <AddPost />
