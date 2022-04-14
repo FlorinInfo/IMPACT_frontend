@@ -27,10 +27,18 @@ import Stack from "@mui/material/Stack";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+import TablePagination from '@mui/material/TablePagination';
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
+
 
 const columns = [
   { field: "id", headerName: "ID" },
@@ -51,8 +59,8 @@ const columns = [
     headerName: "Dovada",
   },
   {
-    field: "rank",
-    headerName: "Rank",
+    field: "rol",
+    headerName: "Rol",
   },
   {
     field: "action",
@@ -60,22 +68,11 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: nanoid(),
-    fullName: "Florin Bucataru",
-    registerTime: "12.06.2022 15:00",
-    locationRegister: "Iasi, Copou",
-    proof: "https://imgur.com/gallery/zFUN42E",
-  },
-  {
-    id: nanoid(),
-    fullName: "Florin Bucataru",
-    registerTime: "12.06.2022 15:00",
-    locationRegister: "Iasi, Copou",
-    proof: "https://imgur.com/gallery/zFUN42E",
-  },
-];
+const roles = [
+  "CETATEAN",
+  "MODERATOR",
+  "ADMINISTRATOR"
+]
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -87,6 +84,20 @@ const WaitingList = () => {
   const [notification, setNotification] = useState("");
   const [users, setUsers] = useState("");
   const [doc, setDoc] = useState("");
+  const [search, setSearch] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const dialogAction = (url) => {
     setDoc(url);
@@ -101,10 +112,18 @@ const WaitingList = () => {
     setNotification("error");
   };
 
+  const handleChange = (id) => (event) => {
+    // Sending request logic ***
+    console.log(event.target.value);
+    const Users = users.map((u) => u.id == id ? { ...u, firstName: event.target.value } : u);
+    setUsers(Users);
+  };
+
   useEffect(() => {
+    setLoader(true);
     axios
       .get(
-        `/users?offset=&limit=&countyId=&villageId&localityId=&search=&role=`,
+        `/users?offset=${page}&limit=${rowsPerPage}&countyId=&villageId&localityId=&search=&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -117,6 +136,7 @@ const WaitingList = () => {
         setUsers(response.data);
         console.log(users);
         console.log(response);
+        setLoader(false);
       })
       .catch((error) => {
         // handle error
@@ -127,6 +147,33 @@ const WaitingList = () => {
       });
   }, []);
 
+  const searchUsers = () => {
+    setLoader(true);
+    axios
+      .get(
+        `/users?offset=0&limit=10&countyId=&villageId&localityId=&search=${search}&role=&status=`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // handle success
+        setUsers(response.data);
+        console.log(response);
+        setLoader(false);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  }
+
   return (
     <div className="waiting-list">
       <Stack direction="row" alignItems="center" spacing={2}>
@@ -135,96 +182,133 @@ const WaitingList = () => {
           id="standard-basic"
           label="Cauta utilizatori"
           variant="standard"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
         />
         <Button
           variant="contained"
           component="span"
           className="waiting-list__search-btn"
           endIcon={<PersonSearchIcon />}
+          onClick={searchUsers}
         >
           Cauta
         </Button>
       </Stack>
       <div className="waiting-list__table">
+
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    className="waiting-list__column-title"
-                    align="left"
-                    key={nanoid()}
-                  >
-                    {column.headerName}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.length
-                ? users.map((user) => (
-                    <TableRow
-                      key={user.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          {users.length ?
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      className="waiting-list__column-title"
+                      align="left"
+                      key={nanoid()}
                     >
-                      {/* <TableCell component="th" scope="row">
+                      {column.headerName}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+
+                {users.map((user, index) => (
+                  <TableRow
+                    key={user.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    {/* <TableCell component="th" scope="row">
                     {row.id}
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell> */}
-                      <TableCell align="left" className="waiting-list__row">
-                        {user.id}
-                      </TableCell>
-                      <TableCell align="left" className="waiting-list__row">
-                        {user.lastName} {user.firstName}
-                      </TableCell>
-                      <TableCell align="left" className="waiting-list__row">
-                        {user.createTime}
-                      </TableCell>
-                      <TableCell align="left" className="waiting-list__row">
-                        {user.County?.name},{user.Village?.name}
-                        {user.Locality?.name}
-                      </TableCell>
-                      <TableCell align="left" className="waiting-list__row">
-                        <IconButton
-                          onClick={()=>dialogAction(user.photoUrl)}
-                          className="waiting-list__proof-btn"
-                          color="primary"
-                          aria-label="upload picture"
-                          component="span"
-                        >
-                          <VisibilityIcon />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="left" className="waiting-list__row">
-                        Select
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        className="waiting-list__row waiting-list__row--f-column"
+                    <TableCell align="left" className="waiting-list__row">
+                      {user.id}
+                    </TableCell>
+                    <TableCell align="left" className="waiting-list__row">
+                      {user.lastName} {user.firstName}
+                    </TableCell>
+                    <TableCell align="left" className="waiting-list__row">
+                      {user.createTime}
+                    </TableCell>
+                    <TableCell align="left" className="waiting-list__row">
+                      {user.County?.name},{user.Village?.name}
+                      {user.Locality?.name}
+                    </TableCell>
+                    <TableCell align="left" className="waiting-list__row">
+                      <IconButton
+                        onClick={() => dialogAction(user.photoUrl)}
+                        className="waiting-list__proof-btn"
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
                       >
-                        <Button
-                          variant="outlined"
-                          startIcon={<ThumbUpAltIcon />}
-                          onClick={approveUser}
+                        <VisibilityIcon />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="left" className="waiting-list__row">
+                      <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+                        <InputLabel id="demo-select-small">Rol</InputLabel>
+                        <Select
+                          labelId="demo-select-small"
+                          id="demo-select-small"
+                          value={user.firstName}
+                          label="Age"
+                          onChange={handleChange(user.id)}
                         >
-                          Aproba
-                        </Button>
-                        <Button
-                          variant="outlined"
-                          startIcon={<ThumbDownAltIcon />}
-                          onClick={unapproveUser}
-                        >
-                          Respinge
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                : ""}
-            </TableBody>
-          </Table>
+                          {
+                            roles.map((r) => <MenuItem key={nanoid()} value={r}>{r}</MenuItem>)
+                          }
+                        </Select>
+                      </FormControl>
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      className="waiting-list__row waiting-list__row--f-column"
+                    >
+                      <Button
+                        variant="outlined"
+                        startIcon={<ThumbUpAltIcon />}
+                        onClick={approveUser}
+                      >
+                        Aproba
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        startIcon={<ThumbDownAltIcon />}
+                        onClick={unapproveUser}
+                      >
+                        Respinge
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+
+            </Table>
+            :
+            loader ?
+              <Box className="waiting-list__loader" sx={{ width: '100%' }}>
+                <LinearProgress />
+              </Box>
+              :
+              <div className="waiting-list__empty">
+                <span className="waiting-list__empty-text">Nu exista utilizatori disponibili</span>
+              </div>
+          }
+          <TablePagination
+            component="div"
+            count={100}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </TableContainer>
         {/* <DataGrid
           rows={rows}
@@ -235,7 +319,7 @@ const WaitingList = () => {
       </div>
       <Dialog
         open={open}
-        onClose={()=>dialogAction("")}
+        onClose={() => dialogAction("")}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
