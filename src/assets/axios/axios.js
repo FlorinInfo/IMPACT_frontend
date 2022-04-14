@@ -14,7 +14,7 @@ service.register({
   },
   onResponse(response) {
     console.log(response);
-    return response;
+    return response; 
   }
 });
 
