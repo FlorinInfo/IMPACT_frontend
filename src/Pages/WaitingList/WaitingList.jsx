@@ -87,7 +87,8 @@ const WaitingList = () => {
   const [search, setSearch] = useState("");
   const [loader, setLoader] = useState(false);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [limit, setLimit] = useState(1);
 
 
   const handleChangePage = (event, newPage) => {
@@ -133,7 +134,8 @@ const WaitingList = () => {
       )
       .then((response) => {
         // handle success
-        setUsers(response.data);
+        setUsers(response.data.users);
+        setLimit(response.data.limit)
         console.log(users);
         console.log(response);
         setLoader(false);
@@ -145,7 +147,7 @@ const WaitingList = () => {
       .then(() => {
         // always executed
       });
-  }, []);
+  }, [page]);
 
   const searchUsers = () => {
     setLoader(true);
@@ -161,7 +163,8 @@ const WaitingList = () => {
       )
       .then((response) => {
         // handle success
-        setUsers(response.data);
+        setUsers(response.data.users);
+        setLimit(response.data.limit)
         console.log(response);
         setLoader(false);
       })
@@ -303,7 +306,7 @@ const WaitingList = () => {
           }
           <TablePagination
             component="div"
-            count={100}
+            count={limit}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
