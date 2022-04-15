@@ -1,0 +1,49 @@
+@import "./.././../../assets//styles/variables";
+
+.section__sort-post {
+  width: 100%;
+  //   margin: auto;
+  border-radius: 4px;
+  border: 2px solid #dfdfdf;
+  align-items: center;
+  display: flex;
+  height: 58px;
+  margin-top: 16px;
+  background-color: white;
+  padding: 8px;
+}
+
+.sort-button {
+  &__label {
+    text-decoration: none;
+    display: flex;
+    height: 32px;
+    align-items: center;
+    color: #878a8c;
+    font-family: $font-medium;
+    margin-left: 15px;
+    border-radius: 9999px;
+    padding: 15px;
+
+    &:hover {
+      background-color: #ededed;
+      cursor: pointer;
+    }
+  }
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  &__text {
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: 13.5px;
+  }
+}
+
+.selected {
+  color: $default-color;
+  background-color: #f6f7f8;
+}

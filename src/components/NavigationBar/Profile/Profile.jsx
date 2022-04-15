@@ -16,7 +16,6 @@ const Profile = (props) => {
   };
 
   return (
-    // <div className="profile" onClick={() => setOpen(!open)}>
     <div className={clicked || "profile"} onClick={handleClick}>
       <img className="pic" src={imgProfil} />
       <div className="profile--text">
