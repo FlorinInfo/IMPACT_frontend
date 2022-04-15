@@ -188,7 +188,14 @@ const SignUpForm = () => {
         setLocalitateError("");
         if (response.data.token) {
           setCookie("token", response.data.token);
-          navigate("/");
+          setCookie("zoneRole", response.data.zoneRole);
+          setCookie("zoneRoleOn", response.data.zoneRoleOn);
+          setCookie("countyId", response.data.countyId);
+          setCookie("villageId", response.data.villageId);
+          setCookie("localityId", response.data.localityId);
+          setCookie("admin", response.data.admin);
+          if (response.data.status == "IN_ASTEPTARE")
+            navigate('/pending'); else navigate("/");
         } else if (response.data.errors) {
           console.log(response.data.errors);
           if (response.data.errors.email)

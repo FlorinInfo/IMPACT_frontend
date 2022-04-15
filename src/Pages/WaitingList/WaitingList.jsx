@@ -14,6 +14,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import {BsFilter} from "react-icons/bs";
 import Button from "@mui/material/Button";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
@@ -179,25 +180,32 @@ const WaitingList = () => {
 
   return (
     <div className="waiting-list">
-      <Stack direction="row" alignItems="center" spacing={2}>
-        <TextField
-          className="waiting-list__search"
-          id="standard-basic"
-          label="Cauta utilizatori"
-          variant="standard"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          component="span"
-          className="waiting-list__search-btn"
-          endIcon={<PersonSearchIcon />}
-          onClick={searchUsers}
-        >
-          Cauta
+      <div className="waiting-list__sort">
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <TextField
+            className="waiting-list__search"
+            id="standard-basic"
+            label="Cauta utilizatori"
+            variant="standard"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            component="span"
+            className="waiting-list__search-btn"
+            endIcon={<PersonSearchIcon />}
+            onClick={searchUsers}
+          >
+            Cauta
+          </Button>
+        </Stack>
+        <div className="waiting-list__filter">
+        <Button variant="contained" endIcon={<BsFilter />}>
+          Filtreaza
         </Button>
-      </Stack>
+        </div>
+      </div>
       <div className="waiting-list__table">
 
         <TableContainer component={Paper}>
