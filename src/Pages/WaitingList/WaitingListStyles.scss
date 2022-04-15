@@ -10,6 +10,14 @@
     max-width: 100%;
   }
 
+  &__sort {
+    display: flex;
+  }
+
+  &__filter {
+    margin:auto 0 auto auto;
+  }
+
   &__table {
     color: red;
     font-size: 16px !important;
@@ -67,5 +75,22 @@
           margin-top: auto!important;
           font-size: 11px!important;
       }
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 2rem;
+
+    &-text {
+      font-family: $font-bold;
+      text-align: center;
+      font-size: 2rem!important; 
+    }
+  }
+
+  &__loader {
+    margin-top: 2rem;
   }
 }
