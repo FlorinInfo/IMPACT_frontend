@@ -30,7 +30,11 @@ function App() {
 
   return (
     <div className="App">
-      {cookies.token && location.pathname != "/pending" ? <NavigationBar /> : ""}
+      {cookies.token && location.pathname != "/pending" ? (
+        <NavigationBar />
+      ) : (
+        ""
+      )}
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
@@ -72,6 +76,7 @@ function App() {
             )
           }
         />
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </div>
   );

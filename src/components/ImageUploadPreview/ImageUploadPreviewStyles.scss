@@ -1,0 +1,44 @@
+@import "./../../assets/styles/variables";
+
+.btn {
+  &__upload-image {
+    display: inline-block;
+    font-family: $font-medium;
+    font-weight: bold;
+    color: $default-color;
+    font-size: 15px;
+    background-color: transparent;
+    padding: 5px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 130px;
+    margin-left: 40%;
+    border: 1px solid $default-color;
+    border-radius: 9999px;
+
+    &:before {
+      content: "Incarca";
+    }
+
+    &:hover {
+      background-color: $default-color-light-2;
+      cursor: pointer;
+    }
+  }
+}
+
+.preview-image {
+  margin-top: 15px;
+  margin-left: 15px;
+  width: 400px;
+  height: auto;
+}
+
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}

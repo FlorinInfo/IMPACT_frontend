@@ -1,3 +1,6 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import "./NavigationBarStyles.scss";
 
 import Logo from "./Logo/Logo";
@@ -12,6 +15,8 @@ import { IoMdContact } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
 
 const NavigationBar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="navbar">
       <Logo />
