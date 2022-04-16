@@ -13,6 +13,7 @@ service.register({
     return promise;
   },
   onResponse(response) {
+    console.log(response)
     let parsedResponse = response.data;
     parsedResponse = JSON.parse(parsedResponse);
     // console.log("xxxx", parsedResponse.errors.permission);

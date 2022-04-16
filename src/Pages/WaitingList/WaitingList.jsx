@@ -14,7 +14,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {BsFilter} from "react-icons/bs";
+import { BsFilter } from "react-icons/bs";
 import Button from "@mui/material/Button";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
@@ -73,7 +73,24 @@ const roles = [
   "CETATEAN",
   "MODERATOR",
   "ADMINISTRATOR"
-]
+];
+
+const timeConverter = (UNIX_timestamp)=>{
+  let a = new Date(UNIX_timestamp);
+  let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let year = a.getFullYear();
+  let month = months[a.getMonth()];
+  let date = a.getDate();
+  let hour = a.getHours();
+  if(hour < 10) hour = ("0" + hour).slice(-2);
+  let min = a.getMinutes();
+  if(min < 10) min = ("0" + hour).slice(-2);
+  let sec = a.getSeconds();
+  if(sec < 10) sec = ("0" + hour).slice(-2);
+  let time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
+
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -113,6 +130,33 @@ const WaitingList = () => {
   const unapproveUser = () => {
     setNotification("error");
   };
+
+  const setUserStatus = (userId, userStatus) => {
+    axios
+      .patch(
+        `/users/${userId}`,
+        {
+          status: userStatus
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  }
 
   const handleChange = (id) => (event) => {
     // Sending request logic ***
@@ -201,9 +245,9 @@ const WaitingList = () => {
           </Button>
         </Stack>
         <div className="waiting-list__filter">
-        <Button variant="contained" endIcon={<BsFilter />}>
-          Filtreaza
-        </Button>
+          <Button variant="contained" endIcon={<BsFilter />}>
+            Filtreaza
+          </Button>
         </div>
       </div>
       <div className="waiting-list__table">
@@ -245,7 +289,7 @@ const WaitingList = () => {
                       {user.lastName} {user.firstName}
                     </TableCell>
                     <TableCell align="left" className="waiting-list__row">
-                      {user.createTime}
+                      {timeConverter(user.createTime)}
                     </TableCell>
                     <TableCell align="left" className="waiting-list__row">
                       {user.County?.name},{user.Village?.name}
@@ -268,7 +312,7 @@ const WaitingList = () => {
                         <Select
                           labelId="demo-select-small"
                           id="demo-select-small"
-                          value={user.firstName}
+                          value={user.zoneRole}
                           label="Age"
                           onChange={handleChange(user.id)}
                         >
@@ -282,20 +326,26 @@ const WaitingList = () => {
                       align="left"
                       className="waiting-list__row waiting-list__row--f-column"
                     >
-                      <Button
-                        variant="outlined"
-                        startIcon={<ThumbUpAltIcon />}
-                        onClick={approveUser}
-                      >
-                        Aproba
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        startIcon={<ThumbDownAltIcon />}
-                        onClick={unapproveUser}
-                      >
-                        Respinge
-                      </Button>
+                      {
+                        // user.status == "IN_ASTEPTARE" ? 
+                        <>
+                          <Button
+                            variant="outlined"
+                            startIcon={<ThumbUpAltIcon />}
+                            onClick={() => setUserStatus(user.id, "APROBAT")}
+                          >
+                            Aproba
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            startIcon={<ThumbDownAltIcon />}
+                            onClick={() => setUserStatus(user.id, "BLOCAT")}
+                          >
+                            Respinge
+                          </Button>
+                        </>
+                          // : ""
+                      }
                     </TableCell>
                   </TableRow>
                 ))}
