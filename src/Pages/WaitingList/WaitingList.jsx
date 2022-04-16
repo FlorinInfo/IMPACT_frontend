@@ -35,10 +35,15 @@ import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import TablePagination from '@mui/material/TablePagination';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
+import FilterDialog from "../../components/Admin/FilterDialog/FilterDialog";
 
 
 const columns = [
@@ -59,10 +64,10 @@ const columns = [
     field: "proof",
     headerName: "Dovada",
   },
-  {
-    field: "rol",
-    headerName: "Rol",
-  },
+  // {
+  //   field: "rol",
+  //   headerName: "Rol",
+  // },
   {
     field: "action",
     headerName: "Actiuni",
@@ -75,19 +80,19 @@ const roles = [
   "ADMINISTRATOR"
 ];
 
-const timeConverter = (UNIX_timestamp)=>{
+const timeConverter = (UNIX_timestamp) => {
   let a = new Date(UNIX_timestamp);
-  let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   let year = a.getFullYear();
   let month = months[a.getMonth()];
   let date = a.getDate();
   let hour = a.getHours();
-  if(hour < 10) hour = ("0" + hour).slice(-2);
+  if (hour < 10) hour = ("0" + hour).slice(-2);
   let min = a.getMinutes();
-  if(min < 10) min = ("0" + hour).slice(-2);
+  if (min < 10) min = ("0" + hour).slice(-2);
   let sec = a.getSeconds();
-  if(sec < 10) sec = ("0" + hour).slice(-2);
-  let time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  if (sec < 10) sec = ("0" + hour).slice(-2);
+  let time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
   return time;
 }
 
@@ -107,6 +112,10 @@ const WaitingList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [limit, setLimit] = useState(1);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [judet, setJudet] = useState(null);
+  const [oras, setOras] = useState(null);
+  const [localitate, setLocalitate] = useState(null);
 
 
   const handleChangePage = (event, newPage) => {
@@ -124,7 +133,7 @@ const WaitingList = () => {
   };
 
   const approveUser = () => {
-    setNotification("success");
+
   };
 
   const unapproveUser = () => {
@@ -132,44 +141,84 @@ const WaitingList = () => {
   };
 
   const setUserStatus = (userId, userStatus) => {
-    axios
-      .patch(
-        `/users/${userId}`,
-        {
-          status: userStatus
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+    if (userStatus == "APROBAT")
+      axios
+        .patch(
+          `/users/${userId}`,
+          {
+            status: userStatus
           },
-        }
-      )
-      .then((response) => {
-        // handle success
-        console.log(response);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .then(() => {
-        // always executed
-      });
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          // handle success
+          console.log(response);
+          const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
+          setUsers(Users);
+          setNotification("success");
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+        });
+    else
+      axios
+        .delete(
+          `/users/${userId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          // handle success
+          console.log(response);
+          const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
+          setUsers(Users);
+          setNotification("error");
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+        });
   }
 
-  const handleChange = (id) => (event) => {
-    // Sending request logic ***
-    console.log(event.target.value);
-    const Users = users.map((u) => u.id == id ? { ...u, firstName: event.target.value } : u);
-    setUsers(Users);
-  };
+  // const handleChange = (id) => (event) => {
+  //   // Sending request logic ***
+  //   console.log(event.target.value);
+  //   let Users = [];
+  //   if (event.target.value == "CETATEAN") {
+  //     Users = users.map((u) => u.id == id ? { ...u, zoneRole: event.target.value, zoneRoleOn: u.Locality ? 'LOCALITY' : 'VILLAGE' } : u);
+  //   }
+  //   else Users = users.map((u) => u.id == id ? { ...u, zoneRole: event.target.value } : u);
+  //   setUsers(Users);
+  // };
+
+  // const updateZoneRoleOn = (id, zoneRoleOn) => {
+  //   // alert(id);
+  //   // alert(zoneRoleOn);
+  //   const Users = users.map((u) => u.id == id ? { ...u, zoneRoleOn } : u);
+  //   setUsers(Users);
+  // }
 
   useEffect(() => {
     setLoader(true);
     axios
       .get(
-        `/users?offset=${page}&limit=${rowsPerPage}&countyId=&villageId&localityId=&search=&role=&status=IN_ASTEPTARE`,
+        `/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -183,6 +232,7 @@ const WaitingList = () => {
         setLimit(response.data.limit)
         console.log(users);
         console.log(response);
+        window.scrollTo(0, 0)
         setLoader(false);
       })
       .catch((error) => {
@@ -192,13 +242,13 @@ const WaitingList = () => {
       .then(() => {
         // always executed
       });
-  }, [page]);
+  }, [page, rowsPerPage, judet, oras, localitate]);
 
   const searchUsers = () => {
     setLoader(true);
     axios
       .get(
-        `/users?offset=0&limit=10&countyId=&villageId&localityId=&search=${search}&role=&status=`,
+        `/users?offset=0&limit=10${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}&search=${search}&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -209,7 +259,8 @@ const WaitingList = () => {
       .then((response) => {
         // handle success
         setUsers(response.data.users);
-        setLimit(response.data.limit)
+        setLimit(response.data.limit);
+        setPage(0);
         console.log(response);
         setLoader(false);
       })
@@ -220,6 +271,13 @@ const WaitingList = () => {
       .then(() => {
         // always executed
       });
+  }
+  const filterUsers = (judetId, orasId, localitateId)=> { 
+    setJudet(judetId);
+    setOras(orasId);
+    setLocalitate(localitateId);
+    setPage(0);
+    setOpenFilter(false);
   }
 
   return (
@@ -244,14 +302,18 @@ const WaitingList = () => {
             Cauta
           </Button>
         </Stack>
-        <div className="waiting-list__filter">
-          <Button variant="contained" endIcon={<BsFilter />}>
-            Filtreaza
-          </Button>
-        </div>
+        {
+          cookies.zoneRoleOn != "LOCALITY" ?
+            <div className="waiting-list__filter">
+              <Button variant="contained" endIcon={<BsFilter />} onClick={() => setOpenFilter(true)}>
+                Filtreaza
+              </Button>
+            </div>
+            : ""
+        }
+
       </div>
       <div className="waiting-list__table">
-
         <TableContainer component={Paper}>
           {users.length ?
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -268,20 +330,12 @@ const WaitingList = () => {
                   ))}
                 </TableRow>
               </TableHead>
-
               <TableBody>
-
                 {users.map((user, index) => (
                   <TableRow
                     key={user.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    {/* <TableCell component="th" scope="row">
-                    {row.id}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell> */}
                     <TableCell align="left" className="waiting-list__row">
                       {user.id}
                     </TableCell>
@@ -292,10 +346,10 @@ const WaitingList = () => {
                       {timeConverter(user.createTime)}
                     </TableCell>
                     <TableCell align="left" className="waiting-list__row">
-                      {user.County?.name},{user.Village?.name}
-                      {user.Locality?.name}
+                      {user.County?.name},&nbsp; {user.Village?.name}
+                      {user.Locality ? ", " + user.Locality.name : ""}
                     </TableCell>
-                    <TableCell align="left" className="waiting-list__row">
+                    <TableCell align="left" className="waiting-list__row" >
                       <IconButton
                         onClick={() => dialogAction(user.photoUrl)}
                         className="waiting-list__proof-btn"
@@ -306,45 +360,35 @@ const WaitingList = () => {
                         <VisibilityIcon />
                       </IconButton>
                     </TableCell>
-                    <TableCell align="left" className="waiting-list__row">
-                      <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-                        <InputLabel id="demo-select-small">Rol</InputLabel>
-                        <Select
-                          labelId="demo-select-small"
-                          id="demo-select-small"
-                          value={user.zoneRole}
-                          label="Age"
-                          onChange={handleChange(user.id)}
-                        >
-                          {
-                            roles.map((r) => <MenuItem key={nanoid()} value={r}>{r}</MenuItem>)
-                          }
-                        </Select>
-                      </FormControl>
-                    </TableCell>
                     <TableCell
                       align="left"
                       className="waiting-list__row waiting-list__row--f-column"
                     >
                       {
-                        // user.status == "IN_ASTEPTARE" ? 
-                        <>
-                          <Button
-                            variant="outlined"
-                            startIcon={<ThumbUpAltIcon />}
-                            onClick={() => setUserStatus(user.id, "APROBAT")}
-                          >
-                            Aproba
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            startIcon={<ThumbDownAltIcon />}
-                            onClick={() => setUserStatus(user.id, "BLOCAT")}
-                          >
-                            Respinge
-                          </Button>
-                        </>
-                          // : ""
+                        user.status == "IN_ASTEPTARE" ?
+                          <>
+                            <Button
+                              variant="outlined"
+                              startIcon={<ThumbUpAltIcon />}
+                              onClick={() => setUserStatus(user.id, "APROBAT")}
+                            >
+                              Aproba
+                            </Button>
+                            <Button
+                              variant="outlined"
+                              startIcon={<ThumbDownAltIcon />}
+                              onClick={() => setUserStatus(user.id, "BLOCAT")}
+                            >
+                              Respinge
+                            </Button>
+                          </>
+                          : user.status == "APROBAT" ?
+                            <Button variant="contained" color="success">
+                              Aprobat
+                            </Button>
+                            : <Button variant="contained" color="error">
+                              Blocat
+                            </Button>
                       }
                     </TableCell>
                   </TableRow>
@@ -388,7 +432,7 @@ const WaitingList = () => {
           <InnerImageZoom src={doc} zoomScale={2} zoomSrc={doc} />
         </DialogContent>
       </Dialog>
-      <Snackbar open={notification} autoHideDuration={6000}>
+      <Snackbar open={notification} autoHideDuration={1000}>
         <Alert severity={notification} sx={{ width: "100%" }}>
           {
             {
@@ -402,6 +446,7 @@ const WaitingList = () => {
           } */}
         </Alert>
       </Snackbar>
+      <FilterDialog open={openFilter} closeFilter={() => setOpenFilter(false)} filterUsers={filterUsers} />
     </div>
   );
 };

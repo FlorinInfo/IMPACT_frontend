@@ -14,11 +14,13 @@ service.register({
   },
   onResponse(response) {
     console.log(response)
-    let parsedResponse = response.data;
-    parsedResponse = JSON.parse(parsedResponse);
-    // console.log("xxxx", parsedResponse.errors.permission);
-    if(parsedResponse.errors) {
-      if(parsedResponse.errors.permission) window.location = '/';
+    if(response.status !== 204) {
+      let parsedResponse = response.data;
+      parsedResponse = JSON.parse(parsedResponse);
+      // console.log("xxxx", parsedResponse.errors.permission);
+      if(parsedResponse.errors) {
+        if(parsedResponse.errors.permission) window.location = '/';
+      }
     }
     return response; 
   }
