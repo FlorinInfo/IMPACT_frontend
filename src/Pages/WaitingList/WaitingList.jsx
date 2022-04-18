@@ -15,6 +15,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { BsFilter } from "react-icons/bs";
+import {AiOutlineClose} from "react-icons/ai"
 import Button from "@mui/material/Button";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
@@ -31,6 +32,7 @@ import MuiAlert from "@mui/material/Alert";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import InputAdornment from '@mui/material/InputAdornment';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -101,8 +103,27 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+
+
 const WaitingList = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+
+  const setJudetDefault = ()=> {
+    if (( cookies.zoneRoleOn == "LOCALITY" || 
+          cookies.zoneRoleOn == "VILLAGE" || 
+          cookies.zoneRoleOn == "COUNTY") &&
+          cookies.admin != true) return cookies.countyId;
+    return null;
+  }
+  const setOrasDefault = ()=> {
+    if ((cookies.zoneRoleOn == "LOCALITY" || cookies.zoneRoleOn == "VILLAGE")&&cookies.admin=="false") return cookies.villageId;
+    return null;
+  }
+  const setLocalitateDefault = ()=> {
+    if (cookies.zoneRoleOn == "LOCALITY"&&cookies.admin=="false") return cookies.localityId; 
+    return null;
+  }
+
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState("");
   const [users, setUsers] = useState("");
@@ -113,9 +134,9 @@ const WaitingList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [limit, setLimit] = useState(1);
   const [openFilter, setOpenFilter] = useState(false);
-  const [judet, setJudet] = useState(null);
-  const [oras, setOras] = useState(null);
-  const [localitate, setLocalitate] = useState(null);
+  const [judet, setJudet] = useState(setJudetDefault());
+  const [oras, setOras] = useState(setOrasDefault());
+  const [localitate, setLocalitate] = useState(setLocalitateDefault());
 
 
   const handleChangePage = (event, newPage) => {
@@ -130,14 +151,6 @@ const WaitingList = () => {
   const dialogAction = (url) => {
     setDoc(url);
     setOpen(!open);
-  };
-
-  const approveUser = () => {
-
-  };
-
-  const unapproveUser = () => {
-    setNotification("error");
   };
 
   const setUserStatus = (userId, userStatus) => {
@@ -244,11 +257,12 @@ const WaitingList = () => {
       });
   }, [page, rowsPerPage, judet, oras, localitate]);
 
-  const searchUsers = () => {
+  const searchUsers = (status) => {
+    // Adding status for deleting button, not working directly with search value 'update status' - search for "" on delete input value
     setLoader(true);
     axios
       .get(
-        `/users?offset=0&limit=10${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}&search=${search}&role=&status=IN_ASTEPTARE`,
+        `/users?offset=0&limit=10${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}&search=${status==="update" ? "" :search}&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -291,6 +305,16 @@ const WaitingList = () => {
             variant="standard"
             value={search}
             onChange={e => setSearch(e.target.value)}
+            InputProps={{
+              endAdornment: search && (
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => {setSearch("");searchUsers('update');}}
+                >
+                  <AiOutlineClose />
+                </IconButton>
+              )
+            }}
           />
           <Button
             variant="contained"
@@ -303,7 +327,7 @@ const WaitingList = () => {
           </Button>
         </Stack>
         {
-          cookies.zoneRoleOn != "LOCALITY" ?
+          cookies.zoneRoleOn != "LOCALITY" || cookies.admin=="true" ?
             <div className="waiting-list__filter">
               <Button variant="contained" endIcon={<BsFilter />} onClick={() => setOpenFilter(true)}>
                 Filtreaza
