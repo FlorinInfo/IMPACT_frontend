@@ -132,7 +132,7 @@ const SignUpForm = () => {
     let formData = new FormData();
     formData.append("image", e.target.files[0]);
     axios
-      .post("/upload-document", formData, {
+      .post("/upload-image-ic", formData, {
         headers: {
           accept: "application/json",
           "Accept-Language": "en-US,en;q=0.8",
@@ -141,7 +141,7 @@ const SignUpForm = () => {
       })
       .then((response) => {
         // handle success
-        setImage(response.data.photoUrl);
+        setImage(response.data.url);
         console.log(response);
       })
       .catch((error) => {
