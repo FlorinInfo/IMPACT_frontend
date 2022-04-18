@@ -15,7 +15,7 @@
   }
 
   &__filter {
-    margin:auto 0 auto auto;
+    margin:auto 0 0 auto;
   }
 
   &__table {
@@ -96,5 +96,22 @@
 
   &__roleOn {
     margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .waiting-list__sort {
+    flex-direction: column;
+  }
+  .waiting-list__search{
+    width: 100%;
+  }
+  .waiting-list__filter {
+    margin-top: 1rem;
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
   }
 }

@@ -15,6 +15,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { BsFilter } from "react-icons/bs";
+import { FaFilter } from "react-icons/fa"
 import {AiOutlineClose} from "react-icons/ai"
 import Button from "@mui/material/Button";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
@@ -329,7 +330,7 @@ const WaitingList = () => {
         {
           cookies.zoneRoleOn != "LOCALITY" || cookies.admin=="true" ?
             <div className="waiting-list__filter">
-              <Button variant="contained" endIcon={<BsFilter />} onClick={() => setOpenFilter(true)}>
+              <Button variant="contained"  endIcon={<BsFilter />} onClick={() => setOpenFilter(true)}>
                 Filtreaza
               </Button>
             </div>
