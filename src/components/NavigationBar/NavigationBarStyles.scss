@@ -17,47 +17,97 @@
 
 // Drop Down Menu
 .dropdown {
-  transform: translateX(-1px);
-  position: absolute;
-  top: 46px;
-  width: 180px;
-  background-color: white;
-  overflow: hidden;
-  border-left: 0.5px solid rgb(220, 220, 220);
-  border-bottom: 0.5px solid rgb(220, 220, 220);
-  border-right: 0.5px solid rgb(220, 220, 220);
+  &__profile {
+    transform: translateX(-1px);
+    position: absolute;
+    top: 46px;
+    width: 180px;
+    background-color: white;
+    overflow: hidden;
+    border-left: 0.5px solid rgb(220, 220, 220);
+    border-bottom: 0.5px solid rgb(220, 220, 220);
+    border-right: 0.5px solid rgb(220, 220, 220);
+  }
 
-  // &:hover {
-  //   border-left: 0.5px solid rgb(220, 220, 220);
-  //   border-bottom: 0.5px solid rgb(220, 220, 220);
-  //   border-right: 0.5px solid rgb(220, 220, 220);
-  // }
+  &__home {
+    z-index: 10000;
+    transform: translateX(-4px);
+    top: 43px;
+    position: absolute;
+    background-color: white;
+    overflow: hidden;
+    width: 230px;
+    border-left: 0.5px solid rgb(220, 220, 220);
+    border-bottom: 0.5px solid rgb(220, 220, 220);
+    border-right: 0.5px solid rgb(220, 220, 220);
+    // height: 160px;
+  }
 }
 
 .menu-item {
-  display: flex;
-  height: 35px;
-  align-items: center;
-  text-decoration: none;
-  color: black;
-  font-family: $font-medium;
+  &__profile {
+    display: flex;
+    height: 35px;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-family: $font-medium;
 
-  &:hover {
-    background-color: $default-color;
-    color: white;
-    svg {
+    &:hover {
+      background-color: $default-color;
       color: white;
+      svg {
+        color: white;
+      }
+    }
+  }
+
+  &__home {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: $font-light;
+    color: black;
+    height: 40px;
+
+    &:hover {
+      background-color: #f5f5f5;
     }
   }
 }
 
 .icon-left {
-  margin-left: 10px;
-  width: 25px;
-  height: 25px;
+  &__profile {
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+  }
+
+  &__home {
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+  }
 }
 
 .menu-item-text {
-  font-size: 14.5px;
-  margin-left: 15px;
+  &__profile {
+    font-size: 14.5px;
+    margin-left: 15px;
+  }
+
+  &__home {
+    font-size: 14px;
+    margin-left: 10px;
+  }
+}
+
+.section-name {
+  color: #878a8c;
+  font-family: $font-light;
+  font-size: 12px;
+  display: block;
+  text-align: start;
+  margin-left: 10px;
+  margin-top: 10px;
 }

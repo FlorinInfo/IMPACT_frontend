@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       {cookies.token && location.pathname != "/pending" ? (
-        <NavigationBar />
+        <NavigationBar currentPage={location.pathname} />
       ) : (
         ""
       )}
