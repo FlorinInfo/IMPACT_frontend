@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
+import { Cookies, useCookies } from "react-cookie";
 
 import Slide from '@mui/material/Slide';
 import { AsyncPaginate } from "react-select-async-paginate";
@@ -26,31 +27,59 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const FilterDialog = ({ open, closeFilter, filterUsers }) => {
+	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
+	const setJudetDefault = () => {
+		if ((cookies.zoneRoleOn == "LOCALITY" ||
+			cookies.zoneRoleOn == "VILLAGE" ||
+			cookies.zoneRoleOn == "COUNTY") &&
+			cookies.admin != 'true') return {
+				name: "",
+				id: cookies.countyId,
+			};
+		return {
+			name: "",
+			id: null,
+		};
+	}
+	const setOrasDefault = () => {
+		if ((cookies.zoneRoleOn == "LOCALITY" || cookies.zoneRoleOn == "VILLAGE") && cookies.admin != "true")
+			return {
+				name: "",
+				id: cookies.villageId,
+			};
+		return {
+			name: "",
+			id: null,
+		};
+	}
+	const setLocalitateDefault = () => {
+		if (cookies.zoneRoleOn == "LOCALITY" && cookies.admin != true) return {
+			name: "",
+			id: cookies.localityId,
+		};
+		return {
+			name: "",
+			id: null,
+		};
+	}
 	// Errors
 	const [judetError, setJudetError] = useState("");
 	const [orasError, setOrasError] = useState("");
 	const [localitateError, setLocalitateError] = useState("");
 
 	// Locations
-	const [judet, setJudet] = useState({
-		name: "",
-		id: null,
-	});
+	const [judet, setJudet] = useState(setJudetDefault());
 
 	const [orase, setOrase] = useState([]);
-	const [oras, setOras] = useState({
-		name: "",
-		id: null,
-	});
+	const [oras, setOras] = useState(setOrasDefault());
 
 	const [localitati, setLocalitati] = useState([]);
-	const [localitate, setLocalitate] = useState({
-		name: "",
-		id: "",
-	});
+	const [localitate, setLocalitate] = useState(setLocalitateDefault());
 
 	const loadJudete = async (search) => {
+		// Verify if it's not an id in search
+		if(!isNaN(search)) search = "";
 		const response = await axios.get("/counties");
 		let options = [];
 		if (Array.isArray(response.data)) {
@@ -64,7 +93,10 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 	};
 
 	const loadOrase = async (search) => {
+		// Verify if it's not an id in search
+		if(!isNaN(search)) search = "";
 		const response = await axios.get(`/villages?countyId=${judet.id}`);
+		console.log(response )
 		let options = [];
 		if (Array.isArray(response.data)) {
 			options = response.data.filter((l) =>
@@ -78,6 +110,8 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 	};
 
 	const loadLocalitati = async (search) => {
+		// Verify if it's not an id in search
+		if(!isNaN(search)) search = "";
 		const response = await axios.get(`/localities?villageId=${oras.id}`);
 		let options = [];
 		if (Array.isArray(response.data)) {
@@ -92,38 +126,21 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 	};
 
 	useEffect(() => {
-		setLocalitate({
-			name: "",
-			id: "",
-		});
-		loadLocalitati("");
+		setLocalitate(setLocalitateDefault());
+		loadLocalitati(oras.id);
 	}, [oras.id]);
 
 	useEffect(() => {
-		setLocalitate({
-			name: "",
-			id: "",
-		});
-		setOras({
-			name: "",
-			id: null,
-		});
-		loadOrase("");
+		setLocalitate(setLocalitateDefault());
+		setOras(setOrasDefault());
+		loadOrase(judet.id);
+		console.log(orase)
 	}, [judet.id]);
 
 	const deleteFilters = () => {
-		setJudet({
-			name: "",
-			id: "",
-		});
-		setLocalitate({
-			name: "",
-			id: "",
-		});
-		setOras({
-			name: "",
-			id: null,
-		});
+		setJudet(setJudetDefault());
+		setOras(setOrasDefault());
+		setLocalitate(setLocalitateDefault());
 	}
 
 	return (
@@ -153,40 +170,44 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 					</Toolbar>
 				</AppBar>
 				<div style={{ padding: "1rem" }}>
-					<div style={{ width: "100%" }}>
-						<label htmlFor="judet" className="label-default">
-							Judet
-						</label>
-						<AsyncPaginate
-							getOptionLabel={(option) => option.name}
-							getOptionValue={(option) => option.id}
-							classNamePrefix="react-select"
-							className="react-select"
-							value={judet}
-							onChange={setJudet}
-							loadOptions={loadJudete}
-							placeholder={""}
-						/>
-						<span className="error-default">{judetError}</span>
-					</div>
-					<div style={{ width: "100%" }}>
-						<label htmlFor="oras" className="label-default">
-							Oras / Comuna
-						</label>
-						<AsyncPaginate
-							isDisabled={judet.id == null || orase.length == 0}
-							key={judet.id}
-							getOptionLabel={(option) => option.name}
-							getOptionValue={(option) => option.id}
-							classNamePrefix="react-select"
-							className="react-select"
-							value={oras}
-							onChange={setOras}
-							loadOptions={loadOrase}
-							placeholder={""}
-						/>
-						<span className="error-default">{orasError}</span>
-					</div>
+					{((cookies.zoneRoleOn == "COUNTY" || cookies.zoneRoleOn == "VILLAGE") && cookies.admin == 'false') ? "" :
+						<div style={{ width: "100%" }}>
+							<label htmlFor="judet" className="label-default">
+								Judet
+							</label>
+							<AsyncPaginate
+								getOptionLabel={(option) => option.name}
+								getOptionValue={(option) => option.id}
+								classNamePrefix="react-select"
+								className="react-select"
+								value={judet}
+								onChange={setJudet}
+								loadOptions={loadJudete}
+								placeholder={""}
+							/>
+							<span className="error-default">{judetError}</span>
+						</div>
+					}
+					{cookies.zoneRoleOn == "VILLAGE" && cookies.admin=="false" ? "" :
+						<div style={{ width: "100%" }}>
+							<label htmlFor="oras" className="label-default">
+								Oras / Comuna
+							</label>
+							<AsyncPaginate
+								isDisabled={judet.id == null || orase.length == 0}
+								key={judet.id}
+								getOptionLabel={(option) => option.name}
+								getOptionValue={(option) => option.id}
+								classNamePrefix="react-select"
+								className="react-select"
+								value={oras}
+								onChange={setOras}
+								loadOptions={loadOrase}
+								placeholder={""}
+							/>
+							<span className="error-default">{orasError}</span>
+						</div>
+					}
 					<div style={{ width: "100%" }}>
 						<label htmlFor="localitate" className="label-default">
 							Localitate
@@ -205,7 +226,7 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 						/>
 						<span className="error-default">{localitateError}</span>
 					</div>
-					<Stack direction="row" justifyContent="end" style={{marginTop:"1rem"}}>
+					<Stack direction="row" justifyContent="end" style={{ marginTop: "1rem" }}>
 						<Button variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={deleteFilters}>
 							Sterge toate filtrele
 						</Button>

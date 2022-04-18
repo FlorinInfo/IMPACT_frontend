@@ -32,7 +32,7 @@
 }
 
 @mixin logged-page {
-  background-color: $default-color-light-3!important;
+  background-color: $default-color-light-2!important;
   min-height: 100vh;
 }
 
@@ -65,4 +65,9 @@
   &:hover {
     background-color: $default-color-light-1;
   }
+}
+
+@mixin border-default {
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }

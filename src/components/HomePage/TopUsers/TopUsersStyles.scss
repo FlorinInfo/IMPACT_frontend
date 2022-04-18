@@ -1,12 +1,12 @@
 @import "./../../../assets/styles/variables";
+@import "./../../../assets/styles/mixins";
 
 .top-users {
   margin-top: 16px;
   background-color: white;
   width: 310px;
   //   height: 250px;
-  border-radius: 4px;
-  border: 2px solid #dfdfdf;
+  @include border-default;
 
   &__title {
     height: 80px;

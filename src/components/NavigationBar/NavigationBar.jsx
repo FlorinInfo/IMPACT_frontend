@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./NavigationBarStyles.scss";
@@ -74,9 +74,17 @@ function DropDownMenuProfile() {
 }
 
 function DropDownMenuHome() {
+  const navigate = useNavigate();
+  const [selectedPage, setSelectedPage] = useState("");
+
+  const handleSelectedPage = (e) => {
+    e.preventDefault();
+    navigate(e.target.closest(".menu-item__home").id);
+  };
+
   function DropDownItemHome(props) {
     return (
-      <a href={props.href} className="menu-item__home">
+      <a className="menu-item__home" id={props.nextPage}>
         <span>{props.leftIcon}</span>
         {props.children}
       </a>
@@ -84,30 +92,34 @@ function DropDownMenuHome() {
   }
 
   return (
-    <div className="dropdown__home">
+    <div className="dropdown__home" onClick={handleSelectedPage}>
       <span className="section-name">Administrator</span>
       <DropDownItemHome
+        className="menu-item__home"
         leftIcon={<RiAdminLine className="icon-left__home" />}
-        href="/create-admins"
+        nextPage="/create-admins"
       >
         <span className="menu-item-text__home">Create-Admins</span>
       </DropDownItemHome>
       <DropDownItemHome
+        className="menu-item__home"
         leftIcon={<AiOutlineUnorderedList className="icon-left__home" />}
-        href="/waiting-list"
+        nextPage="/waiting-list"
       >
         <span className="menu-item-text__home">Waiting-List</span>
       </DropDownItemHome>
       <span className="section-name">Utilizator</span>
       <DropDownItemHome
+        className="menu-item__home"
         leftIcon={<HomeIcon className="icon-left__home" />}
-        href="/"
+        nextPage="/"
       >
         <span className="menu-item-text__home">Home</span>
       </DropDownItemHome>
       <DropDownItemHome
+        className="menu-item__home"
         leftIcon={<IoAddSharp className="icon-left__home" />}
-        href="/create-post"
+        nextPage="/create-post"
       >
         <span className="menu-item-text__home">Create-Post</span>
       </DropDownItemHome>
