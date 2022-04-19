@@ -11,6 +11,7 @@ import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import Admins from "./Pages/Admins/Admins";
 import CreatePost from "./Pages/CreatePost/CreatePost";
+import Users from "./Pages/Users/Users";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 
 function App() {
@@ -61,6 +62,16 @@ function App() {
           element={
             cookies && cookies.token ? (
               <WaitingList />
+            ) : (
+              redirectToLogin("/login")
+            )
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            cookies && cookies.token ? (
+              <Users />
             ) : (
               redirectToLogin("/login")
             )

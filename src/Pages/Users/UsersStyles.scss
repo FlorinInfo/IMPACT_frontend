@@ -1,7 +1,7 @@
 @import "../../assets/styles/variables";
 @import "../../assets/styles/mixins";
 
-.waiting-list {
+.users-list {
 //   @include default-logged-container;
 @include default-admin-container;
 
@@ -101,16 +101,21 @@
   &__roleOn {
     margin-left: 1rem;
   }
+
+  &__role {
+	  width: 105px!important;
+	  text-align: center;
+  }
 }
 
 @media only screen and (max-width: 500px) {
-  .waiting-list__sort {
+  .users-list__sort {
     flex-direction: column;
   }
-  .waiting-list__search{
+  .users-list__search{
     width: 100%;
   }
-  .waiting-list__filter {
+  .users-list__filter {
     margin-top: 1rem;
     width: 100%;
 
