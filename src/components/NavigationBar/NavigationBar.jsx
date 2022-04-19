@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./NavigationBarStyles.scss";
@@ -75,7 +75,7 @@ function DropDownMenuProfile() {
 
 function DropDownMenuHome() {
   const navigate = useNavigate();
-  const [selectedPage, setSelectedPage] = useState("");
+  // const [selectedPage, setSelectedPage] = useState("");
 
   const handleSelectedPage = (e) => {
     e.preventDefault();

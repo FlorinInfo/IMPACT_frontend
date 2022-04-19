@@ -1,0 +1,21 @@
+@import "./../../assets/styles/variables";
+@import "./../../assets/styles/mixins";
+
+.not-found {
+  @include logged-page;
+
+  &__message-error {
+    &__img {
+      display: block;
+      margin: auto;
+      width: 100vh;
+      height: auto;
+    }
+
+    &__text {
+      text-align: center;
+      font-family: $font-regular;
+      font-size: 30px;
+    }
+  }
+}

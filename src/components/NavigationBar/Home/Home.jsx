@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import "./HomeStyles.scss";
 
@@ -14,8 +14,27 @@ const Home = (props) => {
     clicked ? setClicked("") : setClicked("homeButton active");
   };
 
+  let homeMenuRef = useRef();
+
+  useEffect(() => {
+    let handlerClickOutside = (e) => {
+      if (!homeMenuRef.current.contains(e.target)) {
+        setClicked("");
+      }
+    };
+    document.addEventListener("mousedown", handlerClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handlerClickOutside);
+    };
+  });
+
   return (
-    <div className="homeButton-container" onClick={handleClick}>
+    <div
+      className="homeButton-container"
+      onClick={handleClick}
+      ref={homeMenuRef}
+    >
       <button className={clicked || "homeButton"}>
         <HomeIcon className="homeIcon" />
         <h1 className="homeicon--text">Home</h1>

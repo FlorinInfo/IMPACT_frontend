@@ -13,6 +13,7 @@ import Admins from "./Pages/Admins/Admins";
 import CreatePost from "./Pages/CreatePost/CreatePost";
 import Users from "./Pages/Users/Users";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
+import NotFound from "./Pages/NotFound/NotFound";
 
 function App() {
   let navigate = useNavigate();
@@ -70,11 +71,7 @@ function App() {
         <Route
           path="/users"
           element={
-            cookies && cookies.token ? (
-              <Users />
-            ) : (
-              redirectToLogin("/login")
-            )
+            cookies && cookies.token ? <Users /> : redirectToLogin("/login")
           }
         />
         <Route
@@ -87,7 +84,7 @@ function App() {
             )
           }
         />
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
