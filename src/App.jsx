@@ -62,7 +62,7 @@ function App() {
           path="/waiting-list"
           element={
             cookies && cookies.token ? (
-              (cookies.role=="ADMINISTRATOR" || cookies.role=="MODERATOR" || cookies.admin=="true")  ? 
+              (cookies.zoneRole=="ADMINISTRATOR" || cookies.zoneRole=="MODERATOR" || cookies.admin=="true")  ? 
                 <WaitingList />
               : redirectToLogin("/")
             ) : (
@@ -74,7 +74,7 @@ function App() {
           path="/users"
           element={
             cookies && cookies.token ? (
-              (cookies.role=="ADMINISTRATOR" || cookies.admin=="true")  ? 
+              (cookies.zoneRole=="ADMINISTRATOR" || cookies.admin=="true")  ? 
                 <Users />
               : redirectToLogin("/")
             ) : (
