@@ -13,7 +13,7 @@ service.register({
     return promise;
   },
   onResponse(response) {
-    console.log(response)
+    // console.log(response)
     if(response.status !== 204) {
       let parsedResponse = response.data;
       parsedResponse = JSON.parse(parsedResponse);
