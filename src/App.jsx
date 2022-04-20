@@ -62,7 +62,9 @@ function App() {
           path="/waiting-list"
           element={
             cookies && cookies.token ? (
-              <WaitingList />
+              (cookies.role=="ADMINISTRATOR" || cookies.role=="MODERATOR" || cookies.admin=="true")  ? 
+                <WaitingList />
+              : redirectToLogin("/")
             ) : (
               redirectToLogin("/login")
             )
@@ -71,7 +73,13 @@ function App() {
         <Route
           path="/users"
           element={
-            cookies && cookies.token ? <Users /> : redirectToLogin("/login")
+            cookies && cookies.token ? (
+              (cookies.role=="ADMINISTRATOR" || cookies.admin=="true")  ? 
+                <Users />
+              : redirectToLogin("/")
+            ) : (
+              redirectToLogin("/login")
+            )
           }
         />
         <Route

@@ -296,6 +296,7 @@ const WaitingList = () => {
   }
 
   return (
+    
     <div className="waiting-list">
       <div className="waiting-list__sort">
         <Stack direction="row" alignItems="center" spacing={2}>
