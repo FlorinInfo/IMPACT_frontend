@@ -82,6 +82,14 @@ body {
   &-container {
     margin-top: 200px !important;
   }
+
+  &__create-post {
+    font-family: $font-bold!important;
+  }
+}
+
+.react-select__input-container {
+  font-size: 1.6rem!important;
 }
 
 .react-select--is-disabled {

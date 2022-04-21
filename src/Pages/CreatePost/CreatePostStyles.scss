@@ -52,8 +52,6 @@
     }
 
     &__title {
-      width: 94%;
-      margin-left: 3%;
       margin-top: 15px;
       height: 40px;
       border-radius: 4px;
@@ -66,8 +64,6 @@
 
     &__textarea {
       resize: vertical;
-      width: 94%;
-      margin-left: 3%;
       margin-top: 10px;
       min-height: 165px;
       border: 1px solid #dfdfdf;
@@ -84,12 +80,16 @@
     }
 
     &__h-line {
-      width: 94%;
+      // width: 94%;
       height: 0.1rem;
       background-color: #dfdfdf;
       margin-bottom: 10px;
       margin-left: 3%;
     }
+  }
+
+  &__fields {
+    padding: 1rem;
   }
 }
 

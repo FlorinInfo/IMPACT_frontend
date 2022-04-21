@@ -73,12 +73,12 @@ function App() {
           console.log(error);
         })
         .then(() => {
-          setLoader(false); 
+          setLoader(false);
           // always executed
         });
     }
     else {
-      setLoader(false); 
+      setLoader(false);
     }
   }, [location])
 
@@ -139,16 +139,14 @@ function App() {
                 </ProtectedAdminRoute>
               }
             />
-            {/* <Route
+            <Route
               path="/create-post"
               element={
-                cookies && cookies.token ? (
+                <ProtectedRoute>
                   <CreatePost />
-                ) : (
-                  redirectTo("/login")
-                )
+                </ProtectedRoute>
               }
-            /> */}
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </>

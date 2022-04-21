@@ -1,13 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import ImageUploadPreview from "./../../components/ImageUploadPreview/ImageUploadPreview";
 
 import { MdOutlinePostAdd } from "react-icons/md";
+import { AsyncPaginate } from "react-select-async-paginate";
+
 
 import "./CreatePostStyles.scss";
 
+import { ImpactStore } from "../../store/ImpactStore";
+
 const CreatePost = () => {
+  const { user, setUser } = useContext(ImpactStore);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [zones, setZones] = useState([]);
+
+  const loadZones = ()=> {
+    let options = [];
+    if(user.localityId) options = 
+      [
+        {
+          value:"COUNTY",
+          label:"Judet"
+        },
+        {
+          value:"VILLAGE",
+          label:"Comuna"
+        },
+        {
+          value:"LOCALITY",
+          label:"Localitate"
+        }
+      ]
+    else 
+    options = 
+      [
+        {
+          value:"COUNTY",
+          label:"Judet"
+        },
+        {
+          value:"VILLAGE",
+          label:"Oras"
+        },
+      ]
+      return {options};
+  }
 
   return (
     <div className="create-post">
@@ -20,6 +58,15 @@ const CreatePost = () => {
               <MdOutlinePostAdd className="create-post__editor__header__icon" />
               Postare
             </h3>
+            <div className="create-post__fields">
+            <AsyncPaginate
+              getOptionLabel={(option) => option.label}
+              getOptionValue={(option) => option.value}
+              loadOptions={loadZones}
+              classNamePrefix="react-select"
+              className="react-select react-select__create-post"
+              placeholder={"Selecteaza zona"}
+            />
             <input
               className="create-post__editor__title input-default"
               placeholder="Titlu"
@@ -36,6 +83,7 @@ const CreatePost = () => {
             </div>
             <div className="create-post__editor__h-line"></div>
             <button className="btn__post-image">Posteaza</button>
+            </div>
           </div>
         </div>
       </div>
