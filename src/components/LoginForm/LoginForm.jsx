@@ -1,13 +1,15 @@
 import "./LoginFormStyles.scss";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import logoBlack from "../../assets/images/logo-black.svg";
 import setCookies from "../../utils/logged-cookies";
+import { ImpactStore } from "../../store/ImpactStore";
 
 const LoginForm = () => {
+  const {user, setUser} = useContext(ImpactStore);
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,6 +43,7 @@ const LoginForm = () => {
           setCookie("villageId", response.data.villageId);
           setCookie("localityId", response.data.localityId);
           setCookie("admin", response.data.admin);
+          setUser(response.data);
           if (response.data.status == "IN_ASTEPTARE")
             navigate('/pending'); else navigate("/");
 

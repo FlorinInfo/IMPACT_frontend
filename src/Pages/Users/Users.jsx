@@ -1,10 +1,8 @@
 import "./UsersStyles.scss";
-import React, { useEffect } from "react";
-import buletin from "../../assets/images/buletine-840x500.jpg";
+import React, { useEffect, useRef } from "react";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
 // import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,44 +11,29 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { BsFilter } from "react-icons/bs";
-import { FaFilter } from "react-icons/fa"
 import { AiOutlineClose } from "react-icons/ai"
 import Button from "@mui/material/Button";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputAdornment from '@mui/material/InputAdornment';
-import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import TablePagination from '@mui/material/TablePagination';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
 import Fab from '@mui/material/Fab';
 import SettingsIcon from '@mui/icons-material/Settings';
+import RoleDialog from "../../components/Admin/RoleDialog/RoleDialog";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { nanoid } from "nanoid";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import FilterDialog from "../../components/Admin/FilterDialog/FilterDialog";
-
+import { ImpactStore } from "../../store/ImpactStore";
 
 const columns = [
 	{ field: "id", headerName: "ID" },
@@ -66,10 +49,6 @@ const columns = [
 		field: "locationRegister",
 		headerName: "Zona",
 	},
-	//   {
-	//     field: "proof",
-	//     headerName: "Dovada",
-	//   },
 	{
 		field: "rol",
 		headerName: "Rol",
@@ -111,6 +90,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Users = () => {
 	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+	const { user, setUser } = useContext(ImpactStore);
 
 	const setJudetDefault = () => {
 		if ((cookies.zoneRoleOn == "LOCALITY" ||
@@ -141,10 +121,13 @@ const Users = () => {
 	const [judet, setJudet] = useState(setJudetDefault());
 	const [oras, setOras] = useState(setOrasDefault());
 	const [localitate, setLocalitate] = useState(setLocalitateDefault());
+	const [roleDialog, setRoleDialog] = useState(false);
+	const [userActive, setUserActive] = useState(null);
 
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
+		window.scrollTo(0, 0);
 	};
 
 	const handleChangeRowsPerPage = (event) => {
@@ -157,85 +140,11 @@ const Users = () => {
 		setOpen(!open);
 	};
 
-	const setUserStatus = (userId, userStatus) => {
-		if (userStatus == "APROBAT")
-			axios
-				.patch(
-					`/users/${userId}`,
-					{
-						status: userStatus
-					},
-					{
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${cookies.token}`,
-						},
-					}
-				)
-				.then((response) => {
-					// handle success
-					console.log(response);
-					const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
-					setUsers(Users);
-					setNotification("success");
-				})
-				.catch((error) => {
-					// handle error
-					console.log(error);
-				})
-				.then(() => {
-					// always executed
-				});
-		else
-			axios
-				.delete(
-					`/users/${userId}`,
-					{
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${cookies.token}`,
-						},
-					}
-				)
-				.then((response) => {
-					// handle success
-					console.log(response);
-					const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
-					setUsers(Users);
-					setNotification("error");
-				})
-				.catch((error) => {
-					// handle error
-					console.log(error);
-				})
-				.then(() => {
-					// always executed
-				});
-	}
-
-	// const handleChange = (id) => (event) => {
-	//   // Sending request logic ***
-	//   console.log(event.target.value);
-	//   let Users = [];
-	//   if (event.target.value == "CETATEAN") {
-	//     Users = users.map((u) => u.id == id ? { ...u, zoneRole: event.target.value, zoneRoleOn: u.Locality ? 'LOCALITY' : 'VILLAGE' } : u);
-	//   }
-	//   else Users = users.map((u) => u.id == id ? { ...u, zoneRole: event.target.value } : u);
-	//   setUsers(Users);
-	// };
-
-	// const updateZoneRoleOn = (id, zoneRoleOn) => {
-	//   // alert(id);
-	//   // alert(zoneRoleOn);
-	//   const Users = users.map((u) => u.id == id ? { ...u, zoneRoleOn } : u);
-	//   setUsers(Users);
-	// }
-
-	useEffect(() => {
+	const loadUsers = () => {
 		setLoader(true);
 		axios
 			.get(
-				`/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,
+				`/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=`,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -249,7 +158,6 @@ const Users = () => {
 				setLimit(response.data.limit)
 				console.log(users);
 				console.log(response);
-				window.scrollTo(0, 0)
 				setLoader(false);
 			})
 			.catch((error) => {
@@ -259,6 +167,10 @@ const Users = () => {
 			.then(() => {
 				// always executed
 			});
+	}
+
+	useEffect(() => {
+		loadUsers();
 	}, [page, rowsPerPage, judet, oras, localitate]);
 
 	const searchUsers = (status) => {
@@ -266,7 +178,7 @@ const Users = () => {
 		setLoader(true);
 		axios
 			.get(
-				`/users?offset=0&limit=10${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}&search=${status === "update" ? "" : search}&role=&status=IN_ASTEPTARE`,
+				`/users?offset=0&limit=10${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}&search=${status === "update" ? "" : search}&role=&status=`,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -298,6 +210,22 @@ const Users = () => {
 		setOpenFilter(false);
 	}
 
+	const openRoleDialog = (user) => {
+		setUserActive(user);
+		setRoleDialog(true);
+	}
+
+	const closeRoleDialog = (id, zoneRole, zoneRoleOn, forcedUpdate) => {
+		// let update = {};
+		// if(zoneRole) update.zoneRole = zoneRole;
+		// if(zoneRoleOn) update.zoneRoleOn = zoneRoleOn;
+		// 	let Users = [];
+		// 	Users = users.map((u) => u.id == id ? { ...u, ...update} : u);
+		// 	setUsers(Users);
+		loadUsers();
+		setRoleDialog(false);
+		setUserActive(null);
+	}
 	return (
 		<div className="users-list">
 			<div className="users-list__sort">
@@ -378,52 +306,16 @@ const Users = () => {
 											{user.Locality ? ", " + user.Locality.name : ""}
 										</TableCell>
 										<TableCell align="left" className="users-list__row" >
-											<Fab  variant="extended" size="small" color={`${user.zoneRole=="CETATEAN" ? "primary" : user.zoneRole=="MODERATOR" ? "warning" : "error"}`} aria-label="add">
+											<Fab className="users-list__role-btn" onClick={() => openRoleDialog(user)} variant="extended" size="small" color={`${user.zoneRole == "CETATEAN" ? "primary" : user.zoneRole == "MODERATOR" ? "warning" : "error"}`} aria-label="add">
 												<SettingsIcon sx={{ mr: 1 }} />
-												<span className="users-list__role">{user.zoneRole}</span>
+												<span className="users-list__role">
+													{user.zoneRole}  &nbsp;
+													{user.zoneRoleOn == "COUNTY" ? "JUDET" : user.zoneRoleOn == "VILLAGE" && user.LocalityId ? "COMUNA" : user.zoneRoleOn == "VILLAGE" && !user.LocalityId ? "ORAS" : "LOCALITATE"}
+												</span>
 											</Fab>
 
-											{/* <IconButton
-                        onClick={() => dialogAction(user.photoUrl)}
-                        className="users-list__proof-btn"
-                        color="primary"
-                        aria-label="upload picture"
-                        component="span"
-                      >
-                        <VisibilityIcon />
-                      </IconButton> */}
+		
 										</TableCell>
-										{/* <TableCell
-                      align="left"
-                      className="users-list__row users-list__row--f-column"
-                    >
-                      {
-                        user.status == "IN_ASTEPTARE" ?
-                          <>
-                            <Button
-                              variant="outlined"
-                              startIcon={<ThumbUpAltIcon />}
-                              onClick={() => setUserStatus(user.id, "APROBAT")}
-                            >
-                              Aproba
-                            </Button>
-                            <Button
-                              variant="outlined"
-                              startIcon={<ThumbDownAltIcon />}
-                              onClick={() => setUserStatus(user.id, "BLOCAT")}
-                            >
-                              Respinge
-                            </Button>
-                          </>
-                          : user.status == "APROBAT" ?
-                            <Button variant="contained" color="success">
-                              Aprobat
-                            </Button>
-                            : <Button variant="contained" color="error">
-                              Blocat
-                            </Button>
-                      }
-                    </TableCell> */}
 									</TableRow>
 								))}
 							</TableBody>
@@ -448,12 +340,6 @@ const Users = () => {
 						onRowsPerPageChange={handleChangeRowsPerPage}
 					/>
 				</TableContainer>
-				{/* <DataGrid
-          rows={rows}
-          columns={columns}
-          //   rowsPerPageOptions={[5]}
-          checkboxSelection
-        /> */}
 			</div>
 			<Dialog
 				open={open}
@@ -474,11 +360,9 @@ const Users = () => {
 							info: "rank",
 						}[notification]
 					}
-					{/* {
-            notification == 'success' ? 'Utilizatorul a fost aprobat cu succes' : "Cererea utilizatorului a fost respinsa"
-          } */}
 				</Alert>
 			</Snackbar>
+			<RoleDialog open={roleDialog} user={userActive} closeDialog={closeRoleDialog} />
 			<FilterDialog open={openFilter} closeFilter={() => setOpenFilter(false)} filterUsers={filterUsers} />
 		</div>
 	);

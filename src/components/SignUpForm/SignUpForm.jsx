@@ -3,7 +3,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { BsCloudCheckFill } from "react-icons/bs";
 import { createRef } from "react";
 import axios from "../../assets/axios/axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 import FormData from "form-data";
 import { Cookies, useCookies } from "react-cookie";
@@ -13,6 +13,7 @@ import AsyncSelect from "react-select/async";
 import { AsyncPaginate } from "react-select-async-paginate";
 
 import logoBlack from "../../assets/images/logo-black.svg";
+import { ImpactStore } from "../../store/ImpactStore";
 
 let judete = [];
 let localitati = [];
@@ -23,6 +24,7 @@ const options = [
 ];
 
 const SignUpForm = () => {
+  const {user, setUser} = useContext(ImpactStore);
   let navigate = useNavigate();
   const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
@@ -194,6 +196,7 @@ const SignUpForm = () => {
           setCookie("villageId", response.data.villageId);
           setCookie("localityId", response.data.localityId);
           setCookie("admin", response.data.admin);
+          setUser(response.data);
           if (response.data.status == "IN_ASTEPTARE")
             navigate('/pending'); else navigate("/");
         } else if (response.data.errors) {

@@ -42,11 +42,12 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { nanoid } from "nanoid";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import FilterDialog from "../../components/Admin/FilterDialog/FilterDialog";
+import { ImpactStore } from "../../store/ImpactStore";
 
 
 const columns = [
@@ -107,6 +108,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 const WaitingList = () => {
+  const { user, setUser } = useContext(ImpactStore);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   const setJudetDefault = ()=> {
@@ -232,7 +234,7 @@ const WaitingList = () => {
     setLoader(true);
     axios
       .get(
-        `/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,
+        `/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -263,7 +265,7 @@ const WaitingList = () => {
     setLoader(true);
     axios
       .get(
-        `/users?offset=0&limit=10${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}&search=${status==="update" ? "" :search}&role=&status=IN_ASTEPTARE`,
+        `/users?offset=0&limit=10${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}&search=${status==="update" ? "" :search}&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -296,6 +298,7 @@ const WaitingList = () => {
   }
 
   return (
+    
     <div className="waiting-list">
       <div className="waiting-list__sort">
         <Stack direction="row" alignItems="center" spacing={2}>

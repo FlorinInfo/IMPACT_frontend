@@ -103,8 +103,11 @@
   }
 
   &__role {
-	  width: 105px!important;
+	  width: 205px!important;
 	  text-align: center;
+  }
+  &__role-btn {
+    z-index: 0!important;
   }
 }
 

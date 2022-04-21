@@ -3,25 +3,22 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { createStore } from "redux";
-import Reducers from "./reducers";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
+import { ImpactStoreProvider } from "./store/ImpactStore";
 
-const store = createStore(
-  Reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
 
 ReactDOM.render(
   <React.StrictMode>
+    <ImpactStoreProvider>
     <BrowserRouter>
       <CookiesProvider>
-        <Provider store={store}>
+        {/* <Provider store={store}> */}
           <App />
-        </Provider>
+        {/* </Provider> */}
       </CookiesProvider>
     </BrowserRouter>
+    </ImpactStoreProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

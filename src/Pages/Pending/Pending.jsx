@@ -22,43 +22,41 @@ const Pending = () => {
   const [loader, setLoader] = useState(false);
   let navigate = useNavigate();
 
-  useEffect(() => {
-    setLoader(true);
-    const userId = jwt_decode(cookies.token).userId;
-    console.log(userId)
-    axios
-      .get(
-        `/users/${userId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        // handle success
-        console.log(response);
-        if (response.data.status != "IN_ASTEPTARE") navigate(-1);
-        setLoader(false);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .then(() => {
-        // always executed
-      });
-  }, [])
+  // useEffect(() => {
+  //   setLoader(true);
+  //   const userId = jwt_decode(cookies.token).userId;
+  //   console.log(userId)
+  //   axios
+  //     .get(
+  //       `/users/${userId}`,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${cookies.token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       // handle success
+  //       console.log(response);
+  //       if (response.data.status != "IN_ASTEPTARE") navigate(-1);
+  //       setLoader(false);
+  //     })
+  //     .catch((error) => {
+  //       // handle error
+  //       console.log(error);
+  //     })
+  //     .then(() => {
+  //       // always executed
+  //     });
+  // }, [])
 
   return (
-    !loader ? 
       <div className="pending">
         <Lottie options={lottieOptions} height={400} width={400} />
         <h4 className="pending__title">Cererea ta se proceseaza.</h4>
         <h5 className="pending__subtitle">Vei primi un email atunci cand este finalizata.</h5>
       </div>
-    : ""
   );
 };
 
