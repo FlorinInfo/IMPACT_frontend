@@ -201,8 +201,9 @@ const WaitingList = () => {
         .then((response) => {
           // handle success
           console.log(response);
-          const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
-          setUsers(Users);
+          loadUsers();
+          // const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
+          // setUsers(Users);
           setNotification("error");
         })
         .catch((error) => {
