@@ -38,9 +38,14 @@ const NavigationBar = (props) => {
 };
 
 function DropDownMenuProfile() {
+  const handleSelectedAction = (e) => {
+    e.preventDefault();
+    console.log(e.target.closest(".menu-item__profile").id);
+  };
+
   function DropDownItemProfile(props) {
     return (
-      <a href="#" className="menu-item__profile">
+      <a href="#" className="menu-item__profile" id={props.action}>
         <span className="icon-button">{props.leftIcon}</span>
         {props.children}
       </a>
@@ -48,24 +53,28 @@ function DropDownMenuProfile() {
   }
 
   return (
-    <div className="dropdown__profile">
+    <div className="dropdown__profile" onClick={handleSelectedAction}>
       <DropDownItemProfile
         leftIcon={<IoSettingsOutline className="icon-left__profile" />}
+        action="settings"
       >
         <span className="menu-item-text__profile">Setări</span>
       </DropDownItemProfile>
       <DropDownItemProfile
         leftIcon={<GiLevelThreeAdvanced className="icon-left__profile" />}
+        action="rank"
       >
         <span className="menu-item-text__profile">Rank</span>
       </DropDownItemProfile>
       <DropDownItemProfile
         leftIcon={<IoMdContact className="icon-left__profile" />}
+        action="contact"
       >
         <span className="menu-item-text__profile">Contact</span>
       </DropDownItemProfile>
       <DropDownItemProfile
         leftIcon={<BiLogOut className="icon-left__profile" />}
+        action="log-out"
       >
         <span className="menu-item-text__profile">Log out</span>
       </DropDownItemProfile>
