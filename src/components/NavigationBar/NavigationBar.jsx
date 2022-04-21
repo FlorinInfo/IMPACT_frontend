@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Cookies, useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 import "./NavigationBarStyles.scss";
@@ -38,9 +39,24 @@ const NavigationBar = (props) => {
 };
 
 function DropDownMenuProfile() {
+  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    removeCookie("token");
+    removeCookie("zoneRole");
+    removeCookie("zoneRoleOn");
+    removeCookie("countyId");
+    removeCookie("villageId");
+    removeCookie("localityId");
+    removeCookie("admin");
+    navigate("/");
+  };
   const handleSelectedAction = (e) => {
     e.preventDefault();
-    console.log(e.target.closest(".menu-item__profile").id);
+    const action = e.target.closest(".menu-item__profile").id;
+
+    if (action === "log-out") logOut();
   };
 
   function DropDownItemProfile(props) {
