@@ -16,7 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { BsFilter } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa"
-import {AiOutlineClose} from "react-icons/ai"
+import { AiOutlineClose } from "react-icons/ai"
 import Button from "@mui/material/Button";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
@@ -111,19 +111,19 @@ const WaitingList = () => {
   const { user, setUser } = useContext(ImpactStore);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
-  const setJudetDefault = ()=> {
-    if (( cookies.zoneRoleOn == "LOCALITY" || 
-          cookies.zoneRoleOn == "VILLAGE" || 
-          cookies.zoneRoleOn == "COUNTY") &&
-          cookies.admin != true) return cookies.countyId;
+  const setJudetDefault = () => {
+    if ((cookies.zoneRoleOn == "LOCALITY" ||
+      cookies.zoneRoleOn == "VILLAGE" ||
+      cookies.zoneRoleOn == "COUNTY") &&
+      cookies.admin != true) return cookies.countyId;
     return null;
   }
-  const setOrasDefault = ()=> {
-    if ((cookies.zoneRoleOn == "LOCALITY" || cookies.zoneRoleOn == "VILLAGE")&&cookies.admin=="false") return cookies.villageId;
+  const setOrasDefault = () => {
+    if ((cookies.zoneRoleOn == "LOCALITY" || cookies.zoneRoleOn == "VILLAGE") && cookies.admin == "false") return cookies.villageId;
     return null;
   }
-  const setLocalitateDefault = ()=> {
-    if (cookies.zoneRoleOn == "LOCALITY"&&cookies.admin=="false") return cookies.localityId; 
+  const setLocalitateDefault = () => {
+    if (cookies.zoneRoleOn == "LOCALITY" && cookies.admin == "false") return cookies.localityId;
     return null;
   }
 
@@ -144,6 +144,7 @@ const WaitingList = () => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    window.scrollTo(0, 0)
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -174,8 +175,9 @@ const WaitingList = () => {
         .then((response) => {
           // handle success
           console.log(response);
-          const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
-          setUsers(Users);
+          loadUsers();
+          // // const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
+          // setUsers(Users);
           setNotification("success");
         })
         .catch((error) => {
@@ -230,11 +232,11 @@ const WaitingList = () => {
   //   setUsers(Users);
   // }
 
-  useEffect(() => {
+  const loadUsers = () => {
     setLoader(true);
     axios
       .get(
-        `/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,
+        `/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet && user.admin == false ? "&countyId=" + judet : ""}${oras && user.admin == false ? "&villageId=" + oras : ""}${localitate && user.admin == false ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -248,7 +250,6 @@ const WaitingList = () => {
         setLimit(response.data.limit)
         console.log(users);
         console.log(response);
-        window.scrollTo(0, 0)
         setLoader(false);
       })
       .catch((error) => {
@@ -258,6 +259,10 @@ const WaitingList = () => {
       .then(() => {
         // always executed
       });
+  }
+
+  useEffect(() => {
+    loadUsers();
   }, [page, rowsPerPage, judet, oras, localitate]);
 
   const searchUsers = (status) => {
@@ -265,7 +270,7 @@ const WaitingList = () => {
     setLoader(true);
     axios
       .get(
-        `/users?offset=0&limit=10${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}&search=${status==="update" ? "" :search}&role=&status=IN_ASTEPTARE`,
+        `/users?offset=0&limit=10${judet && user.admin == false ? "&countyId=" + judet : ""}${oras && user.admin == false ? "&villageId=" + oras : ""}${localitate && user.admin == false ? "&localityId=" + localitate : ""}&search=${status === "update" ? "" : search}&role=&status=IN_ASTEPTARE`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -289,7 +294,7 @@ const WaitingList = () => {
         // always executed
       });
   }
-  const filterUsers = (judetId, orasId, localitateId)=> { 
+  const filterUsers = (judetId, orasId, localitateId) => {
     setJudet(judetId);
     setOras(orasId);
     setLocalitate(localitateId);
@@ -298,7 +303,7 @@ const WaitingList = () => {
   }
 
   return (
-    
+
     <div className="waiting-list">
       <div className="waiting-list__sort">
         <Stack direction="row" alignItems="center" spacing={2}>
@@ -313,7 +318,7 @@ const WaitingList = () => {
               endAdornment: search && (
                 <IconButton
                   aria-label="toggle password visibility"
-                  onClick={() => {setSearch("");searchUsers('update');}}
+                  onClick={() => { setSearch(""); searchUsers('update'); }}
                 >
                   <AiOutlineClose />
                 </IconButton>
@@ -331,9 +336,9 @@ const WaitingList = () => {
           </Button>
         </Stack>
         {
-          cookies.zoneRoleOn != "LOCALITY" || cookies.admin=="true" ?
+          cookies.zoneRoleOn != "LOCALITY" || cookies.admin == "true" ?
             <div className="waiting-list__filter">
-              <Button variant="contained"  endIcon={<BsFilter />} onClick={() => setOpenFilter(true)}>
+              <Button variant="contained" endIcon={<BsFilter />} onClick={() => setOpenFilter(true)}>
                 Filtreaza
               </Button>
             </div>
