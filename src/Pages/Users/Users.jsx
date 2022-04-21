@@ -28,12 +28,12 @@ import Fab from '@mui/material/Fab';
 import SettingsIcon from '@mui/icons-material/Settings';
 import RoleDialog from "../../components/Admin/RoleDialog/RoleDialog";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { nanoid } from "nanoid";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import FilterDialog from "../../components/Admin/FilterDialog/FilterDialog";
-
+import { ImpactStore } from "../../store/ImpactStore";
 
 const columns = [
 	{ field: "id", headerName: "ID" },
@@ -90,6 +90,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Users = () => {
 	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+	const { user, setUser } = useContext(ImpactStore);
 
 	const setJudetDefault = () => {
 		if ((cookies.zoneRoleOn == "LOCALITY" ||
@@ -143,7 +144,7 @@ const Users = () => {
 		setLoader(true);
 		axios
 			.get(
-				`/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,
+				`/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=`,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -177,7 +178,7 @@ const Users = () => {
 		setLoader(true);
 		axios
 			.get(
-				`/users?offset=0&limit=10${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}&search=${status === "update" ? "" : search}&role=&status=IN_ASTEPTARE`,
+				`/users?offset=0&limit=10${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}&search=${status === "update" ? "" : search}&role=&status=`,
 				{
 					headers: {
 						"Content-Type": "application/json",
