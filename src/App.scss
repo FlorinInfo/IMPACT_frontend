@@ -90,6 +90,10 @@ body {
 
 .react-select__input-container {
   font-size: 1.6rem!important;
+
+  &::placeholder {
+    color: red!important;
+  }
 }
 
 .react-select--is-disabled {

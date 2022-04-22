@@ -70,13 +70,12 @@
     }
 
     &__upload-images {
-      width: 94%;
-      height: 280px;
-      margin-left: 3%;
-      margin-top: 10px;
-      border: 1px solid #dfdfdf;
-      border-radius: 4px;
-      margin-bottom: 15px;
+      margin-top: 2rem;
+      // margin-left: 3%;
+      // margin-top: 10px;
+      // border: 1px solid #dfdfdf;
+      // border-radius: 4px;
+      // margin-bottom: 15px;
     }
 
     &__h-line {
@@ -90,6 +89,16 @@
 
   &__fields {
     padding: 1rem;
+  }
+
+  &__media-title {
+    font-family: $font-regular;
+    font-size: 1.5rem;
+    padding-bottom: .5rem;
+
+    &-icon {
+      font-size: 1.7rem;
+    }
   }
 }
 
