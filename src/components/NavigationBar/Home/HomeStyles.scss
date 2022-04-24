@@ -1,4 +1,4 @@
-.homeButton {
+.home-button {
   display: flex;
   padding: 3px;
   width: 230px;
@@ -15,15 +15,24 @@
     cursor: pointer;
   }
 
-  &-container {
+  &__container {
     box-sizing: border-box;
   }
+  &__icon {
+    font-size: 50px;
+  }
 
-  h1 {
+  &__text {
     font-size: 15px;
     font-weight: 90;
     margin-top: 5px;
     margin-left: 5px;
+  }
+
+  &__arrow {
+    margin-left: 130px;
+    width: 30px;
+    height: 30px;
   }
 
   svg {
@@ -31,16 +40,26 @@
   }
 }
 
-.homeIcon {
-  font-size: 50px;
-}
-
-.arrow {
-  margin-left: 130px;
-  width: 30px;
-  height: 30px;
-}
-
 .active {
   border: 0.5px solid rgb(220, 220, 220);
+}
+
+@media only screen and (max-width: 1023px) {
+  .home-button {
+    width: auto;
+
+    &__text {
+      display: none;
+    }
+
+    &__arrow {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 777px) {
+  .home-button {
+    display: none;
+  }
 }

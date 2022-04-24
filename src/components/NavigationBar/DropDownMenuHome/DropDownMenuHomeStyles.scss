@@ -1,0 +1,113 @@
+@import "./../../../assets/styles/variables";
+
+.dropdown {
+  &__home {
+    z-index: 10000;
+    transform: translateX(-4px);
+    top: 43px;
+    position: absolute;
+    background-color: white;
+    overflow: hidden;
+    width: 230px;
+    border-left: 0.5px solid rgb(220, 220, 220);
+    border-bottom: 0.5px solid rgb(220, 220, 220);
+    border-right: 0.5px solid rgb(220, 220, 220);
+  }
+}
+
+.menu-item {
+  &__home {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: $font-light;
+    color: black;
+    height: 40px;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+.icon-left {
+  &__home {
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.menu-item-text {
+  &__home {
+    font-size: 14px;
+    margin-left: 10px;
+  }
+}
+
+.section-name {
+  color: #878a8c;
+  font-family: $font-light;
+  font-size: 12px;
+  display: block;
+  text-align: start;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+@media only screen and (max-width: 777px) {
+  .dropdown {
+    &__home {
+      z-index: 10000;
+      // transform: translateX(-4px);
+      top: 45px;
+      position: absolute;
+      background-color: white;
+      overflow: hidden;
+      width: 100%;
+      border-left: 0.5px solid rgb(220, 220, 220);
+      border-bottom: 0.5px solid rgb(220, 220, 220);
+      border-right: 0.5px solid rgb(220, 220, 220);
+    }
+  }
+
+  .menu-item {
+    &__home {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      font-family: $font-light;
+      color: black;
+      height: 40px;
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+
+  .icon-left {
+    &__home {
+      margin-left: 10px;
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .menu-item-text {
+    &__home {
+      font-size: 16px;
+      margin-left: 15px;
+    }
+  }
+
+  .section-name {
+    color: #878a8c;
+    font-family: $font-light;
+    font-size: 13px;
+    display: block;
+    text-align: start;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+}

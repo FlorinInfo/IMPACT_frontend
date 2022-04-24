@@ -10,3 +10,9 @@
     cursor: pointer;
   }
 }
+
+@media only screen and (max-width: 777px) {
+  .logo {
+    display: none;
+  }
+}

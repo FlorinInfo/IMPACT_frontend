@@ -28,3 +28,9 @@
     border: 1px solid rgb(230, 230, 230);
   }
 }
+
+@media only screen and (max-width: 777px) {
+  .section--create-post {
+    display: none;
+  }
+}

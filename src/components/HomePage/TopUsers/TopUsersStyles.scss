@@ -83,3 +83,9 @@
     }
   }
 }
+
+@media (max-width: 1023px) {
+  .top-users {
+    display: none;
+  }
+}

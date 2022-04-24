@@ -11,7 +11,7 @@ const Home = (props) => {
   const [clicked, setClicked] = useState("");
 
   const handleClick = () => {
-    clicked ? setClicked("") : setClicked("homeButton active");
+    clicked ? setClicked("") : setClicked("home-button active");
   };
 
   let homeMenuRef = useRef();
@@ -31,15 +31,15 @@ const Home = (props) => {
 
   return (
     <div
-      className="homeButton-container"
+      className="home-button__container"
       onClick={handleClick}
       ref={homeMenuRef}
     >
-      <button className={clicked || "homeButton"}>
-        <HomeIcon className="homeIcon" />
-        <h1 className="homeicon--text">Home</h1>
+      <button className={clicked || "home-button"}>
+        <HomeIcon className="home-button__icon" />
+        <h1 className="home-button__text">Home</h1>
         {/* {userType === "administrator"} */}
-        <RiArrowDropDownLine className="arrow" />
+        <RiArrowDropDownLine className="home-button__arrow" />
         {clicked && props.children}
       </button>
     </div>

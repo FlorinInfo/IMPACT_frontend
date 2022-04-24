@@ -11,7 +11,7 @@ const NavBarActions = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="actionsContainer">
+    <div className="actions-container">
       {/* <Notifications className="action" /> */}
       <IoIosNotificationsOutline className="action" />
       <BsHeart className="action" />

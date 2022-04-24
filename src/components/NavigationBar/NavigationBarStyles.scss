@@ -1,6 +1,10 @@
 @import "./../../assets/styles/variables";
 
 .navbar {
+  display: inline;
+}
+
+.main-navbar {
   display: flex;
   // justify-content: space-between;
   width: 100%;
@@ -10,105 +14,40 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  &__right-menu-button {
+    display: none;
+  }
 }
 
 .active {
   border: 0.5px solid rgb(220, 220, 220);
 }
 
-// Drop Down Menu
-.dropdown {
-  &__profile {
-    transform: translateX(-1px);
-    position: absolute;
-    top: 46px;
-    width: 180px;
-    background-color: white;
-    overflow: hidden;
-    border-left: 0.5px solid rgb(220, 220, 220);
-    border-bottom: 0.5px solid rgb(220, 220, 220);
-    border-right: 0.5px solid rgb(220, 220, 220);
-  }
-
-  &__home {
-    z-index: 10000;
-    transform: translateX(-4px);
-    top: 43px;
-    position: absolute;
-    background-color: white;
-    overflow: hidden;
-    width: 230px;
-    border-left: 0.5px solid rgb(220, 220, 220);
-    border-bottom: 0.5px solid rgb(220, 220, 220);
-    border-right: 0.5px solid rgb(220, 220, 220);
-    // height: 160px;
-  }
-}
-
-.menu-item {
-  &__profile {
-    display: flex;
-    height: 35px;
-    align-items: center;
-    text-decoration: none;
-    color: black;
-    font-family: $font-medium;
-
-    &:hover {
-      background-color: $default-color;
-      color: white;
-      svg {
-        color: white;
-      }
-    }
-  }
-
-  &__home {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    font-family: $font-light;
-    color: black;
-    height: 40px;
-
-    &:hover {
-      background-color: #f5f5f5;
+@media only screen and (max-width: 777px) {
+  .main-navbar {
+    &__right-menu-button {
+      display: block;
+      width: 25px;
+      height: 25px;
+      margin-top: 8px;
+      margin-bottom: auto;
+      margin-left: 15px;
     }
   }
 }
 
-.icon-left {
-  &__profile {
-    margin-left: 10px;
-    width: 25px;
-    height: 25px;
-  }
-
-  &__home {
-    margin-left: 10px;
-    width: 25px;
-    height: 25px;
-  }
+.hidden {
+  display: none;
 }
 
-.menu-item-text {
-  &__profile {
-    font-size: 14.5px;
-    margin-left: 15px;
-  }
-
-  &__home {
-    font-size: 14px;
-    margin-left: 10px;
-  }
-}
-
-.section-name {
-  color: #878a8c;
-  font-family: $font-light;
-  font-size: 12px;
-  display: block;
-  text-align: start;
-  margin-left: 10px;
-  margin-top: 10px;
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
 }

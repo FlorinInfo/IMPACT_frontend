@@ -50,3 +50,9 @@
   color: $default-color;
   background-color: #f6f7f8;
 }
+
+@media only screen and (max-width: 777px) {
+  .section__sort-post {
+    display: none;
+  }
+}
