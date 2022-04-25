@@ -100,6 +100,13 @@
       font-size: 1.7rem;
     }
   }
+
+  &__add-btn {
+    display: block  ;
+    padding: .2rem 2rem!important;
+    // font-size: 1.3rem;
+    margin-left: auto;
+  } 
 }
 
 .btn {

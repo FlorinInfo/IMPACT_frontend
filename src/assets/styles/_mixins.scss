@@ -20,15 +20,28 @@
   max-width: 95rem;
   margin: 0 auto;
   padding: 2rem 0;
+
+  @media only screen and (max-width: 1080px) {
+    max-width: 99rem;
+    padding: 0 2rem;
+  }
 }
 
 @mixin default-logged-container--left {
   width: 65rem;
+
+  @media only screen and (max-width: 1080px) {
+    width: 100%;
+  }
 }
 
 @mixin default-logged-container--right {
   width: calc(100% - 70rem);
   margin-left: auto;
+
+  @media only screen and (max-width: 1080px) {
+    display: none;
+  }
 }
 
 @mixin logged-page {

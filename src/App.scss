@@ -9,8 +9,12 @@ body {
   margin: 0;
   font-size: 10px;
   // font-family: $font-light;
+  
 }
 
+html, body {
+  overflow-x: hidden!important;
+}
 // body {
 //   background-color: #dae0e6;
 // }

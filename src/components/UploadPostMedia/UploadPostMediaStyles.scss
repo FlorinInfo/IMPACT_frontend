@@ -2,7 +2,7 @@
 @import "../../assets/styles/mixins";
 
 @mixin media-cnt {
-	width: 11rem;
+	width: 11rem; 
 	height: 11rem;
 	@include border-default;
 	display: flex;
@@ -72,4 +72,21 @@
 			}
 		}
 	}
+
+	&__videos {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+
+	&__video {
+		width: 48%;
+	}
+
+	&__loader {
+		display: block;
+		margin: auto!important;
+	}
 }
+
+

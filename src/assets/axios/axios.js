@@ -19,7 +19,7 @@ service.register({
       parsedResponse = JSON.parse(parsedResponse);
       // console.log("xxxx", parsedResponse.errors.permission);
       if(parsedResponse.errors) {
-        if(parsedResponse.errors.permission) window.location = '/';
+        // if(parsedResponse.errors.permission) window.location = '/';
       }
     }
     return response; 
