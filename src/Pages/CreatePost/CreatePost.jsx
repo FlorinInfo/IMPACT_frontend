@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import ImageUploadPreview from "./../../components/ImageUploadPreview/ImageUploadPreview";
 import { useNavigate } from "react-router-dom";
@@ -19,23 +19,85 @@ import "./CreatePostStyles.scss";
 
 import { ImpactStore } from "../../store/ImpactStore";
 
-const ZoneSelect = ({error, updateZone}) => {
+const ZoneSelect = ({ error, updateZone }) => {
   const { user, setUser } = useContext(ImpactStore);
   const [zone, setZone] = useState("");
   const [zoneId, setZoneId] = useState("");
 
   const changeZone = (e) => {
+    setLocalitate({
+      name: user.Locality ? user.Locality.name : null,
+      id: user.localityId ? user.localityId : null ,
+    });
     let id = null;
     setZone(e.target.value);
     if (e.target.value == "COUNTY") id = user.countyId;
     if (e.target.value == "VILLAGE") id = user.villageId;
-    if (e.target.value == "LOCALITY") id = user.localityId;
+    if (e.target.value == "LOCALITY") id = localitate.id;
+
     setZoneId(id);
-    updateZone({
-      type:e.target.value,
-      id
-    })
   }
+
+  const [orase, setOrase] = useState([]);
+  const [oras, setOras] = useState({
+    name: user.Village.name,
+    id: user.villageId,
+  });
+
+  const loadOrase = async (search) => {
+    const response = await axios.get(`/villages?countyId=${user.countyId}`);
+    let options = [];
+    if (Array.isArray(response.data)) {
+      options = response.data.filter((l) =>
+        l.name.toLowerCase().startsWith(search.toLowerCase())
+      );
+    }
+    setOrase(options);
+    return {
+      options,
+    };
+  };
+
+  useEffect(() => {
+    if(user.zoneRoleOn == "COUNTY") {
+      setLocalitate({
+        name: "",
+        id: "",
+      });
+      loadLocalitati("");
+  }
+  }, [oras.id]);
+
+
+  const [localitati, setLocalitati] = useState([]);
+  const [localitate, setLocalitate] = useState({
+    name: user.Locality ? user.Locality.name : null,
+    id: user.localityId ? user.localityId : null ,
+  });
+
+  const loadLocalitati = async (search) => {
+    const response = await axios.get(`/localities?villageId=${oras.id}`);
+    let options = [];
+    if (Array.isArray(response.data)) {
+      options = response.data.filter((l) =>
+        l.name.toLowerCase().startsWith(search.toLowerCase())
+      );
+    }
+    setLocalitati(options);
+    return {
+      options,
+    };
+  };
+
+  useEffect(()=> {
+    if(zone=="VILLAGE") setZoneId(oras.id);
+    if(zone =="LOCALITY") setZoneId(localitate.id);
+    updateZone({
+      type: zone,
+      id: zoneId
+    })
+    console.log(zoneId);
+  }, [oras.id, localitate.id, zone, zoneId])
 
   if (user.admin == true) return <></>
   if (user.zoneRole == "CETATEAN") {
@@ -73,6 +135,113 @@ const ZoneSelect = ({error, updateZone}) => {
       </FormControl>
     )
   }
+  if (user.zoneRole == "ADMINISTRATOR" || user.zoneRole == "MODERATOR") {
+    if (user.zoneRoleOn == "LOCALITY") return (
+      <FormControl>
+        <FormLabel id="demo-row-radio-buttons-group-label zone-select__title">Selecteaza zona</FormLabel>
+        <RadioGroup
+          value={zone}
+          onChange={changeZone}
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel value="COUNTY" control={<Radio />} label="Judet" />
+          <FormControlLabel value="VILLAGE" control={<Radio />} label="Oras" />
+          <FormControlLabel value="LOCALITY" control={<Radio />} label="Localitate" />
+        </RadioGroup>
+        <span className="error-default">{error}</span>
+      </FormControl>
+    )
+    if (user.zoneRoleOn == "VILLAGE") return (
+      <FormControl>
+        <FormLabel id="demo-row-radio-buttons-group-label zone-select__title">Selecteaza zona</FormLabel>
+        <RadioGroup
+          value={zone}
+          onChange={changeZone}
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel value="COUNTY" control={<Radio />} label="Judet" />
+          <FormControlLabel value="VILLAGE" control={<Radio />} label="Oras" />
+          {user.localityId ? <FormControlLabel value="LOCALITY" control={<Radio />} label="Localitate" /> : ""}
+        </RadioGroup>
+        <span className="error-default">{error}</span>
+        {
+          user.localityId && zone == "LOCALITY" ?
+            <AsyncPaginate
+              getOptionLabel={(option) => option.name}
+              getOptionValue={(option) => option.id}
+              classNamePrefix="react-select"
+              className="react-select"
+              value={localitate}
+              onChange={setLocalitate}
+              loadOptions={loadLocalitati}
+              placeholder={""}
+            />
+            : ""
+        }
+      </FormControl>
+    )
+    if (user.zoneRoleOn == "COUNTY") return (
+      <FormControl>
+        <FormLabel id="demo-row-radio-buttons-group-label zone-select__title">Selecteaza zona</FormLabel>
+        <RadioGroup
+          value={zone}
+          onChange={changeZone}
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel value="COUNTY" control={<Radio />} label="Judet" />
+          <FormControlLabel value="VILLAGE" control={<Radio />} label="Oras" />
+          <FormControlLabel value="LOCALITY" control={<Radio />} label="Localitate" />
+        </RadioGroup>
+        <span className="error-default">{error}</span>
+        {
+          zone == "LOCALITY" ?
+            <>
+              <AsyncPaginate
+                getOptionLabel={(option) => option.name}
+                getOptionValue={(option) => option.id}
+                classNamePrefix="react-select"
+                className="react-select"
+                value={oras}
+                onChange={setOras}
+                loadOptions={loadOrase}
+                placeholder={""}
+              />
+              <AsyncPaginate
+              key={oras.id}
+                getOptionLabel={(option) => option.name}
+                getOptionValue={(option) => option.id}
+                classNamePrefix="react-select"
+                className="react-select"
+                value={localitate}
+                onChange={setLocalitate}
+                loadOptions={loadLocalitati}
+                placeholder={""}
+              />
+            </>
+            : ""
+        }
+        {zone == "VILLAGE" ?
+          <AsyncPaginate
+            getOptionLabel={(option) => option.name}
+            getOptionValue={(option) => option.id}
+            classNamePrefix="react-select"
+            className="react-select"
+            value={oras}
+            onChange={setOras}
+            loadOptions={loadOrase}
+            placeholder={""}
+          />
+          : ""
+        }
+      </FormControl>
+    )
+  }
 }
 
 const CreatePost = () => {
@@ -86,8 +255,8 @@ const CreatePost = () => {
   const [images, setImages] = useState([]);
   const [videos, setVideos] = useState([]);
   const [zone, setZone] = useState({
-    type:null,
-    id:null
+    type: null,
+    id: null
   })
 
   // Errors 
@@ -95,7 +264,7 @@ const CreatePost = () => {
   const [errorDescription, setErrorDescription] = useState("");
   const [errorZone, setErrorZone] = useState("");
 
-  const updateZone = (z)=> {
+  const updateZone = (z) => {
     console.log(z);
     setZone(z);
   }
@@ -156,8 +325,8 @@ const CreatePost = () => {
         ...images,
         ...videos
       ],
-      ...(zone.type && { zone: zone.type }),
-      ...(zone.id && { zoneId: zone.id }),
+      ...(zone.type&&zone.id && { zone: zone.type }),
+      ...(zone.id&&zone.type && { zoneId: zone.id }),
     })
     axios
       .post("/articles", {
@@ -167,8 +336,8 @@ const CreatePost = () => {
           ...images,
           ...videos
         ],
-        ...(zone.type && { zone: zone.type }),
-        ...(zone.id && { zoneId: zone.id }),
+        ...(zone.type&&zone.id  && { zone: zone.type }),
+        ...(zone.id&&zone.type && { zoneId: zone.id }),
       }, {
         headers: {
           accept: "application/json",
@@ -179,9 +348,9 @@ const CreatePost = () => {
         // handle success
         console.log(response)
         if (response.data.errors) {
-          if (response.data.errors.description) setErrorDescription(response.data.errors.description.details);else setErrorDescription("");
-          if (response.data.errors.title) setErrorTitle(response.data.errors.title.details);else setErrorTitle("");
-          if (response.data.errors.zone) setErrorZone(response.data.errors.zone.details);else setErrorZone("");
+          if (response.data.errors.description) setErrorDescription(response.data.errors.description.details); else setErrorDescription("");
+          if (response.data.errors.title) setErrorTitle(response.data.errors.title.details); else setErrorTitle("");
+          if (response.data.errors.zone) setErrorZone(response.data.errors.zone.details); else setErrorZone("");
         }
         else {
           navigate("/post/" + response.data.id)
@@ -208,7 +377,7 @@ const CreatePost = () => {
               Postare
             </h3>
             <div className="create-post__fields">
-              <ZoneSelect updateZone={updateZone} error={errorZone}/>
+              <ZoneSelect updateZone={updateZone} error={errorZone} />
               {/* <AsyncPaginate
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option) => option.value}
@@ -220,6 +389,7 @@ const CreatePost = () => {
                 placeholder={"Selecteaza zona"}
               /> */}
               <input
+                value={title}
                 className="create-post__editor__title input-default"
                 placeholder="Titlu"
                 onChange={(e) => setTitle(e.target.value)}
