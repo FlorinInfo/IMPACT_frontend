@@ -24,24 +24,24 @@ const Post = ({ article }) => {
       {/* <video controls muted autoPlay>
                         <source src="https://backend.imp-act.ml/assets/videosArticles/7Oog2e1I_aOnSAr322I0U.mp4" type="video/mp4"></source>
                     </video> */}
-      <div className="postvotes">
+      <div className="post__votes">
         <BiUpvote
-          className={`postvotes-action postvotes-action--up ${
+          className={`post__votes-action post__votes-action--up ${
             true == true ? "postvotes-action--active-1" : ""
           }`}
         />
-        <span className="postvotes-number">123</span>
-        <BiDownvote className="postvotes-action postvotes-action--down" />
+        <span className="post__votes-number">123</span>
+        <BiDownvote className="post__votes-action post__votes-action--down" />
       </div>
-      <div className="postmain">
-        <div className="postauthor">
+      <div className="post__main">
+        <div className="post__author">
           <img src={profileImage} alt="" />
-          <Link to="#" className="postauthor-name">
+          <Link to="#" className="post__author-name">
             {article.author.firstName} {article.author.lastName}
           </Link>
         </div>
-        <span className="posttitle">{article.title}</span>
-        <p className="postdescription">{article.description}</p>
+        <span className="post__title">{article.title}</span>
+        <p className="post__description">{article.description}</p>
         <div className="post__media">
           <MediaSlider media={article.articleGallery} />
         </div>
