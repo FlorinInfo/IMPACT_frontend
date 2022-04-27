@@ -275,11 +275,11 @@ const Users = () => {
 						<Table sx={{ minWidth: 650 }} aria-label="simple table">
 							<TableHead>
 								<TableRow>
-									{columns.map((column) => (
+									{columns.map((column, index) => (
 										<TableCell
 											className="users-list__column-title"
 											align="left"
-											key={nanoid()}
+											key={index}
 										>
 											{column.headerName}
 										</TableCell>

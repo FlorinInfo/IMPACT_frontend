@@ -45,7 +45,7 @@ const Post = ({ article }) => {
             true == true ? "postvotes-action--active-1" : ""
           }`}
         />
-        <span className="post__votes-number">123</span>
+        <span className="post__votes-number">{article.votePoints}</span>
         <BiDownvote className="post__votes-action post__votes-action--down" />
       </div>
       <div className="post__main">

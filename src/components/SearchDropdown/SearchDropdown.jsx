@@ -21,10 +21,10 @@ const SearchDropDown = ({ onSelect, onSearch, list, selected }) => {
       />
       {list.length ? (
         <ul className="search-dropdown__responses"  >
-          {list.map((l) => (
+          {list.map((l, index) => (
             <li
               className="search-dropdown__response"
-              key={nanoid()}
+              key={index}
               onClick={() => onSelect(l)}
             >
               {l.name}

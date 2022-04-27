@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { nanoid } from "nanoid";
 import { useRef } from "react";
+import Image from 'mui-image'
 
 const MediaSlider = ({ media }) => {
 	const videoRef = useRef();
@@ -16,11 +17,11 @@ const MediaSlider = ({ media }) => {
 				onSwiper={(swiper) => console.log(swiper)}
 			>
 				{
-					media.map((m) =>
-						<SwiperSlide key={nanoid()} className="slider__media-cnt">
+					media.map((m, index) =>
+						<SwiperSlide key={index} className="slider__media-cnt">
 							{
 								m.type == "image" ? <img className="slider__media-image" src={m.url} alt="" /> :
-									<video ref={videoRef} key={nanoid()} width="320" height="240" controls className="slider__media-video">
+									<video key={index} width="320" height="240" controls className="slider__media-video">
 										<source src={m.url} type="video/mp4" />
 										Your browser does not support the video tag.
 									</video>

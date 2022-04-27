@@ -100,7 +100,7 @@ const UploadPostMedia = ({getImages, getVideos}) => {
 	}
 
 	const removeImage = (index) => {
-		setImages(images.map((image, i)=> i!=index));
+		setImages(images.filter((image, i)=> i!=index));
 	}
 
 	return (
@@ -109,7 +109,7 @@ const UploadPostMedia = ({getImages, getVideos}) => {
 			<div className="media-post__grid">
 				{
 					images.length ? images.map((i, index) =>
-						<div className="media-post__preview" key={nanoid()} style={{ backgroundImage: `url(${i.url})` }}>
+						<div className="media-post__preview" key={i.url} style={{ backgroundImage: `url(${i.url})` }}>
 							<div className="media-post__preview-remove" onClick={() => removeImage(index)}>
 								<IoIosClose className="media-post__preview-remove-icon" />
 							</div>
@@ -126,9 +126,9 @@ const UploadPostMedia = ({getImages, getVideos}) => {
 			</div>
 			<div className="media-post__videos">
 				{
-					videos.map((v) =>
+					videos.map((v, index) =>
 						<>
-							<video key={nanoid()} width="320" height="240" controls className="media-post__video">
+							<video key={v.url} width="320" height="240" controls className="media-post__video">
 								<source src={v.url} type="video/mp4" />
 								Your browser does not support the video tag.
 							</video>

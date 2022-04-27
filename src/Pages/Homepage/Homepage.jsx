@@ -9,8 +9,11 @@ import { useEffect, useState, useContext } from "react";
 import axios from "../../assets/axios/axios.js";
 import { Cookies, useCookies } from "react-cookie";
 import { ImpactStore } from "../../store/ImpactStore";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Homepage = () => {
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(1);
   const { user, setUser } = useContext(ImpactStore);
   const [posts, setPosts] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
@@ -19,10 +22,10 @@ const Homepage = () => {
     id: user.localityId ? user.localityId : user.villageId,
   });
   const [filter, setFilter] = useState(user.admin ? "admin" : "recent");
-  useEffect(() => {
+  const fetchData = () => {
     axios
       .get(
-        `/articles?${zone.type}=${zone.id}&${filter}=true&offset=0&limit=10&cursor=`,
+        `/articles?${zone.type}=${zone.id}&${filter}=true&offset=${page * 10}&limit=10&cursor=`,
         {
           headers: {
             accept: "application/json",
@@ -33,7 +36,8 @@ const Homepage = () => {
       .then((response) => {
         // handle success
         console.log(response);
-        setPosts(response.data.articles);
+        setLimit(response.data.limit);
+        setPosts([...posts, ...response.data.articles]);
       })
       .catch((error) => {
         // handle error
@@ -42,7 +46,10 @@ const Homepage = () => {
       .then(() => {
         // always executed
       });
-  }, []);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [page]);
 
   return (
     <div className="homepage">
@@ -50,13 +57,20 @@ const Homepage = () => {
         <div className="homepage__left">
           <AddPost />
           <SortPosts />
-          <div className="homepage__posts">
-            {posts.map((article) => (
-              <div key={article.id} className="homepage__post">
-                <Post article={article} />{" "}
-              </div>
-            ))}
-          </div>
+          <InfiniteScroll
+            dataLength={posts.length} //This is important field to render the next data
+            next={()=>setPage(page+1)}
+            hasMore={true}
+            loader={posts.length==limit ? <h4 className="scroll-text">Ai vazut toate postarile</h4> : <h4 className="scroll-text">Loading...</h4>}
+          >
+            <div className="homepage__posts">
+              {posts.map((article) => (
+                <div key={article.id} className="homepage__post">
+                  <Post article={article} />{" "}
+                </div>
+              ))}
+            </div>
+          </InfiniteScroll>
         </div>
         <div className="homepage__right">
           <TopUsers />

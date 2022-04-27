@@ -155,7 +155,7 @@ const RoleDialog = ({ open, user, closeDialog }) => {
 								onChange={(e) => setZoneRole(e.target.value)}
 							>
 								{
-									roles.map((r) => <FormControlLabel key={nanoid()} value={r} control={<Radio />} label={r} />)
+									roles.map((r, index) => <FormControlLabel key={index} value={r} control={<Radio />} label={r} />)
 								}
 								{/* <FormControlLabel value="male" control={<Radio />} label="Male" />
 							<FormControlLabel value="other" control={<Radio />} label="Other" /> */}
@@ -175,7 +175,7 @@ const RoleDialog = ({ open, user, closeDialog }) => {
 										onChange={(e) => setZoneRoleOn(e.target.value)}
 									>
 										{
-											zones.map((r) => user.Locality==null&&r=="LOCALITY" ? "" : <FormControlLabel key={nanoid()} value={r} control={<Radio />} label={r} />)
+											zones.map((r, index) => user.Locality==null&&r=="LOCALITY" ? "" : <FormControlLabel key={index} value={r} control={<Radio />} label={r} />)
 										}
 										{/* <FormControlLabel value="male" control={<Radio />} label="Male" />
 							<FormControlLabel value="other" control={<Radio />} label="Other" /> */}

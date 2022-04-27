@@ -5,17 +5,21 @@
 	display: flex;
 	justify-content: center;
 	&__media{
+		max-height: 400px!important;
 		
 		&-image {
 			max-width: 100%;
 		margin: auto;
 		display: block;
-		max-height: 500px;
+		max-height: 400px;
+		
 		}
 
 		&-video {
+			display: block;
 			width: 100%;
 			height: auto;
+			max-height: 400px!important;
 		}
 
 		&-cnt {
