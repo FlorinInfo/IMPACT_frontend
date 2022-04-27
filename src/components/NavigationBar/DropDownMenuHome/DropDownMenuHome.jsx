@@ -31,9 +31,9 @@ const DropDownMenuHome = () => {
       <DropDownItemHome
         className="menu-item__home"
         leftIcon={<RiAdminLine className="icon-left__home" />}
-        nextPage="/create-admins"
+        nextPage="/users"
       >
-        <span className="menu-item-text__home">Create-Admins</span>
+        <span className="menu-item-text__home">Users</span>
       </DropDownItemHome>
       <DropDownItemHome
         className="menu-item__home"

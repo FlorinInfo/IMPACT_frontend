@@ -17,7 +17,7 @@ const testMedia = [
 ]
 
 
-const Post = ()=> {
+const Post = ({article})=> {
 	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
 
@@ -34,12 +34,12 @@ const Post = ()=> {
 			<div className="post__main">
 				<div className="post__author">
 					<img src={profileImage} alt="" />
-					<Link to="#" className="post__author-name">Florin Bucataru</Link>
+					<Link to="#" className="post__author-name">{article.author.firstName} {article.author.lastName}</Link>
 				</div>
-				<span className="post__title">Banca deteriorata</span>
-				<p className="post__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quo libero consequuntur blanditiis quam quidem saepe minus voluptate pariatur esse?</p>
+				<span className="post__title">{article.title}</span>
+				<p className="post__description">{article.description}</p>
 				<div className="post__media">
-					<MediaSlider media={testMedia}/>
+					<MediaSlider media={article.articleGallery}/>
 				</div>
 			</div>
 		</div>

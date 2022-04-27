@@ -5,10 +5,18 @@
 	display: flex;
 	justify-content: center;
 	&__media{
-		max-width: 100%;
+		
+		&-image {
+			max-width: 100%;
 		margin: auto;
 		display: block;
 		max-height: 500px;
+		}
+
+		&-video {
+			width: 100%;
+			height: auto;
+		}
 
 		&-cnt {
 			display: flex;
