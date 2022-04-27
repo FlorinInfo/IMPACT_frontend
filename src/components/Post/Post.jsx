@@ -30,65 +30,43 @@ const Post = () => {
   const handleFavorite = () => {
     favorite ? setFavorite("") : setFavorite("favorite");
   };
+  const Post = ({ article }) => {
+    const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
-  const handleShowOptions = () => {
-    showOptions ? setShowOptions(false) : setShowOptions(true);
-  };
+    const handleShowOptions = () => {
+      showOptions ? setShowOptions(false) : setShowOptions(true);
+    };
 
-  return (
-    <div className="post">
-      {/* <video controls muted autoPlay>
+    return (
+      <div className="post">
+        {/* <video controls muted autoPlay>
                         <source src="https://backend.imp-act.ml/assets/videosArticles/7Oog2e1I_aOnSAr322I0U.mp4" type="video/mp4"></source>
                     </video> */}
-      <div className="post__votes">
-        <BiUpvote
-          className={`post__votes-action post__votes-action--up ${
-            true == true ? "post__votes-action--active-1" : ""
-          }`}
-        />
-        <span className="post__votes-number">123</span>
-        <BiDownvote className="post__votes-action post__votes-action--down" />
-      </div>
-      <div className="post__main">
-        <div className="post__author">
-          <img src={profileImage} alt="" />
-          <Link to="#" className="post__author-name">
-            Florin Bucataru
-          </Link>
+        {/* <div className="post__votes">
+          <BiUpvote
+            className={`post__votes-action post__votes-action--up ${
+              true == true ? "post__votes-action--active-1" : ""
+            }`}
+          />
+          <span className="post__votes-number">123</span>
+          <BiDownvote className="post__votes-action post__votes-action--down" />
         </div>
-        <span className="post__title">Banca deteriorata</span>
-        <p className="post__description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quo
-          libero consequuntur blanditiis quam quidem saepe minus voluptate
-          pariatur esse?
-        </p>
-        <div className="post__media">
-          <MediaSlider media={testMedia} />
-          <div className="post__actions">
-            <button className="post__actions__button">
-              <VscComment className="post__actions__button__icon" />
-              <span className="post__actions__button__text">
-                {numLikes} Comentarii
-              </span>
-            </button>
-            <button className="post__actions__button" onClick={handleFavorite}>
-              <MdFavorite
-                className={`post__actions__button__icon ${favorite}`}
-              />
-              <span className="post__actions__button__text"> Favorite</span>
-            </button>
-            <button
-              className="post__actions__button"
-              onClick={handleShowOptions}
-            >
-              <MdMoreHoriz className="post__actions__button__icon" />
-            </button>
-            {showOptions && <PostOptions />}
+        <div className="post__main">
+          <div className="post__author">
+            <img src={profileImage} alt="" />
+            <Link to="#" className="post__author-name">
+              {article.author.firstName} {article.author.lastName}
+            </Link>
           </div>
-        </div>
+          <span className="post__title">{article.title}</span>
+          <p className="post__description">{article.description}</p>
+          <div className="post__media">
+            <MediaSlider media={article.articleGallery} />
+          </div>
+        </div> */}
       </div>
-    </div>
-  );
+    );
+  };
 };
 
 export default Post;

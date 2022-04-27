@@ -23,7 +23,7 @@ function SortButton(props) {
 }
 
 const SortPosts = () => {
-  const [selectedSort, setSelectedSort] = useState("populare");
+  const [selectedSort, setSelectedSort] = useState("noi");
 
   const handleSelectedSort = (e) => {
     e.preventDefault();
@@ -33,18 +33,18 @@ const SortPosts = () => {
   return (
     <div className="section__sort-post" onClick={handleSelectedSort}>
       <SortButton
-        id="populare"
-        active={"populare" === selectedSort}
-        leftIcon={<AiTwotoneFire className="sort-button__icon" />}
-      >
-        <span className="sort-button__text">Populare</span>
-      </SortButton>
-      <SortButton
         id="noi"
         active={"noi" === selectedSort}
         leftIcon={<IoMdMedal className="sort-button__icon" />}
       >
         <span className="sort-button__text">Noi</span>
+      </SortButton>
+      <SortButton
+        id="populare"
+        active={"populare" === selectedSort}
+        leftIcon={<AiTwotoneFire className="sort-button__icon" />}
+      >
+        <span className="sort-button__text">Populare</span>
       </SortButton>
       <SortButton
         id="efectuate"

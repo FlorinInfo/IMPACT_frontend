@@ -2,9 +2,11 @@ import "./MediaSliderStyles.scss"
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import { nanoid } from "nanoid";
+import { useRef } from "react";
 
-const MediaSlider = ({media}) => {
-
+const MediaSlider = ({ media }) => {
+	const videoRef = useRef();
 	return (
 		<div className="slider">
 			<Swiper
@@ -14,8 +16,16 @@ const MediaSlider = ({media}) => {
 				onSwiper={(swiper) => console.log(swiper)}
 			>
 				{
-					media.map((m)=> 
-						<SwiperSlide className="slider__media-cnt"><img className="slider__media" src={m} alt="" /></SwiperSlide>
+					media.map((m) =>
+						<SwiperSlide key={nanoid()} className="slider__media-cnt">
+							{
+								m.type == "image" ? <img className="slider__media-image" src={m.url} alt="" /> :
+									<video ref={videoRef} key={nanoid()} width="320" height="240" controls className="slider__media-video">
+										<source src={m.url} type="video/mp4" />
+										Your browser does not support the video tag.
+									</video>
+							}
+						</SwiperSlide>
 					)
 				}
 				{/* <SwiperSlide className="slider__media-cnt"><img className="slider__media" src={media[1]} alt="" /></SwiperSlide>
