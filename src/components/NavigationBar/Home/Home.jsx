@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./HomeStyles.scss";
 
 import HomeIcon from "@material-ui/icons/Home";
+import { MdHome } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 const userType = "administrator";

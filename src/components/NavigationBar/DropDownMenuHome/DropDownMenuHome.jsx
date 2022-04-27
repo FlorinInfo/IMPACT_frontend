@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./DropDownMenuHomeStyles.scss";
 
 import HomeIcon from "@material-ui/icons/Home";
+import { MdHome } from "react-icons/md";
 import { RiAdminLine } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoAddSharp } from "react-icons/io5";
@@ -45,7 +46,7 @@ const DropDownMenuHome = () => {
       <span className="section-name">Utilizator</span>
       <DropDownItemHome
         className="menu-item__home"
-        leftIcon={<HomeIcon className="icon-left__home" />}
+        leftIcon={<MdHome className="icon-left__home" />}
         nextPage="/"
       >
         <span className="menu-item-text__home">Home</span>

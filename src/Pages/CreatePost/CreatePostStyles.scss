@@ -94,7 +94,7 @@
   &__media-title {
     font-family: $font-regular;
     font-size: 1.5rem;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
 
     &-icon {
       font-size: 1.7rem;
@@ -102,11 +102,11 @@
   }
 
   &__add-btn {
-    display: block  ;
-    padding: .2rem 2rem!important;
+    display: block;
+    padding: 0.2rem 2rem !important;
     // font-size: 1.3rem;
     margin-left: auto;
-  } 
+  }
 }
 
 .btn {
@@ -163,4 +163,12 @@
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+@media only screen and (max-width: 1080px) {
+  .create-post {
+    &__title {
+      margin-top: 15px;
+    }
+  }
 }

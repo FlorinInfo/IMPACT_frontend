@@ -1,0 +1,38 @@
+@import "./../../../assets/styles/variables";
+
+.post-options {
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  transform: translateX(210px);
+  border-radius: 4px;
+  //   box-shadow: 1px 1px 2px #878a8c, 1px 1px 2px #878a8c;
+  filter: drop-shadow(0 0 0.25rem #878a8c);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    color: #878a8c;
+    height: 40px;
+    padding: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 0.1px solid #c4c4c4;
+
+    &__icon {
+      width: 25px;
+      height: 25px;
+    }
+
+    &__text {
+      font-family: $font-medium-2;
+      font-size: 13px;
+      margin-left: 10px;
+    }
+
+    &:hover {
+      background-color: #e9f5fd;
+      color: black;
+    }
+  }
+}

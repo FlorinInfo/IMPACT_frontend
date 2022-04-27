@@ -15,6 +15,7 @@ const Homepage = () => {
           <div className="homepage__posts">
             <div className="homepage__post">
               <Post />
+              <Post />
             </div>
           </div>
         </div>
