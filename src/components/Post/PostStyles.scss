@@ -9,7 +9,7 @@
   flex-direction: row;
   padding: 1rem 0;
 
-  &votes {
+  &__votes {
     width: 4rem;
     display: flex;
     flex-direction: column;
@@ -53,7 +53,7 @@
     }
   }
 
-  &main {
+  &__main {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -62,7 +62,7 @@
     width: calc(100% - 4rem);
   }
 
-  &author {
+  &__author {
     display: flex;
     width: 100%;
     // border-bottom: 1px solid #ccc;
@@ -82,7 +82,7 @@
     }
   }
 
-  &title {
+  &__title {
     font-family: $font-bold;
     font-size: 2rem;
     margin-top: 0.5rem;
