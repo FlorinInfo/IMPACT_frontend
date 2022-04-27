@@ -10,6 +10,7 @@ import axios from "../../assets/axios/axios.js";
 import { Cookies, useCookies } from "react-cookie";
 import { ImpactStore } from "../../store/ImpactStore";
 
+
 const Homepage = () => {
   const { user, setUser } = useContext(ImpactStore);
   const [posts, setPosts] = useState([]);
