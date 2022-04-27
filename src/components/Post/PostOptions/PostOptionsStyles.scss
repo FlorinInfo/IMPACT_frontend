@@ -1,10 +1,12 @@
 @import "./../../../assets/styles/variables";
 
 .post-options {
+  // top: 20px;
+  z-index: 1000;
   overflow: hidden;
   position: absolute;
   background-color: white;
-  transform: translateX(210px);
+  transform: translate(210px, 40px);
   border-radius: 4px;
   //   box-shadow: 1px 1px 2px #878a8c, 1px 1px 2px #878a8c;
   filter: drop-shadow(0 0 0.25rem #878a8c);
@@ -33,6 +35,7 @@
     &:hover {
       background-color: #e9f5fd;
       color: black;
+      cursor: pointer;
     }
   }
 }

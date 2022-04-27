@@ -1,10 +1,15 @@
 import "./PostStyles.scss";
 import { Link } from "react-router-dom";
-import { BiDownvote, BiUpvote } from "react-icons/bi";
 import profileImage from "../../assets/images/default_profile_pic1.jpg";
 import { useEffect, useState } from "react";
 
 import MediaSlider from "./MediaSlider/MediaSlider";
+import PostOptions from "./PostOptions/PostOptions";
+
+import { BiDownvote, BiUpvote } from "react-icons/bi";
+import { VscComment } from "react-icons/vsc";
+import { MdOutlineFavorite } from "react-icons/md";
+import { MdMoreHoriz } from "react-icons/md";
 
 import testImage from "../../assets/images/dwipm_18.png";
 import testImage2 from "../../assets/images/buletine-840x500.jpg";
@@ -18,6 +23,16 @@ const testMedia = [
 
 const Post = ({ article }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [favorite, setFavorite] = useState(false);
+  const [showPostOptions, setShowOptions] = useState(false);
+
+  const handleFavorite = () => {
+    favorite ? setFavorite(false) : setFavorite(true);
+  };
+
+  const handleShowOptions = () => {
+    showPostOptions ? setShowOptions(false) : setShowOptions(true);
+  };
 
   return (
     <div className="post">
@@ -44,6 +59,30 @@ const Post = ({ article }) => {
         <p className="post__description">{article.description}</p>
         <div className="post__media">
           <MediaSlider media={article.articleGallery} />
+        </div>
+        <div className="post__actions">
+          <button className="post__actions__button">
+            <VscComment className="post__actions__button__icon" />
+            <span className="post__actions__button__text">75 Comentarii</span>
+          </button>
+          <button className="post__actions__button" onClick={handleFavorite}>
+            <MdOutlineFavorite
+              className={`post__actions__button__icon ${
+                favorite && "favorite"
+              }`}
+            />
+            <span
+              className={`post__actions__button__text ${
+                favorite && "favorite"
+              }`}
+            >
+              Favorite
+            </span>
+          </button>
+          <button className="post__actions__button" onClick={handleShowOptions}>
+            <MdMoreHoriz className="post__actions__button__icon" />
+          </button>
+          {showPostOptions && <PostOptions />}
         </div>
       </div>
     </div>

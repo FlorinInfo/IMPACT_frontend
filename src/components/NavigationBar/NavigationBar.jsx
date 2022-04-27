@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import "./NavigationBarStyles.scss";
 
@@ -11,10 +11,12 @@ import DropDownMenuProfile from "./DropDownMenuProfile/DropDownMenuProfile";
 import DropDownMenuHome from "./DropDownMenuHome/DropDownMenuHome";
 import UnderNavigationBar from "./UnderNavigationBar/UnderNavigationBar";
 import DropDownMobileMenu from "./DropDownMobileMenu/DropDownMobileMenu";
+import { ImpactStore } from "../../store/ImpactStore";
 
 import { IoMenuOutline } from "react-icons/io5";
 
 const NavigationBar = (props) => {
+  const { user, setUser } = useContext(ImpactStore);
   const [opened, setOpened] = useState("");
 
   const handleOpenMobileMenu = () => {
