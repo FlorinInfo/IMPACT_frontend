@@ -9,7 +9,7 @@
   flex-direction: row;
   padding: 1rem 0;
 
-  &__votes {
+  &votes {
     width: 4rem;
     display: flex;
     flex-direction: column;
@@ -53,7 +53,7 @@
     }
   }
 
-  &__main {
+  &main {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -62,7 +62,7 @@
     width: calc(100% - 4rem);
   }
 
-  &__author {
+  &author {
     display: flex;
     width: 100%;
     // border-bottom: 1px solid #ccc;
@@ -82,7 +82,7 @@
     }
   }
 
-  &__title {
+  &title {
     font-family: $font-bold;
     font-size: 2rem;
     margin-top: 0.5rem;
@@ -93,39 +93,4 @@
     font-family: $font-medium;
     font-size: 1.4rem;
   }
-
-  &__actions {
-    margin-top: 5px;
-
-    &__button {
-      border-radius: 4px;
-      display: inline-block;
-      background-color: transparent;
-      padding: 5px;
-      border-color: transparent;
-      color: #878a8c;
-
-      &:hover {
-        background-color: #e8e8e8;
-      }
-
-      &__text {
-        margin-top: auto;
-        margin-bottom: 15px;
-        margin-left: 5px;
-        font-family: $font-bold;
-        font-size: 12px;
-        color: #878a8c;
-      }
-
-      &__icon {
-        width: 20px;
-        height: 20px;
-      }
-    }
-  }
-}
-
-.favorite {
-  color: #cf0017;
 }
