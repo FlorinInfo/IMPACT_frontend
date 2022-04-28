@@ -13,13 +13,13 @@ service.register({
     return promise;
   },
   onResponse(response) {
-    // console.log(response)
-    if(response.status !== 204) {
+    console.log(response)
+    if(response.status !== 204&&response.status !== 201) {
       let parsedResponse = response.data;
       parsedResponse = JSON.parse(parsedResponse);
       // console.log("xxxx", parsedResponse.errors.permission);
       if(parsedResponse.errors) {
-        // if(parsedResponse.errors.permission) window.location = '/';
+        if(parsedResponse.errors.permission) window.location = '/';
       }
     }
     return response; 

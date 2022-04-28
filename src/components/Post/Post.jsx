@@ -34,6 +34,35 @@ const Post = ({ article }) => {
     showPostOptions ? setShowOptions(false) : setShowOptions(true);
   };
 
+  const votePost = (vote) => {
+    axios
+      .post(
+        `/votes`,
+        {
+          "articleId": article.id,
+          "type": vote
+        },
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // handle success
+        console.log(response);
+
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  };
+
   return (
     <div className="post">
       {/* <video controls muted autoPlay>
@@ -41,12 +70,13 @@ const Post = ({ article }) => {
                     </video> */}
       <div className="post__votes">
         <BiUpvote
+          onClick={()=>votePost("UPVOTE")}
           className={`post__votes-action post__votes-action--up ${
             true == true ? "postvotes-action--active-1" : ""
           }`}
         />
         <span className="post__votes-number">{article.votePoints}</span>
-        <BiDownvote className="post__votes-action post__votes-action--down" />
+        <BiDownvote onClick={()=>votePost("DOWNVOTE")} className="post__votes-action post__votes-action--down" />
       </div>
       <div className="post__main">
         <div className="post__author">
