@@ -7,12 +7,14 @@
   @include border-default;
   display: flex;
   flex-direction: row;
-  padding: 1rem 0;
+  
 
   &__votes {
     width: 4rem;
     display: flex;
     flex-direction: column;
+    background-color: #f8f9fa;
+    padding: 1rem 0;
 
     &-number {
       font-family: $font-bold;
