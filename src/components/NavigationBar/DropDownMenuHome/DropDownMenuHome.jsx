@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./DropDownMenuHomeStyles.scss";
@@ -9,7 +9,12 @@ import { RiAdminLine } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoAddSharp } from "react-icons/io5";
 
+import { ImpactStore } from "../../../store/ImpactStore";
+
 const DropDownMenuHome = () => {
+  const { user, setUser } = useContext(ImpactStore);
+  console.log(user, "fggdgdf");
+
   const navigate = useNavigate();
 
   const handleSelectedPage = (e) => {
@@ -28,21 +33,27 @@ const DropDownMenuHome = () => {
 
   return (
     <div className="dropdown__home" onClick={handleSelectedPage}>
-      <span className="section-name">Administrator</span>
-      <DropDownItemHome
-        className="menu-item__home"
-        leftIcon={<RiAdminLine className="icon-left__home" />}
-        nextPage="/users"
-      >
-        <span className="menu-item-text__home">Users</span>
-      </DropDownItemHome>
-      <DropDownItemHome
-        className="menu-item__home"
-        leftIcon={<AiOutlineUnorderedList className="icon-left__home" />}
-        nextPage="/waiting-list"
-      >
-        <span className="menu-item-text__home">Waiting-List</span>
-      </DropDownItemHome>
+      {(user.admin || user.zoneRole === "MODERATOR") && (
+        <span className="section-name">Administrator</span>
+      )}
+      {user.admin && (
+        <DropDownItemHome
+          className="menu-item__home"
+          leftIcon={<RiAdminLine className="icon-left__home" />}
+          nextPage="/users"
+        >
+          <span className="menu-item-text__home">Users</span>
+        </DropDownItemHome>
+      )}
+      {(user.admin || user.zoneRole === "MODERATOR") && (
+        <DropDownItemHome
+          className="menu-item__home"
+          leftIcon={<AiOutlineUnorderedList className="icon-left__home" />}
+          nextPage="/waiting-list"
+        >
+          <span className="menu-item-text__home">Waiting-List</span>
+        </DropDownItemHome>
+      )}
       <span className="section-name">Utilizator</span>
       <DropDownItemHome
         className="menu-item__home"

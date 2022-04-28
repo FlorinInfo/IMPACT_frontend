@@ -1,7 +1,7 @@
 import "./PostStyles.scss";
 import { Link } from "react-router-dom";
 import profileImage from "../../assets/images/default_profile_pic1.jpg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import MediaSlider from "./MediaSlider/MediaSlider";
 import PostOptions from "./PostOptions/PostOptions";
@@ -25,6 +25,9 @@ const Post = ({ article }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [favorite, setFavorite] = useState(false);
   const [showPostOptions, setShowOptions] = useState(false);
+  let postOptionsRef = useRef();
+
+  console.log(article, "fsdfs");
 
   const handleFavorite = () => {
     favorite ? setFavorite(false) : setFavorite(true);
@@ -34,13 +37,26 @@ const Post = ({ article }) => {
     showPostOptions ? setShowOptions(false) : setShowOptions(true);
   };
 
+  useEffect(() => {
+    let handlerClickOutside = (e) => {
+      if (!postOptionsRef.current.contains(e.target)) {
+        setShowOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", handlerClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handlerClickOutside);
+    };
+  });
+
   const votePost = (vote) => {
     axios
       .post(
         `/votes`,
         {
-          "articleId": article.id,
-          "type": vote
+          articleId: article.id,
+          type: vote,
         },
         {
           headers: {
@@ -52,7 +68,6 @@ const Post = ({ article }) => {
       .then((response) => {
         // handle success
         console.log(response);
-
       })
       .catch((error) => {
         // handle error
@@ -70,13 +85,16 @@ const Post = ({ article }) => {
                     </video> */}
       <div className="post__votes">
         <BiUpvote
-          onClick={()=>votePost("UPVOTE")}
+          onClick={() => votePost("UPVOTE")}
           className={`post__votes-action post__votes-action--up ${
             true == true ? "postvotes-action--active-1" : ""
           }`}
         />
         <span className="post__votes-number">{article.votePoints}</span>
-        <BiDownvote onClick={()=>votePost("DOWNVOTE")} className="post__votes-action post__votes-action--down" />
+        <BiDownvote
+          onClick={() => votePost("DOWNVOTE")}
+          className="post__votes-action post__votes-action--down"
+        />
       </div>
       <div className="post__main">
         <div className="post__author">
@@ -90,7 +108,7 @@ const Post = ({ article }) => {
         <div className="post__media">
           <MediaSlider media={article.articleGallery} />
         </div>
-        <div className="post__actions">
+        <div className="post__actions" ref={postOptionsRef}>
           <button className="post__actions__button">
             <VscComment className="post__actions__button__icon" />
             <span className="post__actions__button__text">75 Comentarii</span>

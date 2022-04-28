@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Router, useParams } from "react-router-dom";
 
 import { AiTwotoneFire } from "react-icons/ai";
-import { IoMdMedal,IoIosPodium } from "react-icons/io";
+import { IoMdMedal, IoIosPodium } from "react-icons/io";
 import { AiOutlineFileDone } from "react-icons/ai";
-import { IoTimeSharp, } from "react-icons/io5";
-
+import { IoTimeSharp } from "react-icons/io5";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 import "./SortPostsStyles.scss";
+
+import TimeSelector from "./TimeSelector/TimeSelector";
 
 function SortButton(props) {
   return (
@@ -24,15 +26,44 @@ function SortButton(props) {
   );
 }
 
-const SortPosts = ({emitSort}) => {
+const SortPosts = ({ emitSort }) => {
   let { routeFilter } = useParams();
-  const [selectedSort, setSelectedSort] = useState(routeFilter==undefined ? "recent" : routeFilter.split("-")[2]);
+  const [selectedSort, setSelectedSort] = useState(
+    routeFilter == undefined ? "recent" : routeFilter.split("-")[2]
+  );
+
+  const [openedTimeSelector, setOpenedTimeSelector] = useState(false);
+  const [selectedTime, setSelectedTime] = useState("Astazi");
 
   const handleSelectedSort = (e) => {
     e.preventDefault();
     setSelectedSort(e.target.closest(".sort-button").id);
+    // if (e.target.closest(".sort-button").id != "time")
     emitSort(e.target.closest(".sort-button").id);
   };
+
+  const handleTimeSelector = () => {
+    openedTimeSelector
+      ? setOpenedTimeSelector(false)
+      : setOpenedTimeSelector(true);
+  };
+
+  let timeSelectorRef = useRef();
+
+  // useEffect(() => {
+  //   let handlerClickOutside = (e) => {
+  //     if (!timeSelectorRef.current.contains(e.target)) {
+  //       setOpenedTimeSelector(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handlerClickOutside);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handlerClickOutside);
+  //   };
+  // });
+
+  const timeSort = selectedSort === "best";
 
   return (
     <div className="section__sort-post" onClick={handleSelectedSort}>
@@ -64,6 +95,25 @@ const SortPosts = ({emitSort}) => {
       >
         <span className="sort-button__text">In lucru</span>
       </SortButton>
+      {timeSort && (
+        <button
+          className="time-button"
+          id="time"
+          onClick={handleTimeSelector}
+          ref={timeSelectorRef}
+        >
+          <a className="sort-button__label selected">
+            <span className="sort-button__text">{selectedTime}</span>
+            <RiArrowDropDownLine className="sort-button__icon" />
+          </a>
+        </button>
+      )}
+      {openedTimeSelector && (
+        <TimeSelector
+          setSelectedTime={setSelectedTime}
+          setOpenedTimeSelector={setOpenedTimeSelector}
+        />
+      )}
     </div>
   );
 };

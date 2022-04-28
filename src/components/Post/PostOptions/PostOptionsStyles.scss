@@ -39,3 +39,9 @@
     }
   }
 }
+
+@media only screen and (max-width: 777px) {
+  .post-options {
+    transform: translate(80px, 40px);
+  }
+}

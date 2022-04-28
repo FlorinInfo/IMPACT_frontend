@@ -1,0 +1,36 @@
+@import "./../../../../assets/styles/variables";
+
+.time-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 35px;
+  z-index: 1000;
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  border-radius: 4px;
+  transform: translate(250px, 40px);
+  filter: drop-shadow(0 0 0.25rem #878a8c);
+
+  &__item {
+    display: block;
+    color: #878a8c;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    &__text {
+      font-family: $font-medium-2;
+      font-size: 13px;
+      margin-left: 10px;
+    }
+
+    &:hover {
+      background-color: #e9f5fd;
+      color: black;
+      cursor: pointer;
+    }
+  }
+}
