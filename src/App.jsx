@@ -115,6 +115,14 @@ function App() {
               }
             />
             <Route
+              path="/:routeFilter"
+              element={
+                <ProtectedRoute>
+                  <Homepage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/pending"
               element={user.token && user.status == "IN_ASTEPTARE" ? <Pending /> : redirectTo("/")}
             />

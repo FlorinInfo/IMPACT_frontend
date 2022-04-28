@@ -49,7 +49,7 @@ const MediaSlider = ({ media }) => {
         spaceBetween={50}
         slidesPerView={1}
         onSlideChange={(swiper) => setActiveSlider(swiper.activeIndex + 1)}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSwiper={(swiper) => console.log(swiper)}
       >
         {media.map((m, index) => (
           <SwiperSlide key={index} className="slider__media-cnt">
