@@ -12,6 +12,7 @@ import { ImpactStore } from "../../store/ImpactStore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const Homepage = () => {
   const defaultFilter = (filterType) => {
@@ -84,6 +85,34 @@ const Homepage = () => {
     }
   };
 
+  const updateArticle = (articleId)=> {
+    axios
+      .get(
+        `/articles/${articleId}`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // handle success
+        let index = posts.findIndex((el)=>el.id==articleId);
+        let newPosts = [...posts];
+        newPosts[index] = response.data;
+        setPosts(newPosts)
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  }
+
   return (
     <div className="homepage">
       <div className="homepage__container">
@@ -105,7 +134,7 @@ const Homepage = () => {
             <div className="homepage__posts">
               {posts.map((article) => (
                 <div key={article.id} className="homepage__post">
-                  <Post article={article} />{" "}
+                  <Post updateArticle={updateArticle} article={article} />{" "}
                 </div>
               ))}
             </div>

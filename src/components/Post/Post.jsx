@@ -15,13 +15,14 @@ import testImage from "../../assets/images/dwipm_18.png";
 import testImage2 from "../../assets/images/buletine-840x500.jpg";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
+import jwt_decode from "jwt-decode";
 const testMedia = [
   // profileImage,
   testImage,
   testImage2,
 ];
 
-const Post = ({ article }) => {
+const Post = ({ article, updateArticle }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [favorite, setFavorite] = useState(false);
   const [showPostOptions, setShowOptions] = useState(false);
@@ -51,31 +52,56 @@ const Post = ({ article }) => {
   });
 
   const votePost = (vote) => {
-    axios
-      .post(
-        `/votes`,
-        {
-          articleId: article.id,
-          type: vote,
-        },
-        {
+    const userId = jwt_decode(cookies.token).userId;
+    if (article.votes.length == 0) {
+      axios
+        .post(
+          `/votes`,
+          {
+            articleId: article.id,
+            type: vote,
+          },
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          // handle success
+          console.log(response);
+          updateArticle(article.id);
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+        });
+    }
+    if (article.votes.length && article.votes[0].type == vote) {
+      axios
+        .delete(`/votes/${article.id}-${userId}`, {
           headers: {
             accept: "application/json",
             Authorization: `Bearer ${cookies.token}`,
           },
-        }
-      )
-      .then((response) => {
-        // handle success
-        console.log(response);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .then(() => {
-        // always executed
-      });
+        })
+        .then((response) => {
+          // handle success
+          console.log(response);
+          updateArticle(article.id);
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+        });
+    }
   };
 
   return (
@@ -87,13 +113,19 @@ const Post = ({ article }) => {
         <BiUpvote
           onClick={() => votePost("UPVOTE")}
           className={`post__votes-action post__votes-action--up ${
-            true == true ? "postvotes-action--active-1" : ""
+            article.votes.length && article.votes[0].type == "UPVOTE"
+              ? "post__votes-action--active-1"
+              : ""
           }`}
         />
         <span className="post__votes-number">{article.votePoints}</span>
         <BiDownvote
           onClick={() => votePost("DOWNVOTE")}
-          className="post__votes-action post__votes-action--down"
+          className={`post__votes-action post__votes-action--down ${
+            article.votes.length && article.votes[0].type == "DOWNVOTE"
+              ? "post__votes-action--active-2"
+              : ""
+          }`}
         />
       </div>
       <div className="post__main">

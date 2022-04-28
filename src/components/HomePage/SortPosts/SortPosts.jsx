@@ -50,23 +50,27 @@ const SortPosts = ({ emitSort }) => {
 
   let timeSelectorRef = useRef();
 
-  // useEffect(() => {
-  //   let handlerClickOutside = (e) => {
-  //     if (!timeSelectorRef.current.contains(e.target)) {
-  //       setOpenedTimeSelector(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handlerClickOutside);
+  useEffect(() => {
+    let handlerClickOutside = (e) => {
+      if (!timeSelectorRef.current.contains(e.target)) {
+        setOpenedTimeSelector(false);
+      }
+    };
+    document.addEventListener("mousedown", handlerClickOutside);
 
-  //   return () => {
-  //     document.removeEventListener("mousedown", handlerClickOutside);
-  //   };
-  // });
+    return () => {
+      document.removeEventListener("mousedown", handlerClickOutside);
+    };
+  });
 
   const timeSort = selectedSort === "best";
 
   return (
-    <div className="section__sort-post" onClick={handleSelectedSort}>
+    <div
+      className="section__sort-post"
+      onClick={handleSelectedSort}
+      ref={timeSelectorRef}
+    >
       <SortButton
         id="recent"
         active={"recent" === selectedSort}
