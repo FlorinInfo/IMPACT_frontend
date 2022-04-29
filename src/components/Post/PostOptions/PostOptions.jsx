@@ -4,10 +4,10 @@ import "./PostOptionsStyles.scss";
 
 import { MdOutlineDelete } from "react-icons/md";
 
-const PostOptions = () => {
+const PostOptions = ({deletePost}) => {
   function OptionItem(props) {
     return (
-      <a className="post-options__item">
+      <a className="post-options__item" onClick={props.onClick}>
         <span>{props.leftIcon}</span>
         {props.children}
       </a>
@@ -17,6 +17,12 @@ const PostOptions = () => {
   return (
     <div className="post-options">
       <OptionItem
+        onClick={deletePost}
+        leftIcon={<MdOutlineDelete className="post-options__item__icon" />}
+      >
+        <span className="post-options__item__text" >Sterge Postare</span>
+      </OptionItem>
+      {/* <OptionItem
         leftIcon={<MdOutlineDelete className="post-options__item__icon" />}
       >
         <span className="post-options__item__text">Sterge Postare</span>
@@ -25,12 +31,7 @@ const PostOptions = () => {
         leftIcon={<MdOutlineDelete className="post-options__item__icon" />}
       >
         <span className="post-options__item__text">Sterge Postare</span>
-      </OptionItem>
-      <OptionItem
-        leftIcon={<MdOutlineDelete className="post-options__item__icon" />}
-      >
-        <span className="post-options__item__text">Sterge Postare</span>
-      </OptionItem>
+      </OptionItem> */}
     </div>
   );
 };

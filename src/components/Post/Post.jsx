@@ -1,7 +1,7 @@
 import "./PostStyles.scss";
 import { Link } from "react-router-dom";
 import profileImage from "../../assets/images/default_profile_pic1.jpg";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 
 import MediaSlider from "./MediaSlider/MediaSlider";
 import PostOptions from "./PostOptions/PostOptions";
@@ -16,22 +16,72 @@ import testImage2 from "../../assets/images/buletine-840x500.jpg";
 import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
+import { ImpactStore } from "../../store/ImpactStore";
 const testMedia = [
   // profileImage,
   testImage,
   testImage2,
 ];
 
-const Post = ({ article, updateArticle }) => {
+const Post = ({ article, updateArticle, deleteArticle, comments }) => {
+  const { user, setUser } = useContext(ImpactStore);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [favorite, setFavorite] = useState(false);
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
 
-  console.log(article, "fsdfs");
+  // console.log(article, "fsdfs");
 
   const handleFavorite = () => {
-    favorite ? setFavorite(false) : setFavorite(true);
+    const userId = jwt_decode(cookies.token).userId;
+    // favorite ? setFavorite(false) : setFavorite(true);
+    if (article.favorites.length == 0) {
+      axios
+        .post(
+          `/favoriteArticles`,
+          {
+            articleId: article.id,
+          },
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          // handle success
+          console.log(response);
+          updateArticle(article.id);
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+        });
+    } else {
+      axios
+        .delete(`/favoriteArticles/${article.id}-${userId}`, {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        })
+        .then((response) => {
+          // handle success
+          console.log(response);
+          updateArticle(article.id);
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+        });
+    }
   };
 
   const handleShowOptions = () => {
@@ -102,6 +152,55 @@ const Post = ({ article, updateArticle }) => {
           // always executed
         });
     }
+    if (article.votes.length && article.votes[0].type != vote) {
+      axios
+        .patch(
+          `/votes/${article.id}-${userId}`,
+          {
+            type: vote,
+          },
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          // handle success
+          console.log(response);
+          updateArticle(article.id);
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+        });
+    }
+  };
+
+  const deletePost = () => {
+    axios
+      .delete(`/articles/${article.id}`, {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((response) => {
+        // handle success
+        console.log(response);
+        deleteArticle(article.id);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
   };
 
   return (
@@ -148,22 +247,32 @@ const Post = ({ article, updateArticle }) => {
           <button className="post__actions__button" onClick={handleFavorite}>
             <MdOutlineFavorite
               className={`post__actions__button__icon ${
-                favorite && "favorite"
+                article.favorites.length && "favorite"
               }`}
             />
             <span
               className={`post__actions__button__text ${
-                favorite && "favorite"
+                article.favorites.length && "favorite"
               }`}
             >
               Favorite
             </span>
           </button>
-          <button className="post__actions__button" onClick={handleShowOptions}>
-            <MdMoreHoriz className="post__actions__button__icon" />
-          </button>
-          {showPostOptions && <PostOptions />}
+          {user.admin == true ||
+          user.zoneRole != "CETATEAN" ||
+          user.id == article.author.id ? (
+            <button
+              className="post__actions__button"
+              onClick={handleShowOptions}
+            >
+              <MdMoreHoriz className="post__actions__button__icon" />
+            </button>
+          ) : (
+            ""
+          )}
+          {showPostOptions && <PostOptions deletePost={deletePost} />}
         </div>
+        {comments ? comments : ""}
       </div>
     </div>
   );

@@ -113,6 +113,10 @@ const Homepage = () => {
       });
   }
 
+  const deleteArticle = (articleId)=>{
+    setPosts(posts.filter((p)=>p.id!=articleId));
+  }
+
   return (
     <div className="homepage">
       <div className="homepage__container">
@@ -134,7 +138,7 @@ const Homepage = () => {
             <div className="homepage__posts">
               {posts.map((article) => (
                 <div key={article.id} className="homepage__post">
-                  <Post updateArticle={updateArticle} article={article} />{" "}
+                  <Post deleteArticle={deleteArticle} updateArticle={updateArticle} article={article} />{" "}
                 </div>
               ))}
             </div>

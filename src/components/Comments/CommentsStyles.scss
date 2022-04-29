@@ -1,0 +1,11 @@
+@import "../../assets//styles/variables";
+@import "../../assets/styles/mixins";
+
+.comments {
+
+    &__textarea {
+        width: 100%;
+        min-height: 10rem;
+        resize: vertical;
+    }
+}

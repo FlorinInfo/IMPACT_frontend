@@ -14,7 +14,7 @@ import CreatePost from "./Pages/CreatePost/CreatePost";
 import Users from "./Pages/Users/Users";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import NotFound from "./Pages/NotFound/NotFound";
-import Post from "./Pages/Post/Post";
+import Post from "./Pages/PostPage/Post";
 import jwt_decode from "jwt-decode";
 import axios from "./assets/axios/axios";
 import { ImpactStore } from "./store/ImpactStore";
