@@ -85,7 +85,12 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
                 <span className="comment__time">{timeConverter(data.createTime)}</span> */}
       </div>
       <div className="comment__data">
-        <span className="comment__text">{data.text}</span>
+        <span className="comment__text">
+          {
+            data.parrentComment ? <span className="comment__text-parrent">@{data.parrentComment.author.firstName} {data.parrentComment.author.lastName}&nbsp;</span> :""
+          }
+          {data.text}
+        </span>
         <div className="comment__reply">
           <span onClick={()=>setReply(!reply)}>
             Raspunde <BsFillReplyAllFill />

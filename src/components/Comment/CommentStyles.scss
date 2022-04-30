@@ -45,6 +45,12 @@
     &__text {
         font-family: $font-regular;
         font-size: 1.4rem;
+
+        &-parrent {
+            font-family: $font-regular;
+            font-size: 1.4rem;
+            color: $default-color;
+        }
     }
 
     &__reply {
