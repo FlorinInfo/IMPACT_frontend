@@ -54,7 +54,7 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 		};
 	}
 	const setLocalitateDefault = () => {
-		if (cookies.zoneRoleOn == "LOCALITY" && cookies.admin != true) return {
+		if (cookies.zoneRoleOn == "LOCALITY" && cookies.admin != "true") return {
 			name: "",
 			id: cookies.localityId,
 		};

@@ -96,7 +96,7 @@ const Users = () => {
 		if ((cookies.zoneRoleOn == "LOCALITY" ||
 			cookies.zoneRoleOn == "VILLAGE" ||
 			cookies.zoneRoleOn == "COUNTY") &&
-			cookies.admin != true) return cookies.countyId;
+			cookies.admin != "true") return cookies.countyId;
 		return null;
 	}
 	const setOrasDefault = () => {
@@ -144,7 +144,7 @@ const Users = () => {
 		setLoader(true);
 		axios
 			.get(
-				`/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=`,
+				`/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate  ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=`,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -178,7 +178,7 @@ const Users = () => {
 		setLoader(true);
 		axios
 			.get(
-				`/users?offset=0&limit=10${judet&&user.admin==false ? "&countyId=" + judet : ""}${oras&&user.admin==false ? "&villageId=" + oras : ""}${localitate&&user.admin==false ? "&localityId=" + localitate : ""}&search=${status === "update" ? "" : search}&role=&status=`,
+				`/users?offset=0&limit=10${judet ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate ? "&localityId=" + localitate : ""}&search=${status === "update" ? "" : search}&role=&status=`,
 				{
 					headers: {
 						"Content-Type": "application/json",
