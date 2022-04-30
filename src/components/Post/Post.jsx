@@ -17,6 +17,7 @@ import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import { ImpactStore } from "../../store/ImpactStore";
+import { useNavigate, useLocation } from "react-router-dom";
 const testMedia = [
   // profileImage,
   testImage,
@@ -29,6 +30,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const [favorite, setFavorite] = useState(false);
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
+  const navigate = useNavigate();
 
   // console.log(article, "fsdfs");
 
@@ -38,10 +40,8 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
     if (article.favorites.length == 0) {
       axios
         .post(
-          `/favoriteArticles`,
-          {
-            articleId: article.id,
-          },
+          `/articles/${article.id}/users/${userId}/favorite`,
+          {},
           {
             headers: {
               accept: "application/json",
@@ -63,7 +63,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         });
     } else {
       axios
-        .delete(`/favoriteArticles/${article.id}-${userId}`, {
+        .delete(`/articles/${article.id}/users/${userId}/favorite`, {
           headers: {
             accept: "application/json",
             Authorization: `Bearer ${cookies.token}`,
@@ -106,9 +106,8 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
     if (article.votes.length == 0) {
       axios
         .post(
-          `/votes`,
+          `/articles/${article.id}/users/${userId}/vote`,
           {
-            articleId: article.id,
             type: vote,
           },
           {
@@ -133,7 +132,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
     }
     if (article.votes.length && article.votes[0].type == vote) {
       axios
-        .delete(`/votes/${article.id}-${userId}`, {
+        .delete(`/articles/${article.id}/users/${userId}/vote`, {
           headers: {
             accept: "application/json",
             Authorization: `Bearer ${cookies.token}`,
@@ -155,7 +154,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
     if (article.votes.length && article.votes[0].type != vote) {
       axios
         .patch(
-          `/votes/${article.id}-${userId}`,
+          `/articles/${article.id}/users/${userId}/vote`,
           {
             type: vote,
           },
@@ -240,9 +239,9 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
           <MediaSlider media={article.articleGallery} />
         </div>
         <div className="post__actions" ref={postOptionsRef}>
-          <button className="post__actions__button">
+          <button className="post__actions__button" onClick={()=>navigate("/post/"+article.id)}>
             <VscComment className="post__actions__button__icon" />
-            <span className="post__actions__button__text">75 Comentarii</span>
+            <span className="post__actions__button__text">{article._count.comments} Comentarii</span>
           </button>
           <button className="post__actions__button" onClick={handleFavorite}>
             <MdOutlineFavorite

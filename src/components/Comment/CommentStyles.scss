@@ -1,0 +1,84 @@
+@import "../../assets//styles/variables";
+@import "../../assets/styles/mixins";
+
+
+.comment {
+    margin-top: 1rem;
+    padding: .5rem 0;
+
+    &__info {
+        display: flex;
+
+        img {
+            width: 2.6rem;
+            border-radius: 50%;
+        }
+    }
+
+    &__name {
+        font-family: $font-regular;
+        display: block;
+        margin:auto 0 auto .5rem;
+        font-size: 1.5rem;
+    }
+
+    &__bullet {
+        font-family: $font-light;
+        display: block;
+        margin:auto 0 auto .5rem;
+    }
+
+    &__role {
+        font-family: $font-light;
+        display: block;
+        margin:auto 0 auto .5rem;
+        font-size: 1.3rem;
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        width: calc(100% - 3.4rem);
+    }
+
+    &__text {
+        font-family: $font-regular;
+        font-size: 1.4rem;
+    }
+
+    &__reply {
+        font-family: $font-bold;
+        font-size: 1.3rem;
+        margin-top: .2rem;
+        display: block;
+        
+        
+        span {
+            cursor: pointer;
+            @include no-select;
+        }
+
+        &-textarea {
+            display: block;
+            width: 100%;
+            margin-top: .8rem;
+            min-height: 5rem;
+            resize: vertical;
+
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: end;
+        margin-top: 1rem;
+    }
+
+    &__add-btn {
+        font-size: 1.2rem;
+        padding: 0 2rem;
+        height: 3rem;
+        margin-left: auto;
+    }
+}

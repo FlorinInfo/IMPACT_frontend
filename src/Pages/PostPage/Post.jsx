@@ -56,7 +56,7 @@ const PostPage = ()=> {
 		<div className="post-page">
 			<div className="post-page__container">
 				<div className="post-page__left">
-					{post ? <Post comments={<Comments/>} updateArticle={updateArticle}  deleteArticle={deleteArticle} article={post}/> : ""}
+					{post ? <Post comments={<Comments updateArticle={updateArticle}/>} updateArticle={updateArticle}  deleteArticle={deleteArticle} article={post}/> : ""}
 				</div>
 				<div className="post-page__right"></div>
 			</div>

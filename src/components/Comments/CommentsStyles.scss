@@ -2,10 +2,26 @@
 @import "../../assets/styles/mixins";
 
 .comments {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
 
     &__textarea {
         width: 100%;
         min-height: 10rem;
         resize: vertical;
+    }
+
+    &__add-btn {
+        margin-left: auto;
+        margin-top: 1rem;
+    }
+
+    &__h-line {
+        display: block;
+        margin-top: 1rem;
+        width: 100%;
+        height: .1rem;
+        background-color: rgb(207, 207, 207);
     }
 }

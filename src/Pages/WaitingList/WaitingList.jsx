@@ -296,6 +296,7 @@ const WaitingList = () => {
       });
   }
   const filterUsers = (judetId, orasId, localitateId) => {
+    console.log(judetId, orasId, localitateId);
     setJudet(judetId);
     setOras(orasId);
     setLocalitate(localitateId);
