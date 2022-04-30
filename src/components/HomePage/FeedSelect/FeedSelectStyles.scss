@@ -1,0 +1,11 @@
+@import "./../../../assets/styles/variables";
+@import "./../../../assets/styles/mixins";
+
+.feed-select {
+    margin-top: 16px;
+    background-color: white;
+    width: 310px;
+    //   height: 250px;
+    @include border-default;
+    padding: 1rem 1rem;
+}

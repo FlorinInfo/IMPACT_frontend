@@ -13,7 +13,7 @@
     height: 25px;
     width: 50px;
     color: rgb(53, 44, 44);
-    margin-left: 40px;
+    margin-left: auto;
   }
 
   &:hover {
@@ -40,6 +40,10 @@
   margin-left: 10px;
   color: rgb(53, 44, 44);
   font-family: $font-light;
+  width: 110px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .rank {

@@ -26,18 +26,18 @@ function SortButton(props) {
   );
 }
 
-const SortPosts = ({ emitSort }) => {
+const SortPosts = ({ emitSort, selectedSort }) => {
   let { routeFilter } = useParams();
-  const [selectedSort, setSelectedSort] = useState(
-    routeFilter == undefined ? "recent" : routeFilter.split("-")[2]
-  );
+  // const [selectedSort, setSelectedSort] = useState(
+  //   routeFilter == undefined ? "recent" : routeFilter.split("-")[2]
+  // );
 
   const [openedTimeSelector, setOpenedTimeSelector] = useState(false);
   const [selectedTime, setSelectedTime] = useState("Astazi");
 
   const handleSelectedSort = (e) => {
     e.preventDefault();
-    setSelectedSort(e.target.closest(".sort-button").id);
+    // setSelectedSort(e.target.closest(".sort-button").id);
     // if (e.target.closest(".sort-button").id != "time")
     emitSort(e.target.closest(".sort-button").id);
   };

@@ -1,6 +1,7 @@
 import React from "react";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 import "./DropDownMenuProfile.scss";
 
@@ -8,10 +9,12 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { GiLevelThreeAdvanced } from "react-icons/gi";
 import { IoMdContact } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
+import { ImpactStore } from "../../../store/ImpactStore";
 
 const DropDownMenuProfile = () => {
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const navigate = useNavigate();
+  const { user, setUser } = useContext(ImpactStore);
 
   const logOut = () => {
     removeCookie("token");
@@ -21,6 +24,7 @@ const DropDownMenuProfile = () => {
     removeCookie("villageId");
     removeCookie("localityId");
     removeCookie("admin");
+    // setUser(null);
     navigate("/");
   };
   const handleSelectedAction = (e) => {
