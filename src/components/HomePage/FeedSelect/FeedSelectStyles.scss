@@ -8,4 +8,10 @@
     //   height: 250px;
     @include border-default;
     padding: 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.async-paginate-locality {
+    margin-top: 1rem;
 }

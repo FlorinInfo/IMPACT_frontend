@@ -235,10 +235,10 @@ const WaitingList = () => {
 
   const loadUsers = () => {
     setLoader(true);
-    alert(judet)
-    alert(oras)
+    // alert(judet)
+    // alert(oras)
 
-    alert(localitate)
+    // alert(localitate)
     axios
       .get(
         `/users?offset=${page == 0 ? page : page * rowsPerPage}&limit=${rowsPerPage}${judet  ? "&countyId=" + judet : ""}${oras ? "&villageId=" + oras : ""}${localitate  ? "&localityId=" + localitate : ""}=&search=${search}&role=&status=IN_ASTEPTARE`,

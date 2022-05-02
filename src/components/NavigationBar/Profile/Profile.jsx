@@ -38,7 +38,7 @@ const Profile = (props) => {
     >
       <img className="pic" src={imgProfil} />
       <div className="profile--text">
-        <h1 className="username">{user.firstName} {user.lastName}xxxxxxxxxxxxxxxx</h1>
+        <h1 className="username">{user.firstName} {user.lastName}</h1>
         <h1 className="rank">rank</h1>
       </div>
       <RiArrowDropDownLine className="arrowDropDown" />
