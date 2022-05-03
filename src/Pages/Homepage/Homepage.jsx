@@ -97,7 +97,7 @@ const Homepage = () => {
       for (const el of filterSplit) {
         let elSplit = el.split("=");
         if (elSplit[0] != "filter")
-          newParams = elSplit[0] + "=" + elSplit[1] + "&";
+          newParams = elSplit[0] + "=" + elSplit[1] + "&" + newParams;
         // console.log({[elSplit[0]]:elSplit[1]})
       }
     } else {
@@ -167,6 +167,11 @@ const Homepage = () => {
               <div className="homepage__posts">
                 {posts.map((article) => (
                   <div key={article.id} className="homepage__post">
+                    Judet : {article.countyId ? article.countyId : ""}
+                    <br />
+                    Oras/comuna : {article.villageId ? article.villageId : ""}
+                    <br />
+                    Localitate : {article.localityId ? article.localityId : ""}
                     <Post
                       deleteArticle={deleteArticle}
                       updateArticle={updateArticle}

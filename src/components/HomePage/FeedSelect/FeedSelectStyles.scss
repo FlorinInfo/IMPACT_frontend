@@ -15,3 +15,21 @@
 .async-paginate-locality {
     margin-top: 1rem;
 }
+
+.admin-select-feed {
+    display: flex;  
+    flex-direction: column;
+    &__btn {
+        font-size: 1.2rem;
+        padding: 0 2rem;
+        height: 3rem;
+        margin-left: auto;
+        margin-top: .5rem;
+        width: 100%;
+        margin-bottom: .5rem;
+    }
+}
+
+.react-select {
+    margin-top: 1rem!important;
+}
