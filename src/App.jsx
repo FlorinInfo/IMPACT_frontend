@@ -20,7 +20,8 @@ import axios from "./assets/axios/axios";
 import { ImpactStore } from "./store/ImpactStore";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import ProtectedAdminRoute from "./utils/ProtectedAdminRoute";
-
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function App() {
   const { user, setUser } = useContext(ImpactStore);
@@ -46,15 +47,12 @@ function App() {
       const userId = jwt_decode(cookies.token).userId;
 
       axios
-        .get(
-          `/users/${userId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          }
-        )
+        .get(`/users/${userId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        })
         .then((response) => {
           // handle success
           console.log(response);
@@ -66,7 +64,7 @@ function App() {
           setCookie("localityId", response.data.localityId);
           setUser({
             ...response.data,
-            token: cookies.token
+            token: cookies.token,
           });
         })
         .catch((error) => {
@@ -77,15 +75,14 @@ function App() {
           setLoader(false);
           // always executed
         });
-    }
-    else {
+    } else {
       setLoader(false);
     }
-  }, [location])
+  }, [location]);
 
   useEffect(() => {
     console.log(user);
-  }, [user])
+  }, [user]);
 
   // const redirectCheck = (page) => {
   //   // alert(user.token)
@@ -96,8 +93,8 @@ function App() {
 
   return (
     <div className="App">
-      {
-        loader == false ? <>
+      {loader == false ? (
+        <>
           {cookies.token && location.pathname != "/pending" ? (
             <NavigationBar currentPage={location.pathname} />
           ) : (
@@ -124,7 +121,13 @@ function App() {
             />
             <Route
               path="/pending"
-              element={user.token && user.status == "IN_ASTEPTARE" ? <Pending /> : redirectTo("/")}
+              element={
+                user.token && user.status == "IN_ASTEPTARE" ? (
+                  <Pending />
+                ) : (
+                  redirectTo("/")
+                )
+              }
             />
             {/* <Route
               path="/create-admins"
@@ -167,13 +170,21 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </>
-          : ""
-      }
-
+      ) : (
+        <>
+          <Backdrop
+          open={loader}
+            sx={{
+              color: "#3b5998",
+              zIndex: (theme) => theme.zIndex.drawer + 999,
+            }}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </>
+      )}
     </div>
   );
 }
-
-
 
 export default App;
