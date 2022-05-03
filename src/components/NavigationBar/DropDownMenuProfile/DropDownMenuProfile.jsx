@@ -25,7 +25,7 @@ const DropDownMenuProfile = () => {
     removeCookie("localityId");
     removeCookie("admin");
     // setUser(null);
-    navigate("/");
+    window.location.reload();
   };
   const handleSelectedAction = (e) => {
     e.preventDefault();

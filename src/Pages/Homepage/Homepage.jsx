@@ -12,10 +12,12 @@ import { Cookies, useCookies } from "react-cookie";
 import { ImpactStore } from "../../store/ImpactStore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
+
 const Homepage = () => {
+  const location = useLocation();
   const defaultFilter = (filterType) => {
     if (routeFilter != undefined) {
       let filterSplit = routeFilter.split("&").reverse();
@@ -89,6 +91,12 @@ const Homepage = () => {
   useEffect(() => {
     fetchData();
   }, [page]);
+
+  // useEffect(()=>{
+  //   setPosts([]);
+  //   setPage(0);
+  //   fetchData();
+  // },[location])
 
   const changeFeed = (filter) => {
     let newParams = "";
