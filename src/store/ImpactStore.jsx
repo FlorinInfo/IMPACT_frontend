@@ -10,6 +10,7 @@ export function ImpactStoreProvider({ children }) {
 		localityId: null,
 		zoneRole: null,
 		zoneRoleOn: null,
+		
 	});
 
 	return (

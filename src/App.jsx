@@ -72,7 +72,7 @@ function App() {
           console.log(error);
         })
         .then(() => {
-          setLoader(false);
+          setTimeout(()=>{setLoader(false);},200)
           // always executed
         });
     } else {
@@ -93,13 +93,16 @@ function App() {
 
   return (
     <div className="App">
-      {loader == false ? (
-        <>
+       {loader == false  ? (
+       <>
+      
           {cookies.token && location.pathname != "/pending" ? (
             <NavigationBar currentPage={location.pathname} />
           ) : (
             ""
           )}
+         
+             
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />

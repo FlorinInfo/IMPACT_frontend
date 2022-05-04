@@ -6,7 +6,12 @@
   background: #ffffff;
   @include border-default;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  &__top {
+    display: flex;
+    flex-direction: row;
+  }
   
 
   &__votes {
@@ -134,6 +139,10 @@
         height: 20px;
       }
     }
+  }
+
+  &__comments {
+    padding: 0 .5rem;
   }
 }
 

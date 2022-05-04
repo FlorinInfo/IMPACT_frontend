@@ -126,11 +126,11 @@ const AdminFeedSelect = () => {
   };
 
   const goFeed = () => {
-    let route = `/${judet.id ? "&countyId=" + judet.id: ""}${oras.id ? "&villageId=" + oras.id: ""}${localitate.id ? "&localityId=" + localitate.id: ""}`;
-    route = route.slice(0,1) + route.slice(2);
-    navigate(
-      route
-    );
+    let route = `/${judet.id ? "&countyId=" + judet.id : ""}${
+      oras.id ? "&villageId=" + oras.id : ""
+    }${localitate.id ? "&localityId=" + localitate.id : ""}`;
+    route = route.slice(0, 1) + route.slice(2);
+    navigate(route);
   };
 
   return (
@@ -139,11 +139,12 @@ const AdminFeedSelect = () => {
         className="admin-select-feed__btn button-default-form"
         onClick={() => setExpand(!expand)}
       >
-        {expand==true ? "Ascunde " : "Vezi "} filtre
+        {expand == true ? "Ascunde " : "Vezi "} filtre
       </button>
       {expand ? (
         <>
           <AsyncPaginate
+            name="judet"
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
             classNamePrefix="react-select"
@@ -154,7 +155,7 @@ const AdminFeedSelect = () => {
             placeholder={"Selecteaza judet"}
           />
           <AsyncPaginate
-          style={{ marginTop: `20px` }}
+            style={{ marginTop: `20px` }}
             isDisabled={judet.id == null || orase.length == 0}
             key={judet.id}
             getOptionLabel={(option) => option.name}
@@ -431,7 +432,7 @@ const FeedSelect = () => {
               <FormControlLabel
                 value="villageId"
                 control={<Radio />}
-                label="Oras"
+                label="Oras / Comuna"
               />
               {user.localityId || user.zoneRoleOn == "COUNTY" ? (
                 <FormControlLabel
@@ -448,36 +449,32 @@ const FeedSelect = () => {
           {user.zoneRoleOn == "VILLAGE" &&
           user.localityId &&
           zone.type == "localityId" ? (
-            <AsyncPaginate
-              getOptionLabel={(option) => option.name}
-              getOptionValue={(option) => option.id}
-              classNamePrefix="react-select"
-              className="react-select"
-              value={localitate}
-              onChange={changeLocality}
-              loadOptions={loadLocalitati}
-              placeholder={""}
-            />
+            <>
+              <label htmlFor="localitate" className="async-paginate-label">
+                Selecteaza localitate
+              </label>
+              <AsyncPaginate
+                name="localitate"
+                getOptionLabel={(option) => option.name}
+                getOptionValue={(option) => option.id}
+                classNamePrefix="react-select"
+                className="react-select"
+                value={localitate}
+                onChange={changeLocality}
+                loadOptions={loadLocalitati}
+                placeholder={""}
+              />
+            </>
           ) : (
             ""
           )}
           {user.zoneRoleOn == "COUNTY" && zone.type == "villageId" ? (
-            <AsyncPaginate
-              getOptionLabel={(option) => option.name}
-              getOptionValue={(option) => option.id}
-              classNamePrefix="react-select"
-              className="react-select"
-              value={oras}
-              onChange={changeVillage}
-              loadOptions={loadOrase}
-              placeholder={""}
-            />
-          ) : (
-            ""
-          )}
-          {user.zoneRoleOn == "COUNTY" && zone.type == "localityId" ? (
             <>
+              <label htmlFor="oras" className="async-paginate-label">
+                Selecteaza oras / comuna
+              </label>
               <AsyncPaginate
+                name="oras"
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.id}
                 classNamePrefix="react-select"
@@ -487,7 +484,31 @@ const FeedSelect = () => {
                 loadOptions={loadOrase}
                 placeholder={""}
               />
+            </>
+          ) : (
+            ""
+          )}
+          {user.zoneRoleOn == "COUNTY" && zone.type == "localityId" ? (
+            <>
+              <label htmlFor="oras" className="async-paginate-label">
+                Selecteaza oras / comuna
+              </label>
               <AsyncPaginate
+                name="oras"
+                getOptionLabel={(option) => option.name}
+                getOptionValue={(option) => option.id}
+                classNamePrefix="react-select"
+                className="react-select"
+                value={oras}
+                onChange={changeVillage}
+                loadOptions={loadOrase}
+                placeholder={""}
+              />
+              <label htmlFor="localitate" className="async-paginate-label">
+                Selecteaza localitate
+              </label>
+              <AsyncPaginate
+                name="localitate"
                 className="async-paginate-locality"
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.id}

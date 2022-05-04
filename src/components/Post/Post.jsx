@@ -207,6 +207,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
       {/* <video controls muted autoPlay>
                         <source src="https://backend.imp-act.ml/assets/videosArticles/7Oog2e1I_aOnSAr322I0U.mp4" type="video/mp4"></source>
                     </video> */}
+      <div className="post__top">
       <div className="post__votes">
         <BiUpvote
           onClick={() => votePost("UPVOTE")}
@@ -241,7 +242,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         <div className="post__actions" ref={postOptionsRef}>
           <button className="post__actions__button" onClick={()=>navigate("/post/"+article.id)}>
             <VscComment className="post__actions__button__icon" />
-            <span className="post__actions__button__text">{article._count.comments} Comentarii</span>
+            <span className="post__actions__button__text">{article._count.comments} {window.screen.width > 500 ? "Comentarii" : ""}</span>
           </button>
           <button className="post__actions__button" onClick={handleFavorite}>
             <MdOutlineFavorite
@@ -254,7 +255,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
                 article.favorites.length && "favorite"
               }`}
             >
-              Favorite
+              {window.screen.width > 500 ? "Favorite" : ""}
             </span>
           </button>
           {user.admin == true ||
@@ -271,6 +272,10 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
           )}
           {showPostOptions && <PostOptions deletePost={deletePost} />}
         </div>
+        
+      </div>
+      </div>
+      <div className="post__comments">
         {comments ? comments : ""}
       </div>
     </div>

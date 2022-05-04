@@ -75,6 +75,7 @@ const Homepage = () => {
       )
       .then((response) => {
         // handle success
+        if(response.data.errors) navigate("/");
         console.log(response);
         setLimit(response.data.limit);
         setPosts([...posts, ...response.data.articles]);
@@ -93,8 +94,10 @@ const Homepage = () => {
   }, [page]);
 
   // useEffect(()=>{
-  //   setPosts([]);
-  //   setPage(0);
+  //   setZone(defaultFilter("zone"));
+  //   setFilter(defaultFilter("filter"));
+  //   // setPosts([]);
+  //   // setPage(0);
   //   fetchData();
   // },[location])
 
@@ -175,11 +178,11 @@ const Homepage = () => {
               <div className="homepage__posts">
                 {posts.map((article) => (
                   <div key={article.id} className="homepage__post">
-                    Judet : {article.countyId ? article.countyId : ""}
+                    {/* Judet : {article.countyId ? article.countyId : ""}
                     <br />
                     Oras/comuna : {article.villageId ? article.villageId : ""}
                     <br />
-                    Localitate : {article.localityId ? article.localityId : ""}
+                    Localitate : {article.localityId ? article.localityId : ""} */}
                     <Post
                       deleteArticle={deleteArticle}
                       updateArticle={updateArticle}
