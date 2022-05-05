@@ -3,6 +3,7 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 import "./App.scss";
 import SignUp from "./Pages/SignUp/SignUp";
 import Homepage from "./Pages/Homepage/Homepage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import Login from "./Pages/Login/Login";
 import Pending from "./Pages/Pending/Pending";
 import WaitingList from "./Pages/WaitingList/WaitingList";
@@ -72,7 +73,9 @@ function App() {
           console.log(error);
         })
         .then(() => {
-          setTimeout(()=>{setLoader(false);},200)
+          setTimeout(() => {
+            setLoader(false);
+          }, 200);
           // always executed
         });
     } else {
@@ -93,16 +96,14 @@ function App() {
 
   return (
     <div className="App">
-       {loader == false  ? (
-       <>
-      
+      {loader == false ? (
+        <>
           {cookies.token && location.pathname != "/pending" ? (
             <NavigationBar currentPage={location.pathname} />
           ) : (
             ""
           )}
-         
-             
+
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
@@ -163,6 +164,14 @@ function App() {
               }
             />
             <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/post/:id"
               element={
                 <ProtectedRoute>
@@ -176,7 +185,7 @@ function App() {
       ) : (
         <>
           <Backdrop
-          open={loader}
+            open={loader}
             sx={{
               color: "#3b5998",
               zIndex: (theme) => theme.zIndex.drawer + 999,

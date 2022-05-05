@@ -13,7 +13,7 @@ import { ImpactStore } from "../../../store/ImpactStore";
 
 const DropDownMenuHome = () => {
   const { user, setUser } = useContext(ImpactStore);
-  console.log(user, "fggdgdf");
+  // console.log(user, "fggdgdf");
 
   const navigate = useNavigate();
 
@@ -33,10 +33,12 @@ const DropDownMenuHome = () => {
 
   return (
     <div className="dropdown__home" onClick={handleSelectedPage}>
-      {(user.admin || user.zoneRole === "MODERATOR") && (
+      {(user.admin ||
+        user.zoneRole === "MODERATOR" ||
+        user.zoneRole === "ADMINISTRATOR") && (
         <span className="section-name">Administrator</span>
       )}
-      {user.admin && (
+      {(user.admin || user.zoneRole === "ADMINISTRATOR") && (
         <DropDownItemHome
           className="menu-item__home"
           leftIcon={<RiAdminLine className="icon-left__home" />}
@@ -45,7 +47,9 @@ const DropDownMenuHome = () => {
           <span className="menu-item-text__home">Users</span>
         </DropDownItemHome>
       )}
-      {(user.admin || user.zoneRole === "MODERATOR") && (
+      {(user.admin ||
+        user.zoneRole === "MODERATOR" ||
+        user.zoneRole === "ADMINISTRATOR") && (
         <DropDownItemHome
           className="menu-item__home"
           leftIcon={<AiOutlineUnorderedList className="icon-left__home" />}

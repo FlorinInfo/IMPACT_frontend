@@ -1,0 +1,63 @@
+@import "./../../assets/styles/mixins";
+@import "./../../assets/styles/variables";
+
+.profile-page {
+  @include logged-page;
+
+  &__container {
+    @include default-logged-container;
+    // background-color: red;
+    display: flex;
+  }
+
+  &__left {
+    @include default-logged-container--left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__right {
+    @include default-logged-container--right;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.profile-component {
+  //   height: 300px;
+  display: flex;
+  background-color: white;
+  border-radius: 4px;
+  @include border-default;
+
+  &__image {
+    margin: 25px;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+  }
+
+  &__data {
+    display: inline;
+    // align-items: center;
+    // justify-content: center;
+    margin-top: 35px;
+
+    &__name {
+      font-family: $font-medium;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    &__value {
+      font-family: $font-medium;
+      font-size: 16px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  .profile-component {
+    margin-top: 10px;
+  }
+}
