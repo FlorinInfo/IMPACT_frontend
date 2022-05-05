@@ -14,7 +14,7 @@ const Profile = (props) => {
   const [clicked, setClicked] = useState("");
   let profileMenuRef = useRef();
   const [rank, setRank] = useState(
-    user.monthlyPoints ?()=>rankPerform(user.monthlyPoints, user.zoneRole, user.admin) : {
+    user.monthlyPoints>=0 ?()=>rankPerform(user.monthlyPoints, user.zoneRole, user.admin) : {
       type:"Cetatean",
       color:"black",
       image:"default.jpg"

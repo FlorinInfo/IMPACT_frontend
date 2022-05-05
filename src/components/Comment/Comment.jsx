@@ -49,7 +49,7 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
   const [reply, setReply] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [rank, setRank] = useState(
-    data.author.monthlyPoints ? ()=>rankPerform(data.author.monthlyPoints, data.roleUser, data.admin)
+    data.author.monthlyPoints>=0 ? ()=>rankPerform(data.author.monthlyPoints, data.roleUser, data.admin)
     :{
       type:"Cetatean",
       color:"black",
@@ -126,7 +126,7 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
             {data.author.firstName} {data.author.lastName}
           </span>
         </div>
-        {user.id == data.authorId || user.zoneRole != "CETATEAN" ? (
+        {user.id == data.authorId || user.zoneRole != "CETATEAN"|| user.admin ? (
           <>
             <IconButton aria-label="delete" className="comment__delete" onClick={deleteComment}>
               <DeleteIcon />

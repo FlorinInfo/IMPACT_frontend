@@ -18,6 +18,7 @@ import { Cookies, useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import { ImpactStore } from "../../store/ImpactStore";
 import { useNavigate, useLocation } from "react-router-dom";
+import rankPerform from "../../utils/rank";
 const testMedia = [
   // profileImage,
   testImage,
@@ -31,6 +32,15 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
   const navigate = useNavigate();
+  console.log(article)
+  const [rank, setRank] = useState(
+    article.author.monthlyPoints>=0 ? ()=>rankPerform(article.author.monthlyPoints, article.roleUser, article.admin)
+    :{
+      type:"Cetatean",
+      color:"black",
+      image:"default.jpg"
+    }
+    );
 
   // console.log(article, "fsdfs");
 
@@ -229,10 +239,13 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
       </div>
       <div className="post__main">
         <div className="post__author">
-          <img src={profileImage} alt="" />
-          <Link to="#" className="post__author-name">
+          <img src={require(`../../assets/images/ranks/${rank.image}`)} alt="" />
+          <div className="post__role-username">
+            <span className="post__role" style={{color:rank.color}}>{rank.type}</span>
+          <Link to="#" className="post__author-name" >
             {article.author.firstName} {article.author.lastName}
           </Link>
+          </div>
         </div>
         <span className="post__title">{article.title}</span>
         <p className="post__description">{article.description}</p>
