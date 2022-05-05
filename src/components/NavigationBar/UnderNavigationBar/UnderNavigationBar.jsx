@@ -10,6 +10,38 @@ import { useLocation } from "react-router-dom";
 import { FaExchangeAlt } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
 import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
+import FeedSelect from "../../HomePage/FeedSelect/FeedSelect";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
+function DialogFeed({open, emitClose}) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+
+  const handleClose = () => {
+    emitClose()
+  };
+
+  return (
+    <div>
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <FeedSelect/>
+      </Dialog>
+    </div>
+  );
+}
 
 function UnderNavigationBarButton(props) {
   return (
@@ -48,6 +80,7 @@ const UnderNavigationBar = () => {
     }
   };
   const [selectedButton, setSelectedButton] = useState(() => setDefaultBtn());
+  const [open, setOpen] = useState(false);
 
   const handleSelectedButton = (e) => {
     e.preventDefault();
@@ -86,12 +119,15 @@ const UnderNavigationBar = () => {
           </div>
         </>
       ) : (
+        <>
+        <DialogFeed open={open} emitClose={()=>setOpen(false)}/>
         <div className="under-navigation-bar under-navigation-bar__admins">
+          
           <UnderNavigationBarButton active={false}>
             {/* <span className="under-navigation-bar__button__text">Judet</span> */}
           </UnderNavigationBarButton>
-          <UnderNavigationBarButton active={false}>
-            <span className="under-navigation-bar__button__text">
+          <UnderNavigationBarButton active={false} >
+            <span className="under-navigation-bar__button__text" onClick={()=>setOpen(true)}>
               {selectedButton == "countyId" ? "Judet" : selectedButton == "villageId" ? "Oras/Comuna" :"Localitate" }
               {/* <IconButton aria-label="delete">
                 <DisplaySettingsIcon />
@@ -102,6 +138,7 @@ const UnderNavigationBar = () => {
             {/* <span className="under-navigation-bar__button__text">Judet</span> */}
           </UnderNavigationBarButton>
         </div>
+        </>
       )}
     </>
   );
