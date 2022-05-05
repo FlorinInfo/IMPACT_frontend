@@ -12,6 +12,7 @@
         img {
             width: 2.6rem;
             border-radius: 50%;
+            height: 2.6rem;
         }
     }
 
@@ -29,10 +30,12 @@
     }
 
     &__role {
-        font-family: $font-light;
+        font-family: $font-bold;
+        color: $default-color;
         display: block;
         margin:auto 0 auto .5rem;
-        font-size: 1.3rem;
+        font-size: 1rem;
+        margin-top: -.4rem;
     }
 
     &__data {
@@ -45,6 +48,7 @@
     &__text {
         font-family: $font-regular;
         font-size: 1.4rem;
+        word-wrap: break-word;
 
         &-parrent {
             font-family: $font-regular;
@@ -86,5 +90,15 @@
         padding: 0 2rem;
         height: 3rem;
         margin-left: auto;
+    }
+
+    &__delete {
+        color: red!important;
+        font-size: 1.6rem;
+        display: block!important;
+        margin-left: auto!important;
+        margin-top: auto;
+        margin-bottom: auto;
+        cursor: pointer;
     }
 }
