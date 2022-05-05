@@ -7,9 +7,9 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
-
-
+import { FaExchangeAlt } from "react-icons/fa";
+import IconButton from "@mui/material/IconButton";
+import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 
 function UnderNavigationBarButton(props) {
   return (
@@ -31,37 +31,34 @@ const UnderNavigationBar = () => {
   let routeFilter = search.pathname.substring(1);
   const { user, setUser } = useContext(ImpactStore);
   let navigate = useNavigate();
-  const setDefaultBtn = ()=> {
-    if (routeFilter != '') {
+  const setDefaultBtn = () => {
+    if (routeFilter != "") {
       let filterSplit = routeFilter.split("&").reverse();
-        
-        for (const el of filterSplit) {
-          let elSplit = el.split("=");
-          if (elSplit[0] == "localityId")
-            return  elSplit[0] ;
-          if (elSplit[0] == "villageId")
-            return  elSplit[0] ;
-          if (elSplit[0] == "countyId")
-            return  elSplit[0] ;
-          console.log({[elSplit[0]]:elSplit[1]}) 
+
+      for (const el of filterSplit) {
+        let elSplit = el.split("=");
+        if (elSplit[0] == "localityId") return elSplit[0];
+        if (elSplit[0] == "villageId") return elSplit[0];
+        if (elSplit[0] == "countyId") return elSplit[0];
+        console.log({ [elSplit[0]]: elSplit[1] });
       }
     } else {
-      if(user.localityId) return "localityId";
+      if (user.localityId) return "localityId";
       return "villageId";
     }
   };
-  const [selectedButton, setSelectedButton] = useState(()=>setDefaultBtn());
+  const [selectedButton, setSelectedButton] = useState(() => setDefaultBtn());
 
   const handleSelectedButton = (e) => {
     e.preventDefault();
     const selected = e.target.closest(".under-navigation-bar__button").id;
     setSelectedButton(selected);
-    navigate(`/${selected}=${user[selected]}`)
+    navigate(`/${selected}=${user[selected]}`);
   };
 
   return (
     <>
-      {user.zoneRole == "CETATEAN"&&!user.admin ? (
+      {user.zoneRole == "CETATEAN" && !user.admin ? (
         <>
           <div className="under-navigation-bar" onClick={handleSelectedButton}>
             <UnderNavigationBarButton
@@ -89,7 +86,22 @@ const UnderNavigationBar = () => {
           </div>
         </>
       ) : (
-        ""
+        <div className="under-navigation-bar under-navigation-bar__admins">
+          <UnderNavigationBarButton active={false}>
+            {/* <span className="under-navigation-bar__button__text">Judet</span> */}
+          </UnderNavigationBarButton>
+          <UnderNavigationBarButton active={false}>
+            <span className="under-navigation-bar__button__text">
+              {selectedButton == "countyId" ? "Judet" : selectedButton == "villageId" ? "Oras/Comuna" :"Localitate" }
+              {/* <IconButton aria-label="delete">
+                <DisplaySettingsIcon />
+              </IconButton> */}
+            </span>
+          </UnderNavigationBarButton>
+          <UnderNavigationBarButton active={false}>
+            {/* <span className="under-navigation-bar__button__text">Judet</span> */}
+          </UnderNavigationBarButton>
+        </div>
       )}
     </>
   );
