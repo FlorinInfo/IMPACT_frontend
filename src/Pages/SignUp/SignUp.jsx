@@ -12,7 +12,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (cookies.token) {
-      navigate(-1);
+      navigate("/");
     }
   }, []);
 
