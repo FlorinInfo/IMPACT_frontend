@@ -12,10 +12,12 @@ export function ImpactStoreProvider({ children }) {
 		zoneRoleOn: null,
 		
 	});
+	const [feedDialog, setFeedDialog] = useState(false);
 
 	return (
 		<ImpactStore.Provider value={{
-			user,setUser
+			user,setUser,
+			feedDialog, setFeedDialog
 		}}>
 			{children}
 		</ImpactStore.Provider>

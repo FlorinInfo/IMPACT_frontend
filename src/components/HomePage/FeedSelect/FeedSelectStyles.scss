@@ -39,3 +39,9 @@
     margin-bottom: -.5rem;
     margin-top: .3rem;
 }
+
+@media only screen and (max-width: 780px) {
+    .admin-select-feed__btn--expand {
+        display: none;
+    }
+  }

@@ -18,30 +18,43 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
-function DialogFeed({open, emitClose}) {
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+import CloseIcon from '@mui/icons-material/Close';
 
 
-  const handleClose = () => {
-    emitClose()
-  };
+// function DialogFeed({open, emitClose}) {
+//   const theme = useTheme();
+//   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  return (
-    <div>
 
-      <Dialog
-        fullScreen={fullScreen}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <FeedSelect/>
-      </Dialog>
-    </div>
-  );
-}
+//   const handleClose = () => {
+//     emitClose()
+//   };
+
+//   return (
+//     <div>
+//       <Dialog
+//         fullScreen={fullScreen}
+//         open={open}
+//         onClose={handleClose}
+//         aria-labelledby="responsive-dialog-title"
+//       >
+//         <IconButton
+//           aria-label="close"
+//           onClick={handleClose}
+//           sx={{
+//             position: 'absolute',
+//             right: 8,
+//             top: 8,
+//             color: (theme) => theme.palette.grey[500],
+//           }}
+//         >
+//           <CloseIcon />
+//         </IconButton>
+//         <FeedSelect/>
+//       </Dialog>
+//     </div>
+//   );
+// }
 
 function UnderNavigationBarButton(props) {
   return (
@@ -62,6 +75,7 @@ const UnderNavigationBar = () => {
   const search = useLocation();
   let routeFilter = search.pathname.substring(1);
   const { user, setUser } = useContext(ImpactStore);
+  const { feedDialog, setFeedDialog } = useContext(ImpactStore);
   let navigate = useNavigate();
   const setDefaultBtn = () => {
     if (routeFilter != "") {
@@ -120,14 +134,14 @@ const UnderNavigationBar = () => {
         </>
       ) : (
         <>
-        <DialogFeed open={open} emitClose={()=>setOpen(false)}/>
+        {/* <DialogFeed open={feedDialog} emitClose={()=>setFeedDialog(false)}/> */}
         <div className="under-navigation-bar under-navigation-bar__admins">
           
           <UnderNavigationBarButton active={false}>
             {/* <span className="under-navigation-bar__button__text">Judet</span> */}
           </UnderNavigationBarButton>
           <UnderNavigationBarButton active={false} >
-            <span className="under-navigation-bar__button__text" onClick={()=>setOpen(true)}>
+            <span className="under-navigation-bar__button__text" onClick={()=>setFeedDialog(true)}>
               {selectedButton == "countyId" ? "Judet" : selectedButton == "villageId" ? "Oras/Comuna" :"Localitate" }
               {/* <IconButton aria-label="delete">
                 <DisplaySettingsIcon />

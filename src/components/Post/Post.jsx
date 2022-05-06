@@ -19,6 +19,9 @@ import jwt_decode from "jwt-decode";
 import { ImpactStore } from "../../store/ImpactStore";
 import { useNavigate, useLocation } from "react-router-dom";
 import rankPerform from "../../utils/rank";
+import defaultVote from "../../assets/images/votes/default.png";
+import upVote from "../../assets/images/votes/upvote.png";
+import downVote from "../../assets/images/votes/downvote.png";
 const testMedia = [
   // profileImage,
   testImage,
@@ -32,15 +35,21 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
   const navigate = useNavigate();
-  console.log(article)
+  console.log(article);
   const [rank, setRank] = useState(
-    article.author.monthlyPoints>=0 ? ()=>rankPerform(article.author.monthlyPoints, article.roleUser, article.admin)
-    :{
-      type:"Cetatean",
-      color:"black",
-      image:"default.jpg"
-    }
-    );
+    article.author.monthlyPoints >= 0
+      ? () =>
+          rankPerform(
+            article.author.monthlyPoints,
+            article.roleUser,
+            article.admin
+          )
+      : {
+          type: "Cetatean",
+          color: "black",
+          image: "default.jpg",
+        }
+  );
 
   // console.log(article, "fsdfs");
 
@@ -218,79 +227,118 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
                         <source src="https://backend.imp-act.ml/assets/videosArticles/7Oog2e1I_aOnSAr322I0U.mp4" type="video/mp4"></source>
                     </video> */}
       <div className="post__top">
-      <div className="post__votes">
-        <BiUpvote
+        <div className="post__votes">
+          {article.votes.length && article.votes[0].type == "UPVOTE" ? (
+            <img
+              onClick={() => votePost("UPVOTE")}
+              src={upVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--up"
+            />
+          ) : (
+            <img
+              onClick={() => votePost("UPVOTE")}
+              src={defaultVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--up"
+            />
+          )}
+
+          {/* <BiUpvote
           onClick={() => votePost("UPVOTE")}
           className={`post__votes-action post__votes-action--up ${
             article.votes.length && article.votes[0].type == "UPVOTE"
               ? "post__votes-action--active-1"
               : ""
           }`}
-        />
-        <span className="post__votes-number">{article.votePoints}</span>
-        <BiDownvote
+        /> */}
+          <span className="post__votes-number">{article.votePoints}</span>
+          {article.votes.length && article.votes[0].type == "DOWNVOTE" ? (
+            <img
+              onClick={() => votePost("DOWNVOTE")}
+              src={downVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--down"
+            />
+          ) : (
+            <img
+              onClick={() => votePost("DOWNVOTE")}
+              src={defaultVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--down"
+            />
+          )}
+          {/* <BiDownvote
           onClick={() => votePost("DOWNVOTE")}
           className={`post__votes-action post__votes-action--down ${
             article.votes.length && article.votes[0].type == "DOWNVOTE"
               ? "post__votes-action--active-2"
               : ""
           }`}
-        />
-      </div>
-      <div className="post__main">
-        <div className="post__author">
-          <img src={require(`../../assets/images/ranks/${rank.image}`)} alt="" />
-          <div className="post__role-username">
-            <span className="post__role" style={{color:rank.color}}>{rank.type}</span>
-          <Link to="#" className="post__author-name" >
-            {article.author.firstName} {article.author.lastName}
-          </Link>
-          </div>
+        /> */}
         </div>
-        <span className="post__title">{article.title}</span>
-        <p className="post__description">{article.description}</p>
-        <div className="post__media">
-          <MediaSlider media={article.articleGallery} />
-        </div>
-        <div className="post__actions" ref={postOptionsRef}>
-          <button className="post__actions__button" onClick={()=>navigate("/post/"+article.id)}>
-            <VscComment className="post__actions__button__icon" />
-            <span className="post__actions__button__text">{article._count.comments} {window.screen.width > 500 ? "Comentarii" : ""}</span>
-          </button>
-          <button className="post__actions__button" onClick={handleFavorite}>
-            <MdOutlineFavorite
-              className={`post__actions__button__icon ${
-                article.favorites.length && "favorite"
-              }`}
+        <div className="post__main">
+          <div className="post__author">
+            <img
+              src={require(`../../assets/images/ranks/${rank.image}`)}
+              alt=""
             />
-            <span
-              className={`post__actions__button__text ${
-                article.favorites.length && "favorite"
-              }`}
-            >
-              {window.screen.width > 500 ? "Favorite" : ""}
-            </span>
-          </button>
-          {user.admin == true ||
-          user.zoneRole != "CETATEAN" ||
-          user.id == article.author.id ? (
+            <div className="post__role-username">
+              <span className="post__role" style={{ color: rank.color }}>
+                {rank.type}
+              </span>
+              <Link to="#" className="post__author-name">
+                {article.author.firstName} {article.author.lastName}
+              </Link>
+            </div>
+          </div>
+          <span className="post__title">{article.title}</span>
+          <p className="post__description">{article.description}</p>
+          <div className="post__media">
+            <MediaSlider media={article.articleGallery} />
+          </div>
+          <div className="post__actions" ref={postOptionsRef}>
             <button
               className="post__actions__button"
-              onClick={handleShowOptions}
+              onClick={() => navigate("/post/" + article.id)}
             >
-              <MdMoreHoriz className="post__actions__button__icon" />
+              <VscComment className="post__actions__button__icon" />
+              <span className="post__actions__button__text">
+                {article._count.comments}{" "}
+                {window.screen.width > 500 ? "Comentarii" : ""}
+              </span>
             </button>
-          ) : (
-            ""
-          )}
-          {showPostOptions && <PostOptions deletePost={deletePost} />}
+            <button className="post__actions__button" onClick={handleFavorite}>
+              <MdOutlineFavorite
+                className={`post__actions__button__icon ${
+                  article.favorites.length && "favorite"
+                }`}
+              />
+              <span
+                className={`post__actions__button__text ${
+                  article.favorites.length && "favorite"
+                }`}
+              >
+                {window.screen.width > 500 ? "Favorite" : ""}
+              </span>
+            </button>
+            {user.admin == true ||
+            user.zoneRole != "CETATEAN" ||
+            user.id == article.author.id ? (
+              <button
+                className="post__actions__button"
+                onClick={handleShowOptions}
+              >
+                <MdMoreHoriz className="post__actions__button__icon" />
+              </button>
+            ) : (
+              ""
+            )}
+            {showPostOptions && <PostOptions deletePost={deletePost} />}
+          </div>
         </div>
-        
       </div>
-      </div>
-      <div className="post__comments">
-        {comments ? comments : ""}
-      </div>
+      <div className="post__comments">{comments ? comments : ""}</div>
     </div>
   );
 };
