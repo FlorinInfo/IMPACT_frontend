@@ -12,7 +12,7 @@ const Login = () => {
 
   useEffect(() => {
     if (cookies.token) {
-      navigate(-1);
+      navigate("/");
     }
   }, []);
 

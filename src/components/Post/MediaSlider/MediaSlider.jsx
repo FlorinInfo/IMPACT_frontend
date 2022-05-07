@@ -6,6 +6,10 @@ import "swiper/css";
 import { useRef, useState } from "react";
 import SwiperCore, { Navigation } from "swiper";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import "@vime/core/themes/default.css";
+import { VmPlayer, VmVideo, VmFile, defineCustomElements } from "@vime/core";
+import { Player, Video } from "@vime/react";
+defineCustomElements();
 
 const MediaSlider = ({ media }) => {
   SwiperCore.use([Navigation]);
@@ -23,13 +27,17 @@ const MediaSlider = ({ media }) => {
           </div>
           <button
             ref={navigationNextRef}
-            className={`${activeSlide==media.length ? "slider__btn--invisible" : ""} slider__btn slider__btn--next`}
+            className={`${
+              activeSlide == media.length ? "slider__btn--invisible" : ""
+            } slider__btn slider__btn--next`}
           >
             <GrNext color="#878a8c" className="slider__btn-icon" />
           </button>
           <button
             ref={navigationPrevRef}
-            className={`${activeSlide==1 ? "slider__btn--invisible" : ""} slider__btn slider__btn--prev`}
+            className={`${
+              activeSlide == 1 ? "slider__btn--invisible" : ""
+            } slider__btn slider__btn--prev`}
           >
             <GrPrevious color="#878a8c" className="slider__btn-icon" />
           </button>
@@ -56,16 +64,30 @@ const MediaSlider = ({ media }) => {
             {m.type == "image" ? (
               <img className="slider__media-image" src={m.url} alt="" />
             ) : (
-              <video
-                key={index}
-                width="320"
-                height="240"
-                controls
-                className="slider__media-video"
-              >
-                <source src={m.url} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <Player controls style={{ width: "100%" }}>
+                <Video crossOrigin="" poster={`${m.url}/poster`}>
+                  {/* These are passed directly to the underlying HTML5 `<video>` element. */}
+                  {/* Why `data-src`? Lazy loading, you can always use `src` if you prefer.  */}
+                  <source data-src={m.url} type="video/mp4" />
+                  {/* <track
+                    default
+                    kind="subtitles"
+                    src="https://media.vimejs.com/subs/english.vtt"
+                    srcLang="en"
+                    label="English"
+                  /> */}
+                </Video>
+              </Player>
+              // <video
+              //   key={index}
+              //   width="320"
+              //   height="240"
+              //   controls
+              //   className="slider__media-video"
+              // >
+              //   <source src={m.url} type="video/mp4" />
+              //   Your browser does not support the video tag.
+              // </video>
             )}
           </SwiperSlide>
         ))}

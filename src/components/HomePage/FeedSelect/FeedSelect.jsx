@@ -16,12 +16,13 @@ import axios from "../../../assets/axios/axios";
 const AdminFeedSelect = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(ImpactStore);
+  const { feedDialog, setFeedDialog } = useContext(ImpactStore);
   const [localitate, setLocalitate] = useState("");
   const [oras, setOras] = useState("");
   const [judet, setJudet] = useState("");
   const [orase, setOrase] = useState([]);
   const [localitati, setLocalitati] = useState([]);
-  const [expand, setExpand] = useState(false);
+  const [expand, setExpand] = useState(window.innerWidth <=780 ? true : false);
 
   const setJudetDefault = () => {
     if (
@@ -130,13 +131,14 @@ const AdminFeedSelect = () => {
       oras.id ? "&villageId=" + oras.id : ""
     }${localitate.id ? "&localityId=" + localitate.id : ""}`;
     route = route.slice(0, 1) + route.slice(2);
+    setFeedDialog(false);
     navigate(route);
   };
 
   return (
     <div className="admin-select-feed">
       <button
-        className="admin-select-feed__btn button-default-form"
+        className="admin-select-feed__btn admin-select-feed__btn--expand button-default-form"
         onClick={() => setExpand(!expand)}
       >
         {expand == true ? "Ascunde " : "Vezi "} filtre

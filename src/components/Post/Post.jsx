@@ -5,7 +5,6 @@ import { useEffect, useState, useRef, useContext } from "react";
 
 import MediaSlider from "./MediaSlider/MediaSlider";
 import PostOptions from "./PostOptions/PostOptions";
-import Status from "./Status/Status";
 
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { VscComment } from "react-icons/vsc";
@@ -19,11 +18,11 @@ import { Cookies, useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import { ImpactStore } from "../../store/ImpactStore";
 import { useNavigate, useLocation } from "react-router-dom";
-<<<<<<< HEAD
-
-=======
 import rankPerform from "../../utils/rank";
->>>>>>> 7a304cdd59b29d61cb5822cdd3bd4035be70b900
+import defaultVote from "../../assets/images/votes/default.png";
+import upVote from "../../assets/images/votes/upvote.png";
+import downVote from "../../assets/images/votes/downvote.png";
+import Status from "./Status/Status";
 const testMedia = [
   // profileImage,
   testImage,
@@ -37,17 +36,23 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
   const navigate = useNavigate();
-  console.log(article)
+  console.log(article);
   const [rank, setRank] = useState(
-    article.author.monthlyPoints>=0 ? ()=>rankPerform(article.author.monthlyPoints, article.roleUser, article.admin)
-    :{
-      type:"Cetatean",
-      color:"black",
-      image:"default.jpg"
-    }
-    );
+    article.author.monthlyPoints >= 0
+      ? () =>
+          rankPerform(
+            article.author.monthlyPoints,
+            article.roleUser,
+            article.admin
+          )
+      : {
+          type: "Cetatean",
+          color: "black",
+          image: "default.jpg",
+        }
+  );
 
-  console.log(article, "fsdfs");
+  // console.log(article, "fsdfs");
 
   const handleFavorite = () => {
     const userId = jwt_decode(cookies.token).userId;
@@ -223,66 +228,72 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
                         <source src="https://backend.imp-act.ml/assets/videosArticles/7Oog2e1I_aOnSAr322I0U.mp4" type="video/mp4"></source>
                     </video> */}
       <div className="post__top">
-<<<<<<< HEAD
         <div className="post__votes">
-          <BiUpvote
-            onClick={() => votePost("UPVOTE")}
-            className={`post__votes-action post__votes-action--up ${
-              article.votes.length && article.votes[0].type == "UPVOTE"
-                ? "post__votes-action--active-1"
-                : ""
-            }`}
-          />
-          <span className="post__votes-number">{article.votePoints}</span>
-          <BiDownvote
-            onClick={() => votePost("DOWNVOTE")}
-            className={`post__votes-action post__votes-action--down ${
-              article.votes.length && article.votes[0].type == "DOWNVOTE"
-                ? "post__votes-action--active-2"
-                : ""
-            }`}
-          />
-=======
-      <div className="post__votes">
-        <BiUpvote
+          {article.votes.length && article.votes[0].type == "UPVOTE" ? (
+            <img
+              onClick={() => votePost("UPVOTE")}
+              src={upVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--up"
+            />
+          ) : (
+            <img
+              onClick={() => votePost("UPVOTE")}
+              src={defaultVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--up"
+            />
+          )}
+
+          {/* <BiUpvote
           onClick={() => votePost("UPVOTE")}
           className={`post__votes-action post__votes-action--up ${
             article.votes.length && article.votes[0].type == "UPVOTE"
               ? "post__votes-action--active-1"
               : ""
           }`}
-        />
-        <span className="post__votes-number">{article.votePoints}</span>
-        <BiDownvote
+        /> */}
+          <span className="post__votes-number">{article.votePoints}</span>
+          {article.votes.length && article.votes[0].type == "DOWNVOTE" ? (
+            <img
+              onClick={() => votePost("DOWNVOTE")}
+              src={downVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--down"
+            />
+          ) : (
+            <img
+              onClick={() => votePost("DOWNVOTE")}
+              src={defaultVote}
+              alt="default-vote"
+              className="post__votes-action post__votes-action--down"
+            />
+          )}
+          {/* <BiDownvote
           onClick={() => votePost("DOWNVOTE")}
           className={`post__votes-action post__votes-action--down ${
             article.votes.length && article.votes[0].type == "DOWNVOTE"
               ? "post__votes-action--active-2"
               : ""
           }`}
-        />
-      </div>
-      <div className="post__main">
-        <div className="post__author">
-          <img src={require(`../../assets/images/ranks/${rank.image}`)} alt="" />
-          <div className="post__role-username">
-            <span className="post__role" style={{color:rank.color}}>{rank.type}</span>
-          <Link to="#" className="post__author-name" >
-            {article.author.firstName} {article.author.lastName}
-          </Link>
-          </div>
->>>>>>> 7a304cdd59b29d61cb5822cdd3bd4035be70b900
+        /> */}
         </div>
         <div className="post__main">
-          <div className=" post__top">
-            <div className="post__author">
-              <img src={profileImage} alt="" />
+          <div className="post__author">
+            <img
+              src={require(`../../assets/images/ranks/${rank.image}`)}
+              alt=""
+            />
+            <div className="post__role-username">
+              <span className="post__role" style={{ color: rank.color }}>
+                {rank.type}
+              </span>
               <Link to="#" className="post__author-name">
                 {article.author.firstName} {article.author.lastName}
               </Link>
             </div>
-            <Status status={article.status} />
           </div>
+          <Status status={article.status} />
           <span className="post__title">{article.title}</span>
           <p className="post__description">{article.description}</p>
           <div className="post__media">

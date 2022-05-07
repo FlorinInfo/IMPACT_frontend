@@ -12,9 +12,56 @@ import { Cookies, useCookies } from "react-cookie";
 import { ImpactStore } from "../../store/ImpactStore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
+import { FaExchangeAlt } from "react-icons/fa";
+import IconButton from "@mui/material/IconButton";
+import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
+
+const DialogFeed = ({ open, emitClose }) => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClose = () => {
+    emitClose();
+  };
+
+  return (
+    <div>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <div className="feed-dialog__select">
+          <FeedSelect />
+        </div>
+      </Dialog>
+    </div>
+  );
+};
 
 const Homepage = () => {
   const location = useLocation();
@@ -56,10 +103,12 @@ const Homepage = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(1);
   const { user, setUser } = useContext(ImpactStore);
+  const { feedDialog, setFeedDialog } = useContext(ImpactStore);
   const [posts, setPosts] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [zone, setZone] = useState(() => defaultFilter("zone"));
   const [filter, setFilter] = useState(() => defaultFilter("filter"));
+  const [top, setTop] = useState([]);
   const fetchData = () => {
     axios
       .get(
@@ -75,7 +124,7 @@ const Homepage = () => {
       )
       .then((response) => {
         // handle success
-        if(response.data.errors) navigate("/");
+        if (response.data.errors) navigate("/");
         console.log(response);
         setLimit(response.data.limit);
         setPosts([...posts, ...response.data.articles]);
@@ -89,8 +138,32 @@ const Homepage = () => {
       });
   };
 
+  const getTop = () => {
+    axios
+      .get(`/users?${zone.type}=${zone.id}&offset=0&limit=10&top=true`, {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((response) => {
+        // handle success
+        if (response.data.errors) navigate("/");
+        console.log("hhhhhhhhhh", response);
+        setTop(response.data);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  };
+
   useEffect(() => {
     fetchData();
+    getTop();
   }, [page]);
 
   // useEffect(()=>{
@@ -140,6 +213,7 @@ const Homepage = () => {
         let newPosts = [...posts];
         newPosts[index] = response.data;
         setPosts(newPosts);
+        getTop();
         console.log(response);
       })
       .catch((error) => {
@@ -157,12 +231,14 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
+      <DialogFeed open={feedDialog} emitClose={() => setFeedDialog(false)} />
+
       <div className="homepage__container">
         <div className="homepage__left">
           <AddPost />
           <SortPosts selectedSort={filter} emitSort={changeFeed} />
           {/* {posts.length} */}
-          {posts.length!=0 ? (
+          {posts.length != 0 ? (
             <InfiniteScroll
               dataLength={posts.length} //This is important field to render the next data
               next={() => setPage(page + 1)}
@@ -198,7 +274,7 @@ const Homepage = () => {
         </div>
         <div className="homepage__right">
           <FeedSelect />
-          <TopUsers />
+          <TopUsers users={top} />
         </div>
       </div>
     </div>

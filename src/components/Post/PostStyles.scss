@@ -53,6 +53,7 @@
       }
 
       &--down {
+        transform: rotate(180deg);
         &:hover {
           color: red;
         }
