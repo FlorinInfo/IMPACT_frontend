@@ -79,6 +79,7 @@ const Comments = ({updateArticle})=> {
             <div className="comments__cnt">
             {
                 comments.length>0 ? comments.map((comment)=> <Comment 
+                                                            key={comment.id}
                                                             updateArticle={updateArticle}
                                                             updateComments={getComments} 
                                                             data={comment} 

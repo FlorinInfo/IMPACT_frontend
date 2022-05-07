@@ -19,7 +19,11 @@ import { Cookies, useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import { ImpactStore } from "../../store/ImpactStore";
 import { useNavigate, useLocation } from "react-router-dom";
+<<<<<<< HEAD
 
+=======
+import rankPerform from "../../utils/rank";
+>>>>>>> 7a304cdd59b29d61cb5822cdd3bd4035be70b900
 const testMedia = [
   // profileImage,
   testImage,
@@ -33,6 +37,15 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
   const navigate = useNavigate();
+  console.log(article)
+  const [rank, setRank] = useState(
+    article.author.monthlyPoints>=0 ? ()=>rankPerform(article.author.monthlyPoints, article.roleUser, article.admin)
+    :{
+      type:"Cetatean",
+      color:"black",
+      image:"default.jpg"
+    }
+    );
 
   console.log(article, "fsdfs");
 
@@ -210,6 +223,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
                         <source src="https://backend.imp-act.ml/assets/videosArticles/7Oog2e1I_aOnSAr322I0U.mp4" type="video/mp4"></source>
                     </video> */}
       <div className="post__top">
+<<<<<<< HEAD
         <div className="post__votes">
           <BiUpvote
             onClick={() => votePost("UPVOTE")}
@@ -228,6 +242,36 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
                 : ""
             }`}
           />
+=======
+      <div className="post__votes">
+        <BiUpvote
+          onClick={() => votePost("UPVOTE")}
+          className={`post__votes-action post__votes-action--up ${
+            article.votes.length && article.votes[0].type == "UPVOTE"
+              ? "post__votes-action--active-1"
+              : ""
+          }`}
+        />
+        <span className="post__votes-number">{article.votePoints}</span>
+        <BiDownvote
+          onClick={() => votePost("DOWNVOTE")}
+          className={`post__votes-action post__votes-action--down ${
+            article.votes.length && article.votes[0].type == "DOWNVOTE"
+              ? "post__votes-action--active-2"
+              : ""
+          }`}
+        />
+      </div>
+      <div className="post__main">
+        <div className="post__author">
+          <img src={require(`../../assets/images/ranks/${rank.image}`)} alt="" />
+          <div className="post__role-username">
+            <span className="post__role" style={{color:rank.color}}>{rank.type}</span>
+          <Link to="#" className="post__author-name" >
+            {article.author.firstName} {article.author.lastName}
+          </Link>
+          </div>
+>>>>>>> 7a304cdd59b29d61cb5822cdd3bd4035be70b900
         </div>
         <div className="post__main">
           <div className=" post__top">
