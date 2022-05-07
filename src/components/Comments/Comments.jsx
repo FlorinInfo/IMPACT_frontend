@@ -83,7 +83,7 @@ const Comments = ({updateArticle})=> {
                                                             updateArticle={updateArticle}
                                                             updateComments={getComments} 
                                                             data={comment} 
-                                                            replies={comment.replies.map((r)=><Comment updateComments={getComments}  updateArticle={updateArticle} data={r} />)}/>) : ""
+                                                            replies={comment.replies.map((r)=><Comment key={comment.id} updateComments={getComments}  updateArticle={updateArticle} data={r} />)}/>) : ""
             }
             </div>
         </div>

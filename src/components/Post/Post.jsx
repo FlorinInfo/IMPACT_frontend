@@ -222,6 +222,10 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
       });
   };
 
+  const changeStatus = ()=> {
+    updateArticle(article.id);
+  }
+
   return (
     <div className="post">
       {/* <video controls muted autoPlay>
@@ -292,8 +296,11 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
                 {article.author.firstName} {article.author.lastName}
               </Link>
             </div>
+            <div className="post__status">
+              <Status status={article.status} id={article.id} changeStatus={changeStatus}/>
+            </div>
           </div>
-          <Status status={article.status} />
+
           <span className="post__title">{article.title}</span>
           <p className="post__description">{article.description}</p>
           <div className="post__media">
