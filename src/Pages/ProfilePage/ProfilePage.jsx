@@ -1,14 +1,63 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import "./ProfilePageStyles.scss";
 
 import imgProfile from "./../../assets/images/default_profile_pic1.jpg";
 import { ImpactStore } from "../../store/ImpactStore";
+import axios from "./../../assets/axios/axios";
+import { Cookies, useCookies } from "react-cookie";
 
 import SortPostsProfile from "../../components/SortPostsProfile/SortPostsProfile";
 
 const ProfilePage = () => {
   const { user, setUser } = useContext(ImpactStore);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const { id, filter } = useParams();
+
+  // console.log(id, "fdgdfs");
+
+  const fetchData = () => {
+    axios
+      .get(`/users/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((response) => {
+        // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {});
+  };
+
+  const getPosts = () => {
+    axios
+      .get(`/users/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((response) => {
+        // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {});
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   // const name
 
   return (
