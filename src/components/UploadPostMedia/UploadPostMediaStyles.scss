@@ -33,6 +33,7 @@
 	&__add-btn {
 		cursor: pointer;
 		@include media-cnt;
+		// margin-top: 1.5rem;
 		&:hover .media-post__add-icon {
 			color: black;
 		}
@@ -77,16 +78,32 @@
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: wrap;
+		margin-top: 1rem;
+		padding-bottom: 1.5rem;
 	}
 
 	&__video {
-		width: 48%;
+		width: 100%;
+		position: relative;
+
+		&-cnt {
+			position: relative;
+			width: 48%;
+		}
+
+		&-remove {
+			button {
+				width: 100%!important;
+				font-size: 1.2rem!important;
+			}
+		}
 	}
 
 	&__loader {
 		display: block;
 		margin: auto!important;
 	}
+
 }
 
 
