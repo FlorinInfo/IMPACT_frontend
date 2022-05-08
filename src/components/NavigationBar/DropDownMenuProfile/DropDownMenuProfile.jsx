@@ -35,7 +35,7 @@ const DropDownMenuProfile = () => {
     const action = e.target.closest(".menu-item__profile").id;
 
     if (action === "log-out") logOut();
-    else if (action === "profile") navigate("/profile");
+    else if (action === "profile") navigate(`/user/${user.id}`);
   };
 
   function DropDownItemProfile(props) {
