@@ -285,14 +285,15 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         <div className="post__main">
           <div className="post__author">
             <img
+              onClick={() => navigate("/user/" + article.author.id)}
               src={require(`../../assets/images/ranks/${rank.image}`)}
               alt=""
             />
             <div className="post__role-username">
               <span className="post__role" style={{ color: rank.color }}>
-                {rank.type}
+                {rank.type} 
               </span>
-              <Link to="#" className="post__author-name">
+              <Link to={`/user/${article.author.id}`} className="post__author-name">
                 {article.author.firstName} {article.author.lastName}
               </Link>
             </div>

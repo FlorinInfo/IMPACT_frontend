@@ -27,6 +27,21 @@
   }
 }
 
+.actions {
+
+  &__img {
+    width: 24px!important;
+    margin-left: 15px;
+    margin-right: 5px;
+    padding:0 5px;
+    margin-bottom: 3px;
+  }
+
+  &__heart {
+    margin-top: auto;
+  }
+}
+
 @media only screen and (max-width: 777px) {
   .actions-container {
     display: none;

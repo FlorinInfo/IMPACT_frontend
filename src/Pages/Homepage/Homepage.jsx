@@ -109,6 +109,7 @@ const Homepage = () => {
   const [zone, setZone] = useState(() => defaultFilter("zone"));
   const [filter, setFilter] = useState(() => defaultFilter("filter"));
   const [top, setTop] = useState([]);
+
   const fetchData = () => {
     axios
       .get(
@@ -122,12 +123,54 @@ const Homepage = () => {
           },
         }
       )
-      .then((response) => {
+      .then(async (response) => {
         // handle success
         if (response.data.errors) navigate("/");
-        console.log(response);
+
+        // Logic for mixing best posts with new posts
+        let newPosts = {
+          data: {
+            articles: [],
+          },
+        };
+
+        if (filter == "best")
+          newPosts = await axios.get(
+            `/articles?${zone.type}=${zone.id}&best=true&offset=${
+              page * 10
+            }&limit=1&cursor=`,
+            {
+              headers: {
+                accept: "application/json",
+                Authorization: `Bearer ${cookies.token}`,
+              },
+            }
+          );
+        console.log("ssssssssssss", newPosts.data.articles);
+        // console.log(response);
+        
+        let verifyArray = [
+          ...posts,
+          ...response.data.articles,
+          ...(newPosts.data ? newPosts.data.articles : []),
+        ];
+        // Removing dublicates
+        verifyArray = verifyArray.reduce((unique, o) => {
+          if (!unique.some((obj) => obj.id === o.id)) {
+            unique.push(o);
+          }
+          return unique;
+        }, []);
+        // verifyArray = verifyArray.filter(
+        //   (value, index, self) =>
+        //     index ===
+        //     self.findIndex(
+        //       (t) => t.id === value.id
+        //     )
+        // );
+        //
         setLimit(response.data.limit);
-        setPosts([...posts, ...response.data.articles]);
+        setPosts([...verifyArray]);
       })
       .catch((error) => {
         // handle error
@@ -138,32 +181,32 @@ const Homepage = () => {
       });
   };
 
-  const getTop = () => {
-    axios
-      .get(`/users?${zone.type}=${zone.id}&offset=0&limit=10&top=true`, {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then((response) => {
-        // handle success
-        if (response.data.errors) navigate("/");
-        console.log("hhhhhhhhhh", response);
-        setTop(response.data);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .then(() => {
-        // always executed
-      });
-  };
+  // const getTop = () => {
+  //   axios
+  //     .get(`/users?${zone.type}=${zone.id}&offset=0&limit=10&top=true`, {
+  //       headers: {
+  //         accept: "application/json",
+  //         Authorization: `Bearer ${cookies.token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // handle success
+  //       if (response.data.errors) navigate("/");
+  //       console.log("hhhhhhhhhh", response);
+  //       setTop(response.data);
+  //     })
+  //     .catch((error) => {
+  //       // handle error
+  //       console.log(error);
+  //     })
+  //     .then(() => {
+  //       // always executed
+  //     });
+  // };
 
   useEffect(() => {
     fetchData();
-    getTop();
+    // getTop();
   }, [page]);
 
   // useEffect(()=>{
@@ -213,7 +256,7 @@ const Homepage = () => {
         let newPosts = [...posts];
         newPosts[index] = response.data;
         setPosts(newPosts);
-        getTop();
+        // getTop();
         console.log(response);
       })
       .catch((error) => {
@@ -244,10 +287,14 @@ const Homepage = () => {
               next={() => setPage(page + 1)}
               hasMore={true}
               loader={
-                posts.length == limit ? (
-                  <h4 className="scroll-text">Ai vazut toate postarile</h4>
+                filter != "best" ? (
+                  posts.length == limit ? (
+                    <h4 className="scroll-text">Ai vazut toate postarile</h4>
+                  ) : (
+                    <h4 className="scroll-text">Loading...</h4>
+                  )
                 ) : (
-                  <h4 className="scroll-text">Loading...</h4>
+                  ""
                 )
               }
             >

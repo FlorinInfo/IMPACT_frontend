@@ -7,13 +7,28 @@ import imgProfile from "./../../assets/images/default_profile_pic1.jpg";
 import { ImpactStore } from "../../store/ImpactStore";
 import axios from "./../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import SortPostsProfile from "../../components/SortPostsProfile/SortPostsProfile";
+import { useState } from "react";
+import rankPerform from "../../utils/rank";
+import Post from "../../components/Post/Post";
 
 const ProfilePage = () => {
-  const { user, setUser } = useContext(ImpactStore);
+  // const { user, setUser } = useContext(ImpactStore);
+  let navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const { id, filter } = useParams();
+  const [user, setUser] = useState(null);
+  const [rank, setRank] = useState({
+    type: "Cetatean",
+    color: "black",
+    image: "default.jpg",
+  });
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(1);
+  const [posts, setPosts] = useState([]);
 
   const fetchData = () => {
     axios
@@ -25,6 +40,22 @@ const ProfilePage = () => {
       })
       .then((response) => {
         // handle success
+        setUser(response.data);
+        setRank(
+          response.data.monthlyPoints >= 0
+            ? () =>
+                rankPerform(
+                  response.data.monthlyPoints,
+                  response.data.zoneRole,
+                  response.data.admin
+                )
+            : {
+                type: "Cetatean",
+                color: "black",
+                image: "default.jpg",
+              }
+        );
+
         console.log(response);
       })
       .catch((error) => {
@@ -36,62 +67,172 @@ const ProfilePage = () => {
 
   const getPosts = () => {
     axios
-      .get(`/users/${id}`, {
+      .get(
+        `/articles?${filter ? filter + "=true" : `userId=${id}`}&offset=${
+          page * 10
+        }&limit=10&cursor=`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      )
+      .then(async (response) => {
+        // handle success
+        console.log("aaaaaaaaaaaaaaaaaaaaA", response);
+        if (response.data.errors) navigate("/");
+
+        // console.log(response);
+
+        // Removing dublicates
+        // verifyArray = verifyArray.filter(
+        //   (value, index, self) =>
+        //     index ===
+        //     self.findIndex(
+        //       (t) => t.id === value.id
+        //     )
+        // );
+        //
+        setLimit(response.data.limit);
+        setPosts([...posts, ...response.data.articles]);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+    getPosts();
+  }, []);
+
+  useEffect(() => {
+    getPosts();
+    // getTop();
+  }, [page]);
+
+  const updateArticle = (articleId) => {
+    axios
+      .get(`/articles/${articleId}`, {
         headers: {
-          "Content-Type": "application/json",
+          accept: "application/json",
           Authorization: `Bearer ${cookies.token}`,
         },
       })
       .then((response) => {
         // handle success
+        let index = posts.findIndex((el) => el.id == articleId);
+        let newPosts = [...posts];
+        newPosts[index] = response.data;
+        setPosts(newPosts);
+        // getTop();
         console.log(response);
       })
       .catch((error) => {
         // handle error
         console.log(error);
       })
-      .then(() => {});
+      .then(() => {
+        // always executed
+      });
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+  const deleteArticle = (articleId) => {
+    setPosts(posts.filter((p) => p.id != articleId));
+  };
 
   return (
     <div className="profile-page">
-      <div className="profile-page__container">
-        <div className="profile-page__left">
-          <div className="profile-component">
-            <img src={imgProfile} className="profile-component__image" />
-            <div className="profile-component__data">
-              <div className="profile-component_characteristic">
-                <span className="profile-component__data__name">Nume:</span>
-                <span className="profile-component__data__value">
-                  {` ${user.lastName}`}
-                </span>
-              </div>
-              <div className="profile-component_characteristic">
-                <span className="profile-component__data__name">Prenume:</span>
-                <span className="profile-component__data__value">
-                  {` ${user.firstName}`}
-                </span>
-              </div>
-              <div className="profile-component_characteristic">
-                <span className="profile-component__data__name">Rank:</span>
-                <span className="profile-component__data__value">{` rank`}</span>
-              </div>
-              <div className="profile-component_characteristic">
-                <span className="profile-component__data__name">
-                  Puncte Rank:
-                </span>
-                <span className="profile-component__data__value">{` 78`}</span>
+      {user ? (
+        <div className="profile-page__container">
+          <div className="profile-page__left">
+            <div className="profile-component">
+              <img
+                src={require(`../../assets/images/ranks/${rank.image}`)}
+                className="profile-component__image"
+              />
+              <div className="profile-component__data">
+                <div className="profile-component_characteristic">
+                  <span className="profile-component__data__name">Nume:</span>
+                  <span className="profile-component__data__value">
+                    {` ${user.lastName}`}
+                  </span>
+                </div>
+                <div className="profile-component_characteristic">
+                  <span className="profile-component__data__name">
+                    Prenume:
+                  </span>
+                  <span className="profile-component__data__value">
+                    {` ${user.firstName}`}
+                  </span>
+                </div>
+                <div className="profile-component_characteristic">
+                  <span className="profile-component__data__name">Rank:</span>
+                  <span className="profile-component__data__value">
+                    {" "}
+                    {rank.type}
+                  </span>
+                </div>
+                <div className="profile-component_characteristic">
+                  <span className="profile-component__data__name">
+                    Puncte Rank:
+                  </span>
+                  <span className="profile-component__data__value">
+                    {" "}
+                    {user.monthlyPoints}
+                  </span>
+                </div>
               </div>
             </div>
+            <SortPostsProfile />
+            {/* {posts.length} */}
+            {posts.length != 0 ? (
+              <InfiniteScroll
+                dataLength={posts.length} //This is important field to render the next data
+                next={() => setPage(page + 1)}
+                hasMore={true}
+                loader={
+                  posts.length == limit ? (
+                    <h4 className="scroll-text">Ai vazut toate postarile</h4>
+                  ) : (
+                    <h4 className="scroll-text">Loading...</h4>
+                  )
+                }
+              >
+                <div className="homepage__posts">
+                  {posts.map((article) => (
+                    <div key={article.id} className="homepage__post">
+                      {/* Judet : {article.countyId ? article.countyId : ""}
+                    <br />
+                    Oras/comuna : {article.villageId ? article.villageId : ""}
+                    <br />
+                    Localitate : {article.localityId ? article.localityId : ""} */}
+                      <Post
+                        deleteArticle={deleteArticle}
+                        updateArticle={updateArticle}
+                        article={article}
+                      />{" "}
+                    </div>
+                  ))}
+                </div>
+              </InfiniteScroll>
+            ) : (
+              <h4 className="scroll-text">Loading...</h4>
+            )}
           </div>
-          <SortPostsProfile />
+          <div className="profile-page__right"></div>
         </div>
-        <div className="profile-page__right"></div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
