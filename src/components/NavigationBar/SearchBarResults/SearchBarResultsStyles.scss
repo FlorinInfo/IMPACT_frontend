@@ -1,0 +1,26 @@
+@import "./../../../assets/styles/mixins";
+@import "./../../../assets/styles/variables";
+
+.results {
+  @include border-default;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  margin-left: 10px;
+  margin-top: 10px;
+
+  &__item {
+    display: block;
+    padding: 10px;
+
+    &__title {
+      display: block;
+      font-family: $font-bold;
+      font-size: 17px;
+    }
+    &__text {
+      display: block;
+      font-family: $font-medium;
+    }
+  }
+}
