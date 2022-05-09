@@ -37,13 +37,13 @@ const SortPosts = ({ emitSort, selectedSort }) => {
   // );
 
   const [openedTimeSelector, setOpenedTimeSelector] = useState(false);
-  const [selectedTime, setSelectedTime] = useState("Astazi");
+  const [selectedTime, setSelectedTime] = useState("Tot timpul");
 
   const handleSelectedSort = (e) => {
     e.preventDefault();
     // setSelectedSort(e.target.closest(".sort-button").id);
-    // if (e.target.closest(".sort-button").id != "time")
-    emitSort(e.target.closest(".sort-button").id);
+    if (e.target.closest(".sort-button").id)
+      emitSort(e.target.closest(".sort-button").id);
   };
 
   const handleTimeSelector = () => {
@@ -78,7 +78,7 @@ const SortPosts = ({ emitSort, selectedSort }) => {
 
   if (vw <= 631) maxIndex = 3;
   else if (vw < 390) maxIndex = 4;
-  console.log(vw, maxIndex, "fdsfsdfs");
+  // console.log(vw, maxIndex, "fdsfsdfs");
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
