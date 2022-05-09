@@ -192,7 +192,7 @@ const ProfilePage = () => {
                 </div>
               </div>
             </div>
-            <SortPostsProfile />
+            <SortPostsProfile activeFilter={filter} />
             {/* {posts.length} */}
             {posts.length != 0 ? (
               <InfiniteScroll

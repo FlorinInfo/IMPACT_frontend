@@ -12,6 +12,9 @@ import { IoTimeSharp } from "react-icons/io5";
 import { RiFileUserLine } from "react-icons/ri";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { useNavigate, useLocation,useParams } from "react-router-dom";
+
+
 
 function SortButton(props) {
   return (
@@ -28,13 +31,19 @@ function SortButton(props) {
   );
 }
 
-const SortPostsProfile = () => {
-  //   const handleSelectedSort = (e) => {
-  //     e.preventDefault();
-  //     setSelectedSort(e.target.closest(".sort-button").id);
-  //     // if (e.target.closest(".sort-button").id != "time")
-  //     // emitSort(e.target.closest(".sort-button").id);
-  //   };
+const SortPostsProfile = ({activeFilter}) => {
+  let navigate = useNavigate();
+  let { id } = useParams(); 
+  const location = useLocation();
+  // const { from } = location.state;
+    const handleSelectedSort = (e) => {
+      e.preventDefault();
+      // setSelectedSort(e.target.closest(".sort-button").id);
+      
+      navigate(`/user/${id}/${e.target.closest(".sort-button").id}`)
+      // if (e.target.closest(".sort-button").id != "time")
+      // emitSort(e.target.closest(".sort-button").id);
+    };
 
   const vw = Math.max(
     document.documentElement.clientWidth || 0,
@@ -58,7 +67,7 @@ const SortPostsProfile = () => {
   return (
     <div
       className="section__sort-post"
-      //   onClick={handleSelectedSort}
+        onClick={handleSelectedSort}
       //   ref={timeSelectorRef}
     >
       {activeIndex != 0 && (
@@ -76,42 +85,42 @@ const SortPostsProfile = () => {
         >
           <SortButton
             id="myPosts"
-            // active={"trimis" === selectedSort}
+            active={!activeFilter}
             leftIcon={<RiFileUserLine className="sort-button__icon" />}
           >
             <span className="sort-button__text">Postarile mele</span>
           </SortButton>
           <SortButton
-            id="trimis"
-            // active={"trimis" === selectedSort}
+            id="sent"
+            active={"sent" === activeFilter}
             leftIcon={<AiOutlineSend className="sort-button__icon" />}
           >
             <span className="sort-button__text">Trimise</span>
           </SortButton>
           <SortButton
-            id="vizionat"
-            // active={"vizionat" === selectedSort}
+            id="seen"
+            active={"seen" === activeFilter}
             leftIcon={<AiFillEye className="sort-button__icon" />}
           >
             <span className="sort-button__text">Vazute</span>
           </SortButton>
           <SortButton
             id="completed"
-            // active={"completed" === selectedSort}
+            active={"completed" === activeFilter}
             leftIcon={<AiOutlineFileDone className="sort-button__icon" />}
           >
             <span className="sort-button__text">Efectuate</span>
           </SortButton>
           <SortButton
             id="inProgress"
-            // active={"inProgress" === selectedSort}
+            active={"inProgress" === activeFilter}
             leftIcon={<IoTimeSharp className="sort-button__icon" />}
           >
             <span className="sort-button__text">In lucru</span>
           </SortButton>
           <SortButton
-            id="favourite"
-            // active={"favourite" === selectedSort}
+            id="favorites"
+            active={"favorites" === activeFilter}
             leftIcon={<MdFavorite className="sort-button__icon" />}
           >
             <span className="sort-button__text">Favorite</span>
