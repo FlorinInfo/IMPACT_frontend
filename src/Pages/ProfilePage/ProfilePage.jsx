@@ -68,7 +68,7 @@ const ProfilePage = () => {
   const getPosts = () => {
     axios
       .get(
-        `/articles?${filter ? filter + "=true" : `userId=${id}`}&offset=${
+        `/articles?userId=${id}&${filter ? filter + "=true" : ``}&offset=${
           page * 10
         }&limit=10&cursor=`,
         {
@@ -225,7 +225,7 @@ const ProfilePage = () => {
                 </div>
               </InfiniteScroll>
             ) : (
-              <h4 className="scroll-text">Loading...</h4>
+              <h4 className="scroll-text"></h4>
             )}
           </div>
           <div className="profile-page__right"></div>
