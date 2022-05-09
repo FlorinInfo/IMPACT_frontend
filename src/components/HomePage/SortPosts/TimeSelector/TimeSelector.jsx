@@ -2,9 +2,13 @@ import { useState } from "react";
 
 import "./TimeSelectorStyles.scss";
 
-const TimeSelector = ({ setSelectedTime, setOpenedTimeSelector }) => {
-  const [activeOption, setActiveOption] = useState("ttimp");
-  console.log(activeOption, "fdfd");
+const TimeSelector = ({
+  setSelectedTime,
+  setOpenedTimeSelector,
+  setActiveOption,
+  activeOption,
+}) => {
+  // const [activeOption, setActiveOption] = useState("ttimp");
 
   function TimeOptionItem(props) {
     return (
@@ -24,6 +28,7 @@ const TimeSelector = ({ setSelectedTime, setOpenedTimeSelector }) => {
     if (selectedOption === "acum") {
       setSelectedTime("Acum");
       setActiveOption(selectedOption);
+      console.log(activeOption, "fdf");
       setOpenedTimeSelector(false);
     } else if (selectedOption === "astazi") {
       setSelectedTime("Astazi");

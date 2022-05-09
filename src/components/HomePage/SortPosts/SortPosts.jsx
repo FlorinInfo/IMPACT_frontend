@@ -38,6 +38,7 @@ const SortPosts = ({ emitSort, selectedSort }) => {
 
   const [openedTimeSelector, setOpenedTimeSelector] = useState(false);
   const [selectedTime, setSelectedTime] = useState("Tot timpul");
+  const [activeOption, setActiveOption] = useState("ttimp");
 
   const handleSelectedSort = (e) => {
     e.preventDefault();
@@ -168,6 +169,8 @@ const SortPosts = ({ emitSort, selectedSort }) => {
         <TimeSelector
           setSelectedTime={setSelectedTime}
           setOpenedTimeSelector={setOpenedTimeSelector}
+          activeOption={activeOption}
+          setActiveOption={setActiveOption}
         />
       )}
       {activeIndex != maxIndex - 1 && (

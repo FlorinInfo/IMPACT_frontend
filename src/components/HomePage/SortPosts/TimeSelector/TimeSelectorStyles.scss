@@ -39,6 +39,12 @@
   display: none;
 }
 
+@media only screen and (max-width: 1080px) {
+  .time-options {
+    transform: translate(470px, 40px);
+  }
+}
+
 @media only screen and (max-width: 777px) {
   .time-options {
     transform: translate(0px, 40px);
