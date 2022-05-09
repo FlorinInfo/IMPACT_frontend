@@ -7,6 +7,7 @@ import Home from "./Home/Home";
 import SearchBar from "./SearchBar/Searchbar";
 import NavBarActions from "./NavBarActions/NavBarActions";
 import Profile from "./Profile/Profile";
+import SearchBarResults from "./SearchBarResults/SearchBarResults";
 import DropDownMenuProfile from "./DropDownMenuProfile/DropDownMenuProfile";
 import DropDownMenuHome from "./DropDownMenuHome/DropDownMenuHome";
 import UnderNavigationBar from "./UnderNavigationBar/UnderNavigationBar";

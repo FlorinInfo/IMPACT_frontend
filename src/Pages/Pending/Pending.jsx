@@ -7,8 +7,6 @@ import axios from "../../assets/axios/axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
-
-
 const Pending = () => {
   const lottieOptions = {
     loop: true,
@@ -52,11 +50,13 @@ const Pending = () => {
   // }, [])
 
   return (
-      <div className="pending">
-        <Lottie options={lottieOptions} height={400} width={400} />
-        <h4 className="pending__title">Cererea ta se proceseaza.</h4>
-        <h5 className="pending__subtitle">Vei primi un email atunci cand este finalizata.</h5>
-      </div>
+    <div className="pending">
+      <Lottie options={lottieOptions} height={400} width={400} />
+      <h4 className="pending__title">Cererea ta se proceseaza.</h4>
+      <h5 className="pending__subtitle">
+        Vei primi un email atunci cand este finalizata.
+      </h5>
+    </div>
   );
 };
 

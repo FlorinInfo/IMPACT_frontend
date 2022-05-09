@@ -11,20 +11,18 @@ import { FaExchangeAlt } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
 import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 import FeedSelect from "../../HomePage/FeedSelect/FeedSelect";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import CloseIcon from '@mui/icons-material/Close';
-
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
 
 // function DialogFeed({open, emitClose}) {
 //   const theme = useTheme();
 //   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
 
 //   const handleClose = () => {
 //     emitClose()
@@ -103,55 +101,75 @@ const UnderNavigationBar = () => {
     navigate(`/${selected}=${user[selected]}`);
   };
 
+  let showUnderNavigationBar = true;
+  if (search.pathname === "/create-post") showUnderNavigationBar = false;
+  if (search.pathname.includes("user")) showUnderNavigationBar = false;
+  if (search.pathname === "/waiting-list") showUnderNavigationBar = false;
+
   return (
     <>
-      {user.zoneRole == "CETATEAN" && !user.admin ? (
+      {showUnderNavigationBar && (
         <>
-          <div className="under-navigation-bar" onClick={handleSelectedButton}>
-            <UnderNavigationBarButton
-              id="countyId"
-              active={"countyId" === selectedButton}
-            >
-              <span className="under-navigation-bar__button__text">Judet</span>
-            </UnderNavigationBarButton>
-            <UnderNavigationBarButton
-              id="villageId"
-              active={"villageId" === selectedButton}
-            >
-              <span className="under-navigation-bar__button__text">
-                {user.localityId ? "Comuna" : "Oras"}
-              </span>
-            </UnderNavigationBarButton>
-            <UnderNavigationBarButton
-              id="localityId"
-              active={"localityId" === selectedButton}
-            >
-              <span className="under-navigation-bar__button__text">
-                Localitate
-              </span>
-            </UnderNavigationBarButton>
-          </div>
-        </>
-      ) : (
-        <>
-        {/* <DialogFeed open={feedDialog} emitClose={()=>setFeedDialog(false)}/> */}
-        <div className="under-navigation-bar under-navigation-bar__admins">
-          
-          <UnderNavigationBarButton active={false}>
-            {/* <span className="under-navigation-bar__button__text">Judet</span> */}
-          </UnderNavigationBarButton>
-          <UnderNavigationBarButton active={false} >
-            <span className="under-navigation-bar__button__text" onClick={()=>setFeedDialog(true)}>
-              {selectedButton == "countyId" ? "Judet" : selectedButton == "villageId" ? "Oras/Comuna" :"Localitate" }
-              {/* <IconButton aria-label="delete">
+          {user.zoneRole == "CETATEAN" && !user.admin ? (
+            <>
+              <div
+                className="under-navigation-bar"
+                onClick={handleSelectedButton}
+              >
+                <UnderNavigationBarButton
+                  id="countyId"
+                  active={"countyId" === selectedButton}
+                >
+                  <span className="under-navigation-bar__button__text">
+                    Judet
+                  </span>
+                </UnderNavigationBarButton>
+                <UnderNavigationBarButton
+                  id="villageId"
+                  active={"villageId" === selectedButton}
+                >
+                  <span className="under-navigation-bar__button__text">
+                    {user.localityId ? "Comuna" : "Oras"}
+                  </span>
+                </UnderNavigationBarButton>
+                <UnderNavigationBarButton
+                  id="localityId"
+                  active={"localityId" === selectedButton}
+                >
+                  <span className="under-navigation-bar__button__text">
+                    Localitate
+                  </span>
+                </UnderNavigationBarButton>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* <DialogFeed open={feedDialog} emitClose={()=>setFeedDialog(false)}/> */}
+              <div className="under-navigation-bar under-navigation-bar__admins">
+                <UnderNavigationBarButton active={false}>
+                  {/* <span className="under-navigation-bar__button__text">Judet</span> */}
+                </UnderNavigationBarButton>
+                <UnderNavigationBarButton active={false}>
+                  <span
+                    className="under-navigation-bar__button__text"
+                    onClick={() => setFeedDialog(true)}
+                  >
+                    {selectedButton == "countyId"
+                      ? "Judet"
+                      : selectedButton == "villageId"
+                      ? "Oras/Comuna"
+                      : "Localitate"}
+                    {/* <IconButton aria-label="delete">
                 <DisplaySettingsIcon />
               </IconButton> */}
-            </span>
-          </UnderNavigationBarButton>
-          <UnderNavigationBarButton active={false}>
-            {/* <span className="under-navigation-bar__button__text">Judet</span> */}
-          </UnderNavigationBarButton>
-        </div>
+                  </span>
+                </UnderNavigationBarButton>
+                <UnderNavigationBarButton active={false}>
+                  {/* <span className="under-navigation-bar__button__text">Judet</span> */}
+                </UnderNavigationBarButton>
+              </div>
+            </>
+          )}
         </>
       )}
     </>

@@ -15,8 +15,6 @@ const ProfilePage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const { id, filter } = useParams();
 
-  // console.log(id, "fdgdfs");
-
   const fetchData = () => {
     axios
       .get(`/users/${id}`, {
@@ -58,7 +56,6 @@ const ProfilePage = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  // const name
 
   return (
     <div className="profile-page">

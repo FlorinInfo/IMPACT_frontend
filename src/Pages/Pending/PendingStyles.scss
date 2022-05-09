@@ -1,20 +1,31 @@
 @import "../../assets/styles/variables";
 .pending {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  &__title {
+    font-family: $font-bold;
+    font-size: 5rem;
+  }
 
+  &__subtitle {
+    font-family: $font-bold;
+    font-size: 3rem;
+    display: block;
+    margin-top: 2rem;
+  }
+}
+
+@media only screen and (max-width: 777px) {
+  .pending {
     &__title {
-        font-family: $font-bold;
-        font-size: 5rem;
+      font-size: 3rem;
     }
 
     &__subtitle {
-        font-family: $font-bold;
-        font-size: 3rem;
-        display: block;
-        margin-top:2rem;
+      font-size: 1.5rem;
     }
+  }
 }

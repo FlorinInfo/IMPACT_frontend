@@ -16,11 +16,16 @@
 .time-button {
   border: none;
   background-color: transparent;
+  // margin-bottom: 15px;
 }
 
 .sort-button {
   border: none;
   background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // width: 23%;
 
   &__label {
     text-decoration: none;
@@ -29,7 +34,7 @@
     align-items: center;
     color: #878a8c;
     font-family: $font-medium;
-    margin-left: 15px;
+    margin-left: 5px;
     border-radius: 9999px;
     padding: 15px;
 
@@ -45,9 +50,16 @@
   }
 
   &__text {
-    margin-left: 5px;
+    margin-left: 10px;
     font-weight: bold;
     font-size: 13.5px;
+  }
+
+  &__arrow {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    color: #878a8c;
   }
 }
 
@@ -56,8 +68,45 @@
   background-color: #f6f7f8;
 }
 
+.carousel {
+  display: flex;
+  width: 92%;
+  overflow: hidden;
+}
+
+.inner {
+  white-space: nowrap;
+  transition: transform 0.3s;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+@media only screen and (max-width: 1080px) {
+  .sort-button {
+    &__arrow {
+      opacity: 0;
+    }
+    // .carousel {
+    //   width: 100%;
+    //   overflow: visible;
+    // }
+  }
+}
+
+// @media only screen and (max-width: 850px) {
+//   .sort-button {
+//     &__arrow {
+//       opacity: 1;
+//     }
+//   }
+// }
+
 @media only screen and (max-width: 777px) {
-  .section__sort-post {
-    display: none;
+  .sort-button {
+    &__arrow {
+      opacity: 1;
+    }
   }
 }
