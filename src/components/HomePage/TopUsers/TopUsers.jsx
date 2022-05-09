@@ -39,7 +39,7 @@ const TopUsers = ({ users }) => {
           })}
         </div>
       ) : (
-        ""
+       <> {users.length}</>
       )}
     </>
   );

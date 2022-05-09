@@ -181,32 +181,32 @@ const Homepage = () => {
       });
   };
 
-  // const getTop = () => {
-  //   axios
-  //     .get(`/users?${zone.type}=${zone.id}&offset=0&limit=10&top=true`, {
-  //       headers: {
-  //         accept: "application/json",
-  //         Authorization: `Bearer ${cookies.token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       // handle success
-  //       if (response.data.errors) navigate("/");
-  //       console.log("hhhhhhhhhh", response);
-  //       setTop(response.data);
-  //     })
-  //     .catch((error) => {
-  //       // handle error
-  //       console.log(error);
-  //     })
-  //     .then(() => {
-  //       // always executed
-  //     });
-  // };
+  const getTop = () => {
+    axios
+      .get(`/users?${zone.type}=${zone.id}&offset=0&limit=10&top=true`, {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((response) => {
+        // handle success
+        if (response.data.errors) navigate("/");
+        console.log("hhhhhhhhhh", response);
+        setTop(response.data);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
+  };
 
   useEffect(() => {
     fetchData();
-    // getTop();
+    getTop();
   }, [page]);
 
   // useEffect(()=>{
@@ -256,7 +256,7 @@ const Homepage = () => {
         let newPosts = [...posts];
         newPosts[index] = response.data;
         setPosts(newPosts);
-        // getTop();
+        getTop();
         console.log(response);
       })
       .catch((error) => {
