@@ -223,7 +223,7 @@ const Homepage = () => {
       let filterSplit = routeFilter.split("&").reverse();
       for (const el of filterSplit) {
         let elSplit = el.split("=");
-        if (elSplit[0] != "filter")
+        if (elSplit[0] != "filter" && elSplit[0] != "time")
           newParams = elSplit[0] + "=" + elSplit[1] + "&" + newParams;
         // console.log({[elSplit[0]]:elSplit[1]})
       }
