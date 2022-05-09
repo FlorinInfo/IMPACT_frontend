@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import "./TimeSelectorStyles.scss";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const TimeSelector = ({
   setSelectedTime,
@@ -9,7 +10,8 @@ const TimeSelector = ({
   activeOption,
 }) => {
   // const [activeOption, setActiveOption] = useState("ttimp");
-
+  const navigate = useNavigate();
+  const search = useLocation();
   function TimeOptionItem(props) {
     return (
       <>
@@ -24,21 +26,31 @@ const TimeSelector = ({
 
   const handleSelectedTime = (e) => {
     e.preventDefault();
+    let params = search.pathname;
+    params = params.replace('&time=today','');
+    params = params.replace('&time=this_week','');
+    params = params.replace('&time=this_month','');
+    // params = params.replace('&time=today','');
     const selectedOption = e.target.closest(".time-options__item").id;
-    if (selectedOption === "acum") {
-      setSelectedTime("Acum");
+    // alert(selectedOption)
+    if (selectedOption === "astazi") {
+      navigate(params + "&time=today" )
+      setSelectedTime("Astazi");
       setActiveOption(selectedOption);
       console.log(activeOption, "fdf");
       setOpenedTimeSelector(false);
-    } else if (selectedOption === "astazi") {
-      setSelectedTime("Astazi");
+    } else if (selectedOption === "luna") {
+      navigate(params + "&time=this_month" )
+      setSelectedTime("Luna a...");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
     } else if (selectedOption === "sapt") {
+      navigate(params + "&time=this_week" )
       setSelectedTime("Saptamana...");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
     } else if (selectedOption === "ttimp") {
+      navigate(params)
       setSelectedTime("Tot timpul");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
@@ -50,14 +62,14 @@ const TimeSelector = ({
       <TimeOptionItem id="ttimp">
         <span className="time-options__item__text">Tot timpul</span>
       </TimeOptionItem>
-      <TimeOptionItem id="acum">
-        <span className="time-options__item__text">Acum</span>
-      </TimeOptionItem>
       <TimeOptionItem id="astazi">
         <span className="time-options__item__text">Astazi</span>
       </TimeOptionItem>
       <TimeOptionItem id="sapt">
         <span className="time-options__item__text">Saptamana aceasta</span>
+      </TimeOptionItem>
+      <TimeOptionItem id="luna">
+        <span className="time-options__item__text">Luna aceasta</span>
       </TimeOptionItem>
     </div>
   );
