@@ -36,7 +36,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
   const navigate = useNavigate();
-  console.log(article);
+  // console.log(article);
   const [rank, setRank] = useState(
     article.author.monthlyPoints >= 0
       ? () =>
@@ -71,7 +71,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         )
         .then((response) => {
           // handle success
-          console.log(response);
+          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -91,7 +91,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         })
         .then((response) => {
           // handle success
-          console.log(response);
+          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -139,7 +139,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         )
         .then((response) => {
           // handle success
-          console.log(response);
+          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -160,7 +160,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         })
         .then((response) => {
           // handle success
-          console.log(response);
+          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -187,7 +187,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         )
         .then((response) => {
           // handle success
-          console.log(response);
+          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -210,7 +210,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
       })
       .then((response) => {
         // handle success
-        console.log(response);
+        // console.log(response);
         deleteArticle(article.id);
       })
       .catch((error) => {
@@ -222,9 +222,9 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
       });
   };
 
-  const changeStatus = ()=> {
+  const changeStatus = () => {
     updateArticle(article.id);
-  }
+  };
 
   return (
     <div className="post">
@@ -291,14 +291,21 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
             />
             <div className="post__role-username">
               <span className="post__role" style={{ color: rank.color }}>
-                {rank.type} 
+                {rank.type}
               </span>
-              <Link to={`/user/${article.author.id}`} className="post__author-name">
+              <Link
+                to={`/user/${article.author.id}`}
+                className="post__author-name"
+              >
                 {article.author.firstName} {article.author.lastName}
               </Link>
             </div>
             <div className="post__status">
-              <Status status={article.status} id={article.id} changeStatus={changeStatus}/>
+              <Status
+                status={article.status}
+                id={article.id}
+                changeStatus={changeStatus}
+              />
             </div>
           </div>
 
