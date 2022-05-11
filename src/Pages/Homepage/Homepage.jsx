@@ -88,6 +88,14 @@ const Homepage = () => {
         }
         return "recent";
       }
+      if (filterType == "time") {
+        for (const el of filterSplit) {
+          let elSplit = el.split("=");
+          if (elSplit[0] == "time") return elSplit[1];
+          // console.log({[elSplit[0]]:elSplit[1]})
+        }
+        return "";
+      }
     } else {
       if (filterType == "zone")
         return {
@@ -95,6 +103,7 @@ const Homepage = () => {
           id: user.localityId ? user.localityId : user.villageId,
         };
       if (filterType == "filter") return "recent";
+      if (filterType == "time") return "";
     }
   };
 
@@ -108,12 +117,13 @@ const Homepage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [zone, setZone] = useState(() => defaultFilter("zone"));
   const [filter, setFilter] = useState(() => defaultFilter("filter"));
+  const [time, setTime] = useState(() => defaultFilter("time"));
   const [top, setTop] = useState([]);
 
   const fetchData = () => {
     axios
       .get(
-        `/articles?${zone.type}=${zone.id}&${filter}=true&offset=${
+        `/articles?${zone.type}=${zone.id}&${filter}=true&timespan=${time}&offset=${
           page * 10
         }&limit=10&cursor=`,
         {
@@ -125,6 +135,7 @@ const Homepage = () => {
       )
       .then(async (response) => {
         // handle success
+        console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzz",response)
         if (response.data.errors) navigate("/");
 
         // Logic for mixing best posts with new posts
@@ -136,7 +147,7 @@ const Homepage = () => {
 
         if (filter == "best")
           newPosts = await axios.get(
-            `/articles?${zone.type}=${zone.id}&best=true&offset=${
+            `/articles?${zone.type}=${zone.id}&recent=true&timespan=${time}&offset=${
               page * 10
             }&limit=1&cursor=`,
             {
@@ -169,6 +180,7 @@ const Homepage = () => {
         //     )
         // );
         //
+        console.log(verifyArray);
         setLimit(response.data.limit);
         setPosts([...verifyArray]);
       })
@@ -291,7 +303,7 @@ const Homepage = () => {
                   posts.length == limit ? (
                     <h4 className="scroll-text">Ai vazut toate postarile</h4>
                   ) : (
-                    <h4 className="scroll-text">Loading...</h4>
+                    <h4 className="scroll-text">xxx</h4>
                   )
                 ) : (
                   ""
@@ -316,7 +328,7 @@ const Homepage = () => {
               </div>
             </InfiniteScroll>
           ) : (
-            <h4 className="scroll-text">Loading...</h4>
+            <h4 className="scroll-text"></h4>
           )}
         </div>
         <div className="homepage__right">

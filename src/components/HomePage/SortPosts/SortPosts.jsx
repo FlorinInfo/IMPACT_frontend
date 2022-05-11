@@ -123,15 +123,15 @@ const SortPosts = ({ emitSort, selectedSort }) => {
             <span className="sort-button__text">Top</span>
           </SortButton>
           <SortButton
-            id="trimis"
-            active={"trimis" === selectedSort}
+            id="sent"
+            active={"sent" === selectedSort}
             leftIcon={<AiOutlineSend className="sort-button__icon" />}
           >
             <span className="sort-button__text">Trimise</span>
           </SortButton>
           <SortButton
-            id="vazute"
-            active={"vazute" === selectedSort}
+            id="seen"
+            active={"seen" === selectedSort}
             leftIcon={<AiFillEye className="sort-button__icon" />}
           >
             <span className="sort-button__text">Vazute</span>
