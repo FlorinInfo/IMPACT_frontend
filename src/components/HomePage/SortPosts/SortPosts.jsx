@@ -108,6 +108,31 @@ const SortPosts = ({ emitSort, selectedSort }) => {
       // setActiveOption(selectedOption);
     }
   }
+
+  const activeOptionIcon = () => {
+    if ("recent" === selectedSort)
+      return <IoMdMedal className="sort-button__icon" />;
+    else if ("best" === selectedSort)
+      return <IoIosPodium className="sort-button__icon" />;
+    else if ("sent" === selectedSort)
+      return <AiOutlineSend className="sort-button__icon" />;
+    else if ("seen" === selectedSort)
+      return <AiFillEye className="sort-button__icon" />;
+    else if ("inProgress" === selectedSort)
+      return <IoTimeSharp className="sort-button__icon" />;
+    else if ("completed" === selectedSort)
+      return <AiOutlineFileDone className="sort-button__icon" />;
+  };
+
+  const activeOptionName = () => {
+    if ("recent" === selectedSort) return "Noi";
+    else if ("best" === selectedSort) return "Top";
+    else if ("sent" === selectedSort) return "Trimise";
+    else if ("seen" === selectedSort) return "Vazute";
+    else if ("inProgress" === selectedSort) return "In Lucru";
+    else if ("completed" === selectedSort) return "Efectuate";
+  };
+
   return (
     <div
       className="section__sort-post"
@@ -128,47 +153,66 @@ const SortPosts = ({ emitSort, selectedSort }) => {
           style={{ transform: `translateX(-${activeIndex * 30}%)` }}
         >
           <SortButton
-            id="recent"
-            active={"recent" === selectedSort}
-            leftIcon={<IoMdMedal className="sort-button__icon" />}
+            id={selectedSort}
+            active={true}
+            leftIcon={activeOptionIcon()}
           >
-            <span className="sort-button__text">Noi</span>
+            <span className="sort-button__text">{activeOptionName()}</span>
           </SortButton>
-          <SortButton
-            id="best"
-            active={"best" === selectedSort}
-            leftIcon={<IoIosPodium className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Top</span>
-          </SortButton>
-          <SortButton
-            id="sent"
-            active={"sent" === selectedSort}
-            leftIcon={<AiOutlineSend className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Trimise</span>
-          </SortButton>
-          <SortButton
-            id="seen"
-            active={"seen" === selectedSort}
-            leftIcon={<AiFillEye className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Vazute</span>
-          </SortButton>
-          <SortButton
-            id="inProgress"
-            active={"inProgress" === selectedSort}
-            leftIcon={<IoTimeSharp className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">In lucru</span>
-          </SortButton>
-          <SortButton
-            id="completed"
-            active={"completed" === selectedSort}
-            leftIcon={<AiOutlineFileDone className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Efectuate</span>
-          </SortButton>
+          {!("recent" === selectedSort) && (
+            <SortButton
+              id="recent"
+              active={"recent" === selectedSort}
+              leftIcon={<IoMdMedal className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Noi</span>
+            </SortButton>
+          )}
+          {!("best" === selectedSort) && (
+            <SortButton
+              id="best"
+              active={"best" === selectedSort}
+              leftIcon={<IoIosPodium className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Top</span>
+            </SortButton>
+          )}
+          {!("sent" === selectedSort) && (
+            <SortButton
+              id="sent"
+              active={"sent" === selectedSort}
+              leftIcon={<AiOutlineSend className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Trimise</span>
+            </SortButton>
+          )}
+          {!("seen" === selectedSort) && (
+            <SortButton
+              id="seen"
+              active={"seen" === selectedSort}
+              leftIcon={<AiFillEye className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Vazute</span>
+            </SortButton>
+          )}
+          {!("inProgress" === selectedSort) && (
+            <SortButton
+              id="inProgress"
+              active={"inProgress" === selectedSort}
+              leftIcon={<IoTimeSharp className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">In lucru</span>
+            </SortButton>
+          )}
+          {!("completed" === selectedSort) && (
+            <SortButton
+              id="completed"
+              active={"completed" === selectedSort}
+              leftIcon={<AiOutlineFileDone className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Efectuate</span>
+            </SortButton>
+          )}
           {timeSort && (
             <button
               className="time-button"
