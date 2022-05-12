@@ -85,10 +85,10 @@ const SortPostsProfile = ({activeFilter}) => {
         >
           <SortButton
             id="myPosts"
-            active={!activeFilter}
+            active={!activeFilter || activeFilter == "myPosts"}
             leftIcon={<RiFileUserLine className="sort-button__icon" />}
           >
-            <span className="sort-button__text">Postarile mele</span>
+            <span className="sort-button__text">Postarile mele </span>
           </SortButton>
           <SortButton
             id="sent"
