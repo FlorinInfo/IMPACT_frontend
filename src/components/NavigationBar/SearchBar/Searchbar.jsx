@@ -30,7 +30,7 @@ const SearchBar = () => {
           onChange={handleSearchBarResultsChange}
           value={searchInput}
         />
-        {showSearchBarResults && (
+        {showSearchBarResults && searchInput != "" && (
           <SearchBarResults
             setShowSearchBarResults={setShowSearchBarResults}
             setSearchInput={setSearchInput}
