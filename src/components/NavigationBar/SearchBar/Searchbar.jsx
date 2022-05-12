@@ -33,6 +33,7 @@ const SearchBar = () => {
         {showSearchBarResults && (
           <SearchBarResults
             setShowSearchBarResults={setShowSearchBarResults}
+            setSearchInput={setSearchInput}
             value={searchInput}
           />
         )}

@@ -89,6 +89,25 @@ const SortPosts = ({ emitSort, selectedSort }) => {
     setActiveIndex(newIndex);
   };
 
+  // console.log(activeOption);
+  // update time selector UI
+
+  let path = window.location.pathname;
+
+  if (path.includes("time")) {
+    let currentSelection = path.substring(
+      path.indexOf("time=") + 5,
+      path.length
+    );
+
+    // console.log(path.includes("time"));
+
+    if (currentSelection === "today") {
+      console.log("astazi");
+      // setSelectedTime("Astazi");
+      // setActiveOption(selectedOption);
+    }
+  }
   return (
     <div
       className="section__sort-post"
@@ -165,14 +184,17 @@ const SortPosts = ({ emitSort, selectedSort }) => {
           )}
         </div>
       </div>
-      {openedTimeSelector && (
+      {
+        // openedTimeSelector &&
         <TimeSelector
-          setSelectedTime={setSelectedTime}
+          active={openedTimeSelector}
+          // selectedTime={selectedTime}
+          // setSelectedTime={setSelectedTime}
           setOpenedTimeSelector={setOpenedTimeSelector}
           activeOption={activeOption}
           setActiveOption={setActiveOption}
         />
-      )}
+      }
       {activeIndex != maxIndex - 1 && (
         <MdKeyboardArrowRight
           className="sort-button__arrow"

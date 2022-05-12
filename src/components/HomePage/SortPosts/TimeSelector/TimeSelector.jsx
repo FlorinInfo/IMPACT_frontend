@@ -4,7 +4,9 @@ import "./TimeSelectorStyles.scss";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const TimeSelector = ({
-  setSelectedTime,
+  active,
+  // selectedTime,
+  // setSelectedTime,
   setOpenedTimeSelector,
   setActiveOption,
   activeOption,
@@ -23,42 +25,57 @@ const TimeSelector = ({
       </>
     );
   }
-
   const handleSelectedTime = (e) => {
     e.preventDefault();
     let params = search.pathname;
-    params = params.replace('&time=today','');
-    params = params.replace('&time=this_week','');
-    params = params.replace('&time=this_month','');
+    params = params.replace("&time=today", "");
+    params = params.replace("&time=this_week", "");
+    params = params.replace("&time=this_month", "");
     // params = params.replace('&time=today','');
     const selectedOption = e.target.closest(".time-options__item").id;
     // alert(selectedOption)
     if (selectedOption === "astazi") {
-      navigate(params + "&time=today" )
-      setSelectedTime("Astazi");
+      // setSelectedTime("Astazi");
       setActiveOption(selectedOption);
       console.log(activeOption, "fdf");
       setOpenedTimeSelector(false);
+      navigate(params + "&time=today");
     } else if (selectedOption === "luna") {
-      navigate(params + "&time=this_month" )
-      setSelectedTime("Luna a...");
+      // setSelectedTime("Luna a...");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
+      navigate(params + "&time=this_month");
     } else if (selectedOption === "sapt") {
-      navigate(params + "&time=this_week" )
-      setSelectedTime("Saptamana...");
+      // setSelectedTime("Saptamana...");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
+      navigate(params + "&time=this_week");
     } else if (selectedOption === "ttimp") {
-      navigate(params)
-      setSelectedTime("Tot timpul");
+      // setSelectedTime("Tot timpul");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
+      navigate(params);
     }
   };
 
+  //update time selector UI
+
+  // let path = window.location.pathname;
+  // let currentSelection = path.substring(path.indexOf("time=") + 5, path.length);
+
+  // console.log(currentSelection);
+
+  // if (currentSelection === "today") {
+  //   // console.log("astazi");
+  //   setSelectedTime("Astazi");
+  //   // setActiveOption(selectedOption);
+  // }
+
   return (
-    <div className="time-options" onClick={handleSelectedTime}>
+    <div
+      className={active ? "time-options" : "time-options hidden"}
+      onClick={handleSelectedTime}
+    >
       <TimeOptionItem id="ttimp">
         <span className="time-options__item__text">Tot timpul</span>
       </TimeOptionItem>

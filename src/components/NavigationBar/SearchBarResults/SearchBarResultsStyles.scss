@@ -21,8 +21,11 @@
     }
 
     &__close {
-      // float: right;
+      position: absolute;
+      right: 20px;
       color: #7c7c7c;
+      width: 25px;
+      height: 25px;
     }
   }
 
