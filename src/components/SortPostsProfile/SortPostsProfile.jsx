@@ -12,9 +12,7 @@ import { IoTimeSharp } from "react-icons/io5";
 import { RiFileUserLine } from "react-icons/ri";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useNavigate, useLocation,useParams } from "react-router-dom";
-
-
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 function SortButton(props) {
   return (
@@ -31,19 +29,19 @@ function SortButton(props) {
   );
 }
 
-const SortPostsProfile = ({activeFilter}) => {
+const SortPostsProfile = ({ activeFilter }) => {
   let navigate = useNavigate();
-  let { id } = useParams(); 
+  let { id } = useParams();
   const location = useLocation();
   // const { from } = location.state;
-    const handleSelectedSort = (e) => {
-      e.preventDefault();
-      // setSelectedSort(e.target.closest(".sort-button").id);
-      
-      navigate(`/user/${id}/${e.target.closest(".sort-button").id}`)
-      // if (e.target.closest(".sort-button").id != "time")
-      // emitSort(e.target.closest(".sort-button").id);
-    };
+  const handleSelectedSort = (e) => {
+    e.preventDefault();
+    // setSelectedSort(e.target.closest(".sort-button").id);
+
+    navigate(`/user/${id}/${e.target.closest(".sort-button").id}`);
+    // if (e.target.closest(".sort-button").id != "time")
+    // emitSort(e.target.closest(".sort-button").id);
+  };
 
   const vw = Math.max(
     document.documentElement.clientWidth || 0,
@@ -64,10 +62,34 @@ const SortPostsProfile = ({activeFilter}) => {
     setActiveIndex(newIndex);
   };
 
+  const activeOptionIcon = () => {
+    if ("myPosts" === activeFilter)
+      return <RiFileUserLine className="sort-button__icon" />;
+    else if ("sent" === activeFilter)
+      return <AiOutlineSend className="sort-button__icon" />;
+    else if ("seen" === activeFilter)
+      return <AiFillEye className="sort-button__icon" />;
+    else if ("inProgress" === activeFilter)
+      return <IoTimeSharp className="sort-button__icon" />;
+    else if ("completed" === activeFilter)
+      return <AiOutlineFileDone className="sort-button__icon" />;
+    else if ("favorites" === activeFilter)
+      return <MdFavorite className="sort-button__icon" />;
+  };
+
+  const activeOptionName = () => {
+    if ("myPosts" === activeFilter) return "Postarile mele";
+    else if ("sent" === activeFilter) return "Trimise";
+    else if ("seen" === activeFilter) return "Vazute";
+    else if ("inProgress" === activeFilter) return "In Lucru";
+    else if ("completed" === activeFilter) return "Efectuate";
+    else if ("favorites" === activeFilter) return "Favorite";
+  };
+
   return (
     <div
       className="section__sort-post"
-        onClick={handleSelectedSort}
+      onClick={handleSelectedSort}
       //   ref={timeSelectorRef}
     >
       {activeIndex != 0 && (
@@ -84,47 +106,66 @@ const SortPostsProfile = ({activeFilter}) => {
           style={{ transform: `translateX(-${activeIndex * 25}%)` }}
         >
           <SortButton
-            id="myPosts"
-            active={!activeFilter || activeFilter == "myPosts"}
-            leftIcon={<RiFileUserLine className="sort-button__icon" />}
+            id={activeFilter}
+            active={true}
+            leftIcon={activeOptionIcon()}
           >
-            <span className="sort-button__text">Postarile mele </span>
+            <span className="sort-button__text">{activeOptionName()}</span>
           </SortButton>
-          <SortButton
-            id="sent"
-            active={"sent" === activeFilter}
-            leftIcon={<AiOutlineSend className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Trimise</span>
-          </SortButton>
-          <SortButton
-            id="seen"
-            active={"seen" === activeFilter}
-            leftIcon={<AiFillEye className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Vazute</span>
-          </SortButton>
-          <SortButton
-            id="completed"
-            active={"completed" === activeFilter}
-            leftIcon={<AiOutlineFileDone className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Efectuate</span>
-          </SortButton>
-          <SortButton
-            id="inProgress"
-            active={"inProgress" === activeFilter}
-            leftIcon={<IoTimeSharp className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">In lucru</span>
-          </SortButton>
-          <SortButton
-            id="favorites"
-            active={"favorites" === activeFilter}
-            leftIcon={<MdFavorite className="sort-button__icon" />}
-          >
-            <span className="sort-button__text">Favorite</span>
-          </SortButton>
+          {!(!activeFilter || activeFilter == "myPosts") && (
+            <SortButton
+              id="myPosts"
+              active={!activeFilter || activeFilter == "myPosts"}
+              leftIcon={<RiFileUserLine className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Postarile mele </span>
+            </SortButton>
+          )}
+          {!("sent" === activeFilter) && (
+            <SortButton
+              id="sent"
+              active={"sent" === activeFilter}
+              leftIcon={<AiOutlineSend className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Trimise</span>
+            </SortButton>
+          )}
+          {!("seen" === activeFilter) && (
+            <SortButton
+              id="seen"
+              active={"seen" === activeFilter}
+              leftIcon={<AiFillEye className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Vazute</span>
+            </SortButton>
+          )}
+          {!("completed" === activeFilter) && (
+            <SortButton
+              id="completed"
+              active={"completed" === activeFilter}
+              leftIcon={<AiOutlineFileDone className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Efectuate</span>
+            </SortButton>
+          )}
+          {!("inProgress" === activeFilter) && (
+            <SortButton
+              id="inProgress"
+              active={"inProgress" === activeFilter}
+              leftIcon={<IoTimeSharp className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">In lucru</span>
+            </SortButton>
+          )}
+          {!("favorites" === activeFilter) && (
+            <SortButton
+              id="favorites"
+              active={"favorites" === activeFilter}
+              leftIcon={<MdFavorite className="sort-button__icon" />}
+            >
+              <span className="sort-button__text">Favorite</span>
+            </SortButton>
+          )}
         </div>
       </div>
       {activeIndex != maxIndex - 1 && (

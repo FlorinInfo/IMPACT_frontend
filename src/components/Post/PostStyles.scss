@@ -12,7 +12,6 @@
     display: flex;
     flex-direction: row;
   }
-  
 
   &__votes {
     width: 4rem;
@@ -65,7 +64,7 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding:1rem 0.5rem;
+    padding: 1rem 0.5rem;
     width: calc(100% - 4rem);
   }
 
@@ -145,16 +144,16 @@
   }
 
   &__comments {
-    padding: 0 .5rem;
+    padding: 0 0.5rem;
   }
 
   &__role {
     font-family: $font-bold;
     color: $default-color;
     display: block;
-    margin:auto 0 auto 1rem;
+    margin: auto 0 auto 1rem;
     font-size: 1rem;
-    margin-top: -.4rem;
+    margin-top: -0.4rem;
   }
 
   &__status {
@@ -164,4 +163,23 @@
 
 .favorite {
   color: #cf0017;
+}
+
+@media only screen and (max-width: 777px) {
+  .post {
+    &__actions {
+      &__button {
+        &__icon {
+          &:hover {
+            background-color: white;
+            cursor: default;
+          }
+        }
+        &:hover {
+          background-color: white;
+          cursor: default;
+        }
+      }
+    }
+  }
 }
