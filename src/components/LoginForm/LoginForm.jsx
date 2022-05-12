@@ -5,7 +5,7 @@ import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import logoBlack from "../../assets/images/logo-black.svg";
-import setCookies from "../../utils/logged-cookies";
+// import setCookies from "../../utils/logged-cookies";
 import { ImpactStore } from "../../store/ImpactStore";
 
 const LoginForm = () => {

@@ -25,25 +25,25 @@ const rankPerform = (points, zoneRole, admin) => {
     return {
       type: "Cetatean",
       color: "#035397",
-      image: "CETATEAN.jpg",
+      image: "CETATEAN.png",
     };
   if (points > 20 && points <= 50)
     return {
       type: "Cetatean implicat",
       color: "#001E6C",
-      image: "cetatean_implicat.jpg",
+      image: "cetatean_implicat.png",
     };
   if (points > 50 && points <= 70)
     return {
       type: "Cetatean model",
       color: "#712B75",
-      image: "cetatean_model.jpg",
+      image: "cetatean_model.png",
     };
   if (points > 70)
     return {
       type: "CyberCetatean",
       color: "#C74B50",
-      image: "cyber_cetatean.jpg",
+      image: "cyber_cetatean.png",
     };
 };
 

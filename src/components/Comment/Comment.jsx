@@ -1,5 +1,4 @@
 import "./CommentStyles.scss";
-import avatar from "../../assets/images/ranks/CETATEAN.jpg";
 import { BsFillReplyAllFill } from "react-icons/bs";
 import { useState, useContext } from "react";
 import axios from "../../assets/axios/axios";

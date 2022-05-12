@@ -14,7 +14,7 @@ import { CgProfile } from "react-icons/cg";
 import { ImpactStore } from "../../../store/ImpactStore";
 
 const DropDownMenuProfile = () => {
-  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
   const { user, setUser } = useContext(ImpactStore);
 
@@ -26,9 +26,9 @@ const DropDownMenuProfile = () => {
     removeCookie("villageId");
     removeCookie("localityId");
     removeCookie("admin");
-    // setUser(null);
-    navigate("/login");
-    return;
+    setUser({});
+    navigate("/");
+    // return;
   };
   const handleSelectedAction = (e) => {
     e.preventDefault();
@@ -74,18 +74,18 @@ const DropDownMenuProfile = () => {
       >
         <span className="menu-item-text__profile">Setări</span>
       </DropDownItemProfile>
-      <DropDownItemProfile
+      {/* <DropDownItemProfile
         leftIcon={<GiLevelThreeAdvanced className="icon-left__profile" />}
         action="rank"
       >
         <span className="menu-item-text__profile">Rank</span>
-      </DropDownItemProfile>
-      <DropDownItemProfile
+      </DropDownItemProfile> */}
+      {/* <DropDownItemProfile
         leftIcon={<IoMdContact className="icon-left__profile" />}
         action="contact"
       >
         <span className="menu-item-text__profile">Contact</span>
-      </DropDownItemProfile>
+      </DropDownItemProfile> */}
       <DropDownItemProfile
         leftIcon={<BiLogOut className="icon-left__profile" />}
         action="log-out"

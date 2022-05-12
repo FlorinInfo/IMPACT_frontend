@@ -41,6 +41,7 @@ const ProfilePage = () => {
       })
       .then((response) => {
         // handle success
+        if (response.data.errors) navigate("/");
         setUser(response.data);
         setRank(
           response.data.monthlyPoints >= 0
