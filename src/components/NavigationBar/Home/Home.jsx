@@ -40,7 +40,7 @@ const Home = (props) => {
   if (location.pathname === "/") pageName = "Home";
   else if (location.pathname === "/create-post") pageName = "Creeaza Postare";
   else if (location.pathname === "/waiting-list") pageName = "Waiting-list";
-  else if (location.pathname === "/users") pageName = "create-users";
+  else if (location.pathname === "/users") pageName = "Users";
 
   return (
     <div
