@@ -30,7 +30,7 @@ function SortButton(props) {
   );
 }
 
-const SortPosts = ({ emitSort, selectedSort }) => {
+const SortPosts = ({ emitSort, selectedSort, time }) => {
   let { routeFilter } = useParams();
   // const [selectedSort, setSelectedSort] = useState(
   //   routeFilter == undefined ? "recent" : routeFilter.split("-")[2]
@@ -38,7 +38,7 @@ const SortPosts = ({ emitSort, selectedSort }) => {
 
   const [openedTimeSelector, setOpenedTimeSelector] = useState(false);
   const [selectedTime, setSelectedTime] = useState("Tot timpul");
-  const [activeOption, setActiveOption] = useState("ttimp");
+  const [activeOption, setActiveOption] = useState(time);
 
   const handleSelectedSort = (e) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ const SortPosts = ({ emitSort, selectedSort }) => {
 
     if (currentSelection === "today") {
       console.log("astazi");
-      // setSelectedTime("Astazi");
+      // setSelectedTime("today");
       // setActiveOption(selectedOption);
     }
   }
@@ -133,6 +133,12 @@ const SortPosts = ({ emitSort, selectedSort }) => {
     else if ("completed" === selectedSort) return "Efectuate";
   };
 
+  const timeName = (time) => {
+    if (time == "today") return "Astazi";
+    if (time == "this_week") return "Saptamana aceasta";
+    if (time == "this_month") return "Luna aceasta";
+    if (!time) return "Tot timpul";
+  };
   return (
     <div
       className="section__sort-post"
@@ -221,7 +227,7 @@ const SortPosts = ({ emitSort, selectedSort }) => {
               ref={timeSelectorRef}
             >
               <a className="sort-button__label selected">
-                <span className="sort-button__text">{selectedTime}</span>
+                <span className="sort-button__text">{timeName(time)}</span>
                 <RiArrowDropDownLine className="sort-button__icon" />
               </a>
             </button>
@@ -232,7 +238,7 @@ const SortPosts = ({ emitSort, selectedSort }) => {
         // openedTimeSelector &&
         <TimeSelector
           active={openedTimeSelector}
-          // selectedTime={selectedTime}
+          selectedTime={selectedTime}
           // setSelectedTime={setSelectedTime}
           setOpenedTimeSelector={setOpenedTimeSelector}
           activeOption={activeOption}
