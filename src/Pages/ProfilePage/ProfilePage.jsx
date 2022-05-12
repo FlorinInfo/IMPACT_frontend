@@ -19,6 +19,7 @@ const ProfilePage = () => {
   // const { user, setUser } = useContext(ImpactStore);
   let navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [loader, setLoader] = useState(true);
   const { id, filter } = useParams();
   const [user, setUser] = useState(null);
   const [rank, setRank] = useState({
@@ -66,9 +67,11 @@ const ProfilePage = () => {
   };
 
   const getPosts = () => {
+    // alert(filter)
+    setLoader(true);
     axios
       .get(
-        `/articles?userId=${id}&${filter ? filter + "=true" : ``}&offset=${
+        `/articles?${filter!="favorites" ? 'userId=' + id+"&" : ""}${filter ? filter + "=true" : ``}&offset=${
           page * 10
         }&limit=10&cursor=`,
         {
@@ -94,6 +97,7 @@ const ProfilePage = () => {
         //     )
         // );
         //
+        setLoader(false);
         setLimit(response.data.limit);
         setPosts([...posts, ...response.data.articles]);
       })
@@ -149,6 +153,7 @@ const ProfilePage = () => {
     setPosts(posts.filter((p) => p.id != articleId));
   };
 
+
   return (
     <div className="profile-page">
       {user ? (
@@ -203,7 +208,7 @@ const ProfilePage = () => {
                   posts.length == limit ? (
                     <h4 className="scroll-text">Ai vazut toate postarile</h4>
                   ) : (
-                    <h4 className="scroll-text">Loading...</h4>
+                    <h4 className="scroll-text">Se incarca...</h4>
                   )
                 }
               >
@@ -225,7 +230,7 @@ const ProfilePage = () => {
                 </div>
               </InfiniteScroll>
             ) : (
-              <h4 className="scroll-text"></h4>
+              <h4 className="scroll-text">{loader==false&&posts.length == 0 ? "Nu exista postari" : ""}</h4>
             )}
           </div>
           <div className="profile-page__right"></div>

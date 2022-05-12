@@ -119,6 +119,7 @@ const Homepage = () => {
   const [filter, setFilter] = useState(() => defaultFilter("filter"));
   const [time, setTime] = useState(() => defaultFilter("time"));
   const [top, setTop] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const fetchData = () => {
     axios
@@ -135,6 +136,7 @@ const Homepage = () => {
       )
       .then(async (response) => {
         // handle success
+       if(filter!="best")  setLoader(false);
         console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzz",response)
         if (response.data.errors) navigate("/");
 
@@ -157,7 +159,9 @@ const Homepage = () => {
               },
             }
           );
+          setLoader(false);
         console.log("ssssssssssss", newPosts.data.articles);
+        
         // console.log(response);
         
         let verifyArray = [
@@ -303,7 +307,7 @@ const Homepage = () => {
                   posts.length == limit ? (
                     <h4 className="scroll-text">Ai vazut toate postarile</h4>
                   ) : (
-                    <h4 className="scroll-text">xxx</h4>
+                    <h4 className="scroll-text">Se incarca...</h4>
                   )
                 ) : (
                   ""
@@ -328,7 +332,7 @@ const Homepage = () => {
               </div>
             </InfiniteScroll>
           ) : (
-            <h4 className="scroll-text"></h4>
+            <>{loader==false&&posts.length == 0 ? "Nu exista postari" : ""}</>
           )}
         </div>
         <div className="homepage__right">
