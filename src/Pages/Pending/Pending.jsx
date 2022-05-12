@@ -49,6 +49,19 @@ const Pending = () => {
   //     });
   // }, [])
 
+  const logOut = () => {
+    removeCookie("token");
+    removeCookie("zoneRole");
+    removeCookie("zoneRoleOn");
+    removeCookie("countyId");
+    removeCookie("villageId");
+    removeCookie("localityId");
+    removeCookie("admin");
+    // setUser(null);
+    navigate("/login");
+    return;
+  };
+
   return (
     <div className="pending">
       <Lottie options={lottieOptions} height={400} width={400} />
@@ -56,6 +69,9 @@ const Pending = () => {
       <h5 className="pending__subtitle">
         Vei primi un email atunci cand este finalizata.
       </h5>
+      <button className="pending__logout" onClick={logOut}>
+        Log out
+      </button>
     </div>
   );
 };
