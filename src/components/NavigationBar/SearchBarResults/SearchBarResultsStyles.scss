@@ -51,6 +51,15 @@
       color: #7c7c7c;
     }
   }
+
+  &__none {
+    margin-left: 5px;
+    padding: 5px;
+    display: block;
+    font-family: $font-medium;
+    font-size: 12px;
+    color: #7c7c7c;
+  }
 }
 
 @media only screen and (max-width: 777px) {

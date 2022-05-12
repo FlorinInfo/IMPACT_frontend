@@ -79,8 +79,6 @@ const SearchBarResults = ({
   let desktopDisplay = true;
   if (vw > 777) desktopDisplay = false;
 
-  const openPost = () => {};
-
   return (
     <div className="results" ref={searchBarResultsRef}>
       <div className="results__top-section">
@@ -95,10 +93,14 @@ const SearchBarResults = ({
         )}
       </div>
       <div className="results__main-section">
-        {/* {console.lo} */}
         {searchBarResultsArticles.map((a) => {
-          return (<ResultItem article={a}/>)
+          return <ResultItem article={a} />;
         })}
+        {!searchBarResultsArticles.length && (
+          <div className="results__none">
+            Nu există postări care sa corespundă căutării dvs!
+          </div>
+        )}
       </div>
     </div>
   );
