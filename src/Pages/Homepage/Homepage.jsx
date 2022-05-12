@@ -291,7 +291,7 @@ const Homepage = () => {
       <div className="homepage__container">
         <div className="homepage__left">
           <AddPost />
-          <SortPosts selectedSort={filter} emitSort={changeFeed} />
+          <SortPosts selectedSort={filter} time={time} emitSort={changeFeed} />
           {/* {posts.length} */}
           {posts.length != 0 ? (
             <InfiniteScroll

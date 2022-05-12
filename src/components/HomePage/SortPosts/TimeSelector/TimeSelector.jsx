@@ -2,11 +2,12 @@ import { useState } from "react";
 
 import "./TimeSelectorStyles.scss";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const TimeSelector = ({
   active,
   // selectedTime,
-  // setSelectedTime,
+  setSelectedTime,
   setOpenedTimeSelector,
   setActiveOption,
   activeOption,
@@ -34,18 +35,18 @@ const TimeSelector = ({
     // params = params.replace('&time=today','');
     const selectedOption = e.target.closest(".time-options__item").id;
     // alert(selectedOption)
-    if (selectedOption === "astazi") {
+    if (selectedOption === "today") {
       // setSelectedTime("Astazi");
       setActiveOption(selectedOption);
       console.log(activeOption, "fdf");
       setOpenedTimeSelector(false);
       navigate(params + "&time=today");
-    } else if (selectedOption === "luna") {
+    } else if (selectedOption === "this_month") {
       // setSelectedTime("Luna a...");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
       navigate(params + "&time=this_month");
-    } else if (selectedOption === "sapt") {
+    } else if (selectedOption === "this_week") {
       // setSelectedTime("Saptamana...");
       setActiveOption(selectedOption);
       setOpenedTimeSelector(false);
@@ -57,6 +58,10 @@ const TimeSelector = ({
       navigate(params);
     }
   };
+
+  // useEffect(()=> {
+  //   setActiveOption("today");
+  // },[])
 
   //update time selector UI
 
@@ -75,17 +80,20 @@ const TimeSelector = ({
     <div
       className={active ? "time-options" : "time-options hidden"}
       onClick={handleSelectedTime}
-    >
+    >{
+      activeOption ? 
       <TimeOptionItem id="ttimp">
-        <span className="time-options__item__text">Tot timpul</span>
-      </TimeOptionItem>
-      <TimeOptionItem id="astazi">
+      <span className="time-options__item__text">Tot timpul</span>
+    </TimeOptionItem> : ""
+    }
+     
+      <TimeOptionItem id="today">
         <span className="time-options__item__text">Astazi</span>
       </TimeOptionItem>
-      <TimeOptionItem id="sapt">
+      <TimeOptionItem id="this__week">
         <span className="time-options__item__text">Saptamana aceasta</span>
       </TimeOptionItem>
-      <TimeOptionItem id="luna">
+      <TimeOptionItem id="this_month"> 
         <span className="time-options__item__text">Luna aceasta</span>
       </TimeOptionItem>
     </div>
