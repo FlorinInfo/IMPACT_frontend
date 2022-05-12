@@ -95,12 +95,11 @@ const SearchBarResults = ({
         )}
       </div>
       <div className="results__main-section">
-        {searchBarResultsArticles.length}
-        {searchBarResultsArticles.map((article) => {
-          <ResultItem article={article} />;
+        {/* {console.lo} */}
+        {searchBarResultsArticles.map((a) => {
+          return (<ResultItem article={a}/>)
         })}
       </div>
-      ;
     </div>
   );
 };
