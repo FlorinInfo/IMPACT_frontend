@@ -330,7 +330,7 @@ const Homepage = () => {
               </div>
             </InfiniteScroll>
           ) : (
-            <>{loader==false&&posts.length == 0 ? "Nu exista postari" : ""}</>
+            <h4 className="scroll-text">{loader==false&&posts.length == 0 ? "Nu exista postari" : ""}</h4>
           )}
         </div>
         <div className="homepage__right">
