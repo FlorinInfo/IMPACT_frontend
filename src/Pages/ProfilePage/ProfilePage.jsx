@@ -72,7 +72,7 @@ const ProfilePage = () => {
     setLoader(true);
     axios
       .get(
-        `/articles?${filter!="favorites" ? 'userId=' + id+"&" : ""}${filter ? filter + "=true" : ``}&offset=${
+        `/articles?userId=${id}&${filter ? filter + "=true" : ``}&offset=${
           page * 10
         }&limit=10&cursor=`,
         {
