@@ -2,12 +2,10 @@ import "./CommentsStyles.scss";
 import Comment from "../Comment/Comment";
 import { useEffect, useState } from "react";
 import axios from "../../assets/axios/axios";
-import { Cookies, useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 const x = [1,2,3,4];
 const Comments = ({updateArticle})=> {
     const {id} = useParams();
-    const [cookies, setCookie, removeCookie] = useCookies(["token"]);
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
 
@@ -21,7 +19,7 @@ const Comments = ({updateArticle})=> {
           {
             headers: {
               accept: "application/json",
-              Authorization: `Bearer ${cookies.token}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         )
@@ -48,7 +46,7 @@ const Comments = ({updateArticle})=> {
           {
             headers: {
               accept: "application/json",
-              Authorization: `Bearer ${cookies.token}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         )

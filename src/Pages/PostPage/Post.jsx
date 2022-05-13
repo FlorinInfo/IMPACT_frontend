@@ -2,7 +2,6 @@ import "./PostStyles.scss";
 
 import Post from "../../components/Post/Post";
 import { useEffect, useState, useContext } from "react";
-import { Cookies, useCookies } from "react-cookie";
 import { ImpactStore } from "../../store/ImpactStore";
 import axios from "../../assets/axios/axios.js";
 import { useParams } from "react-router-dom";
@@ -12,7 +11,6 @@ import Comments from "../../components/Comments/Comments";
 const PostPage = ()=> {
 	const navigate = useNavigate();
 	const [post, setPost] = useState(null);
-	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 	const {id} = useParams();
 
 	const fetchData = ()=> {
@@ -22,7 +20,7 @@ const PostPage = ()=> {
 		  {
 			headers: {
 			  accept: "application/json",
-			  Authorization: `Bearer ${cookies.token}`,
+			  Authorization: `Bearer ${localStorage.getItem("token")}`,
 			},
 		  }
 		)

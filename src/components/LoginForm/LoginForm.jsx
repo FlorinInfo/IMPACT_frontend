@@ -2,7 +2,6 @@ import "./LoginFormStyles.scss";
 
 import { useState, useContext } from "react";
 import axios from "../../assets/axios/axios";
-import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import logoBlack from "../../assets/images/logo-black.svg";
 // import setCookies from "../../utils/logged-cookies";
@@ -15,7 +14,6 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   const loginUser = () => {
     axios
@@ -36,13 +34,13 @@ const LoginForm = () => {
         setEmailError("");
         setPasswordError("");
         if (response.data.token) {
-          setCookie("token", response.data.token);
-          setCookie("zoneRole", response.data.zoneRole);
-          setCookie("zoneRoleOn", response.data.zoneRoleOn);
-          setCookie("countyId", response.data.countyId);
-          setCookie("villageId", response.data.villageId);
-          setCookie("localityId", response.data.localityId);
-          setCookie("admin", response.data.admin);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("zoneRole", response.data.zoneRole);
+          localStorage.setItem("zoneRoleOn", response.data.zoneRoleOn);
+          localStorage.setItem("countyId", response.data.countyId);
+          localStorage.setItem("villageId", response.data.villageId);
+          localStorage.setItem("localityId", response.data.localityId);
+          localStorage.setItem("admin", response.data.admin);
           setUser(response.data);
           if (response.data.status == "IN_ASTEPTARE")
             navigate('/pending'); else navigate("/");

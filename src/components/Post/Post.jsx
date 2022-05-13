@@ -14,7 +14,6 @@ import { MdMoreHoriz } from "react-icons/md";
 import testImage from "../../assets/images/dwipm_18.png";
 import testImage2 from "../../assets/images/buletine-840x500.jpg";
 import axios from "../../assets/axios/axios";
-import { Cookies, useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import { ImpactStore } from "../../store/ImpactStore";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -31,7 +30,6 @@ const testMedia = [
 
 const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const { user, setUser } = useContext(ImpactStore);
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [favorite, setFavorite] = useState(false);
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
@@ -55,7 +53,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   // console.log(article, "fsdfs");
 
   const handleFavorite = () => {
-    const userId = jwt_decode(cookies.token).userId;
+    const userId = jwt_decode(localStorage.getItem("token")).userId;
     // favorite ? setFavorite(false) : setFavorite(true);
     if (article.favorites.length == 0) {
       axios
@@ -65,7 +63,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
           {
             headers: {
               accept: "application/json",
-              Authorization: `Bearer ${cookies.token}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         )
@@ -86,7 +84,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         .delete(`/articles/${article.id}/users/${userId}/favorite`, {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
         .then((response) => {
@@ -122,7 +120,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   });
 
   const votePost = (vote) => {
-    const userId = jwt_decode(cookies.token).userId;
+    const userId = jwt_decode(localStorage.getItem("token")).userId;
     if (article.votes.length == 0) {
       axios
         .post(
@@ -133,7 +131,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
           {
             headers: {
               accept: "application/json",
-              Authorization: `Bearer ${cookies.token}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         )
@@ -155,7 +153,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         .delete(`/articles/${article.id}/users/${userId}/vote`, {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
         .then((response) => {
@@ -181,7 +179,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
           {
             headers: {
               accept: "application/json",
-              Authorization: `Bearer ${cookies.token}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         )
@@ -205,7 +203,7 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
       .delete(`/articles/${article.id}`, {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {

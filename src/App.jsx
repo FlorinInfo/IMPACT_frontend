@@ -8,7 +8,6 @@ import Login from "./Pages/Login/Login";
 import Pending from "./Pages/Pending/Pending";
 import WaitingList from "./Pages/WaitingList/WaitingList";
 import { useContext, useEffect, useState } from "react";
-import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import Admins from "./Pages/Admins/Admins";
 import CreatePost from "./Pages/CreatePost/CreatePost";
@@ -32,7 +31,7 @@ function App() {
 
   let navigate = useNavigate();
   const location = useLocation();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  // const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [loader, setLoader] = useState(true);
 
   const redirectTo = (route) => <Navigate replace to={route} />;
@@ -46,29 +45,29 @@ function App() {
   // }, [cookies.token]);
 
   useEffect(() => {
-    if (cookies.token) {
+    if (localStorage.getItem("token")) {
       setLoader(true);
-      const userId = jwt_decode(cookies.token).userId;
+      const userId = jwt_decode(localStorage.getItem("token")).userId;
 
       axios
         .get(`/users/${userId}`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
         .then((response) => {
           // handle success
           console.log(response);
-          setCookie("status", response.data.status);
-          setCookie("zoneRole", response.data.zoneRole);
-          setCookie("zoneRoleOn", response.data.zoneRoleOn);
-          setCookie("countyId", response.data.countyId);
-          setCookie("villageId", response.data.villageId);
-          setCookie("localityId", response.data.localityId);
+          localStorage.setItem("status", response.data.status);
+          localStorage.setItem("zoneRole", response.data.zoneRole);
+          localStorage.setItem("zoneRoleOn", response.data.zoneRoleOn);
+          localStorage.setItem("countyId", response.data.countyId);
+          localStorage.setItem("villageId", response.data.villageId);
+          localStorage.setItem("localityId", response.data.localityId);
           setUser({
             ...response.data,
-            token: cookies.token,
+            token: localStorage.getItem("token")
           });
         })
         .catch((error) => {
@@ -101,7 +100,7 @@ function App() {
     <div className="App">
       {loader == false ? (
         <>
-          {cookies.token && location.pathname != "/pending" ? (
+          {localStorage.getItem("token") && location.pathname != "/pending" ? (
             <NavigationBar currentPage={location.pathname} />
           ) : (
             ""

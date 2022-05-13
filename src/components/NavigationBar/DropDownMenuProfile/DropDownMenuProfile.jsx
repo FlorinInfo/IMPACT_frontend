@@ -1,5 +1,4 @@
 import React from "react";
-import { Cookies, useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 
@@ -15,18 +14,17 @@ import { FaRegHandshake } from "react-icons/fa";
 import { ImpactStore } from "../../../store/ImpactStore";
 
 const DropDownMenuProfile = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
   const { user, setUser } = useContext(ImpactStore);
 
   const logOut = () => {
-    removeCookie("token");
-    removeCookie("zoneRole");
-    removeCookie("zoneRoleOn");
-    removeCookie("countyId");
-    removeCookie("villageId");
-    removeCookie("localityId");
-    removeCookie("admin");
+    localStorage.removeItem("token");
+    localStorage.removeItem("zoneRole");
+    localStorage.removeItem("zoneRoleOn");
+    localStorage.removeItem("countyId");
+    localStorage.removeItem("villageId");
+    localStorage.removeItem("localityId");
+    localStorage.removeItem("admin");
     setUser({});
     navigate("/login")
     // return;

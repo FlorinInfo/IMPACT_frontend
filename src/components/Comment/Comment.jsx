@@ -3,7 +3,6 @@ import { BsFillReplyAllFill } from "react-icons/bs";
 import { useState, useContext } from "react";
 import axios from "../../assets/axios/axios";
 import { useParams } from "react-router-dom";
-import { Cookies, useCookies } from "react-cookie";
 import { MdDeleteForever } from "react-icons/md";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
@@ -43,7 +42,6 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
     return time;
   };
   const { user, setUser } = useContext(ImpactStore);
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const { id } = useParams();
   const [reply, setReply] = useState(false);
   const [replyText, setReplyText] = useState("");
@@ -66,7 +64,7 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
         {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
@@ -94,7 +92,7 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
       {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )

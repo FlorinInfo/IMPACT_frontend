@@ -2,7 +2,6 @@ import "./PendingStyles.scss";
 import Lottie from "react-lottie";
 import pendingAnimation from "../../assets/lotties/pending.json";
 import { useEffect, useState } from "react";
-import { Cookies, useCookies } from "react-cookie";
 import axios from "../../assets/axios/axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -16,7 +15,6 @@ const Pending = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [loader, setLoader] = useState(false);
   let navigate = useNavigate();
 
@@ -50,13 +48,13 @@ const Pending = () => {
   // }, [])
 
   const logOut = () => {
-    removeCookie("token");
-    removeCookie("zoneRole");
-    removeCookie("zoneRoleOn");
-    removeCookie("countyId");
-    removeCookie("villageId");
-    removeCookie("localityId");
-    removeCookie("admin");
+    localStorage.removeItem("token");
+    localStorage.removeItem("zoneRole");
+    localStorage.removeItem("zoneRoleOn");
+    localStorage.removeItem("countyId");
+    localStorage.removeItem("villageId");
+    localStorage.removeItem("localityId");
+    localStorage.removeItem("admin");
     // setUser({});
     navigate("/login")
     return;

@@ -16,7 +16,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import axios from "../../../assets/axios/axios";
-import { Cookies, useCookies } from "react-cookie";
 import { nanoid } from "nanoid";
 import { useState, useEffect } from "react";
 
@@ -71,7 +70,6 @@ BootstrapDialogTitle.propTypes = {
 };
 
 const RoleDialog = ({ open, user, closeDialog }) => {
-	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 	const [zoneRole, setZoneRole] = useState("");
 	const [zoneRoleOn, setZoneRoleOn] = useState("");
 	const [forcedUpdate, setForcedUpdate] = useState(false);
@@ -105,7 +103,7 @@ const RoleDialog = ({ open, user, closeDialog }) => {
 				{
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${cookies.token}`,
+						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
 				}
 			)

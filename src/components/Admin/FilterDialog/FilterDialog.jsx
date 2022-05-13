@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
-import { Cookies, useCookies } from "react-cookie";
 
 import Slide from '@mui/material/Slide';
 import { AsyncPaginate } from "react-select-async-paginate";
@@ -27,15 +26,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const FilterDialog = ({ open, closeFilter, filterUsers }) => {
-	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
 	const setJudetDefault = () => {
-		if ((cookies.zoneRoleOn == "LOCALITY" ||
-			cookies.zoneRoleOn == "VILLAGE" ||
-			cookies.zoneRoleOn == "COUNTY") &&
-			cookies.admin != 'true') return {
+		if ((localStorage.getItem("zoneRoleOn") == "LOCALITY" ||
+		localStorage.getItem("zoneRoleOn") == "VILLAGE" ||
+		localStorage.getItem("zoneRoleOn") == "COUNTY") &&
+		localStorage.getItem("admin") != 'true') return {
 				name: "",
-				id: cookies.countyId,
+				id: localStorage.getItem("countyId"),
 			};
 		return {
 			name: "",
@@ -43,10 +41,10 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 		};
 	}
 	const setOrasDefault = () => {
-		if ((cookies.zoneRoleOn == "LOCALITY" || cookies.zoneRoleOn == "VILLAGE") && cookies.admin != "true")
+		if ((localStorage.getItem("zoneRoleOn") == "LOCALITY" || localStorage.getItem("zoneRoleOn") == "VILLAGE") && localStorage.getItem("admin")!= "true")
 			return {
 				name: "",
-				id: cookies.villageId,
+				id: localStorage.getItem("villageId"),
 			};
 		return {
 			name: "",
@@ -54,9 +52,9 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 		};
 	}
 	const setLocalitateDefault = () => {
-		if (cookies.zoneRoleOn == "LOCALITY" && cookies.admin != "true") return {
+		if (localStorage.getItem("zoneRoleOn") == "LOCALITY" && localStorage.getItem("admin") != "true") return {
 			name: "",
-			id: cookies.localityId,
+			id: localStorage.getItem("localityId"),
 		};
 		return {
 			name: "",
@@ -170,7 +168,7 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 					</Toolbar>
 				</AppBar>
 				<div style={{ padding: "1rem" }}>
-					{((cookies.zoneRoleOn == "COUNTY" || cookies.zoneRoleOn == "VILLAGE") && cookies.admin == 'false') ? "" :
+					{((localStorage.getItem("zoneRoleOn") == "COUNTY" || localStorage.getItem("zoneRoleOn") == "VILLAGE") && localStorage.getItem("admin") == 'false') ? "" :
 						<div style={{ width: "100%" }}>
 							<label htmlFor="judet" className="label-default">
 								Judet
@@ -188,7 +186,7 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 							<span className="error-default">{judetError}</span>
 						</div>
 					}
-					{cookies.zoneRoleOn == "VILLAGE" && cookies.admin=="false" ? "" :
+					{localStorage.getItem("zoneRoleOn") == "VILLAGE" && localStorage.getItem("admin")=="false" ? "" :
 						<div style={{ width: "100%" }}>
 							<label htmlFor="oras" className="label-default">
 								Oras / Comuna

@@ -31,7 +31,6 @@ import RoleDialog from "../../components/Admin/RoleDialog/RoleDialog";
 import { useState, useContext } from "react";
 import { nanoid } from "nanoid";
 import axios from "../../assets/axios/axios";
-import { Cookies, useCookies } from "react-cookie";
 import FilterDialog from "../../components/Admin/FilterDialog/FilterDialog";
 import { ImpactStore } from "../../store/ImpactStore";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -90,22 +89,21 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 const Users = () => {
-	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 	const { user, setUser } = useContext(ImpactStore);
 
 	const setJudetDefault = () => {
-		if ((cookies.zoneRoleOn == "LOCALITY" ||
-			cookies.zoneRoleOn == "VILLAGE" ||
-			cookies.zoneRoleOn == "COUNTY") &&
-			cookies.admin != "true") return cookies.countyId;
+		if ((localStorage.getItem("zoneRoleOn") == "LOCALITY" ||
+		localStorage.getItem("zoneRoleOn")== "VILLAGE" ||
+		localStorage.getItem("zoneRoleOn") == "COUNTY") &&
+		localStorage.getItem("admin") != "true") return localStorage.getItem("countyId");
 		return null;
 	}
 	const setOrasDefault = () => {
-		if ((cookies.zoneRoleOn == "LOCALITY" || cookies.zoneRoleOn == "VILLAGE") && cookies.admin == "false") return cookies.villageId;
+		if ((localStorage.getItem("zoneRoleOn") == "LOCALITY" || localStorage.getItem("zoneRoleOn") == "VILLAGE") && localStorage.getItem("admin") == "false") return localStorage.getItem("villageId");
 		return null;
 	}
 	const setLocalitateDefault = () => {
-		if (cookies.zoneRoleOn == "LOCALITY" && cookies.admin == "false") return cookies.localityId;
+		if (localStorage.getItem("zoneRoleOn") == "LOCALITY" && localStorage.getItem("admin") == "false") return localStorage.getItem("localityId");
 		return null;
 	}
 
@@ -150,7 +148,7 @@ const Users = () => {
 				{
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${cookies.token}`,
+						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
 				}
 			)
@@ -184,7 +182,7 @@ const Users = () => {
 				{
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${cookies.token}`,
+						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
 				}
 			)
@@ -261,7 +259,7 @@ const Users = () => {
 					</Button>
 				</Stack>
 				{
-					cookies.zoneRoleOn != "LOCALITY" || cookies.admin == "true" ?
+					localStorage.getItem("zoneRoleOn") != "LOCALITY" || localStorage.getItem("admin") == "true" ?
 						<div className="users-list__filter">
 							<Button variant="contained" endIcon={<BsFilter />} onClick={() => setOpenFilter(true)}>
 								Filtreaza

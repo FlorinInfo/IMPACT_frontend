@@ -6,7 +6,6 @@ import "./ProfilePageStyles.scss";
 import imgProfile from "./../../assets/images/default_profile_pic1.jpg";
 import { ImpactStore } from "../../store/ImpactStore";
 import axios from "./../../assets/axios/axios";
-import { Cookies, useCookies } from "react-cookie";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -18,7 +17,6 @@ import Post from "../../components/Post/Post";
 const ProfilePage = () => {
   // const { user, setUser } = useContext(ImpactStore);
   let navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [loader, setLoader] = useState(true);
   const { id, filter } = useParams();
   const [user, setUser] = useState(null);
@@ -36,7 +34,7 @@ const ProfilePage = () => {
       .get(`/users/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
@@ -78,7 +76,7 @@ const ProfilePage = () => {
         {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
@@ -126,7 +124,7 @@ const ProfilePage = () => {
       .get(`/articles/${articleId}`, {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {

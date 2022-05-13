@@ -1,5 +1,4 @@
 import react, { useEffect, useRef, useState } from "react";
-import { Cookies, useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 import axios from "./../../../assets/axios/axios";
@@ -14,7 +13,6 @@ const SearchBarResults = ({
   value,
   setSearchInput,
 }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   // let searchBarInput = value;
   // console.log(value, "acasa");
   const [articleTitle, setArticleTitle] = useState("");
@@ -29,7 +27,7 @@ const SearchBarResults = ({
       .get(`/articles?q=${value}&offset=0&limit=3`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {

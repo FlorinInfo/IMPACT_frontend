@@ -6,7 +6,6 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { AsyncPaginate } from "react-select-async-paginate";
 import UploadPostMedia from "../../components/UploadPostMedia/UploadPostMedia";
 import { MdPermMedia } from "react-icons/md"
-import { Cookies, useCookies } from "react-cookie";
 import axios from "../../assets/axios/axios";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -246,7 +245,6 @@ const ZoneSelect = ({ error, updateZone }) => {
 
 const CreatePost = () => {
   let navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const { user, setUser } = useContext(ImpactStore);
   const [selectedImage, setSelectedImage] = useState(null);
   const [zones, setZones] = useState([]);
@@ -341,7 +339,7 @@ const CreatePost = () => {
       }, {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {

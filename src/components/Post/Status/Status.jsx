@@ -4,11 +4,9 @@ import "./StatusStyles.scss";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { ImpactStore } from "../../../store/ImpactStore";
 import axios from "../../../assets/axios/axios";
-import { Cookies, useCookies } from "react-cookie";
 import { useEffect } from "react";
 
 const Status = ({status, id, changeStatus}) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [showStatusCH, setShowStatusCH] = useState(false);
   const { user, setUser } = useContext(ImpactStore);
   const [postStatus, setPostStatus] = useState(status);
@@ -27,7 +25,7 @@ const Status = ({status, id, changeStatus}) => {
       {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )

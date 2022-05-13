@@ -3,7 +3,6 @@ import { IoAdd } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import image from "../../assets/images/default_profile_pic1.jpg";
 import { createRef, useState } from "react";
-import { Cookies, useCookies } from "react-cookie";
 import axios from "../../assets/axios/axios";
 import { nanoid } from "nanoid";
 import { css } from "@emotion/react";
@@ -17,7 +16,6 @@ const override = css`
 `;
 
 const UploadPostMedia = ({ getImages, getVideos }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const isImage = (file) => {
     return file && file["type"].split("/")[0] === "image";
   };
@@ -40,7 +38,7 @@ const UploadPostMedia = ({ getImages, getVideos }) => {
         .post("/upload-image-article", formData, {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Accept-Language": "en-US,en;q=0.8",
             "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
           },
@@ -79,7 +77,7 @@ const UploadPostMedia = ({ getImages, getVideos }) => {
         .post("/upload-video-article", formData, {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Accept-Language": "en-US,en;q=0.8",
             "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
           },

@@ -3,22 +3,20 @@ import LeftImage from "../../components/LeftImage/LeftImage";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Cookies, useCookies } from "react-cookie";
 import { useEffect } from "react";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   useEffect(() => {
-    if (cookies.token) {
+    if (localStorage.getItem("token")) {
       navigate("/");
     }
   }, []);
 
   return (
     <>
-      {cookies.token ? (
+      {localStorage.getItem("token") ? (
         ""
       ) : (
         <div className="signup">

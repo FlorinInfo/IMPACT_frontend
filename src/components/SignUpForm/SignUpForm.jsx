@@ -6,7 +6,6 @@ import axios from "../../assets/axios/axios";
 import { useState, useEffect, useRef, useContext } from "react";
 import SearchDropdown from "../SearchDropdown/SearchDropdown";
 import FormData from "form-data";
-import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
 import AsyncSelect from "react-select/async";
@@ -31,10 +30,6 @@ const SignUpForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "token",
-    "referralId",
-  ]);
 
   // Errors
   const [imageError, setImageError] = useState("");
@@ -174,8 +169,8 @@ const SignUpForm = () => {
           countyId: judet.id,
           villageId: oras.id,
           ...(localitate.id && { localityId: localitate.id }),
-          ...(cookies.referralId && {
-            referralId: parseInt(cookies.referralId),
+          ...(localStorage.getItem("referralId") && {
+            referralId: parseInt(localStorage.getItem("referralId")),
           }),
         },
         {
@@ -195,13 +190,13 @@ const SignUpForm = () => {
         setOrasError("");
         setLocalitateError("");
         if (response.data.token) {
-          setCookie("token", response.data.token);
-          setCookie("zoneRole", response.data.zoneRole);
-          setCookie("zoneRoleOn", response.data.zoneRoleOn);
-          setCookie("countyId", response.data.countyId);
-          setCookie("villageId", response.data.villageId);
-          setCookie("localityId", response.data.localityId);
-          setCookie("admin", response.data.admin);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("zoneRole", response.data.zoneRole);
+          localStorage.setItem("zoneRoleOn", response.data.zoneRoleOn);
+          localStorage.setItem("countyId", response.data.countyId);
+          localStorage.setItem("villageId", response.data.villageId);
+          localStorage.setItem("localityId", response.data.localityId);
+          localStorage.setItem("admin", response.data.admin);
           setUser(response.data);
           if (response.data.status == "IN_ASTEPTARE") navigate("/pending");
           else navigate("/");

@@ -8,7 +8,6 @@ import FeedSelect from "../../components/HomePage/FeedSelect/FeedSelect";
 
 import { useEffect, useState, useContext } from "react";
 import axios from "../../assets/axios/axios.js";
-import { Cookies, useCookies } from "react-cookie";
 import { ImpactStore } from "../../store/ImpactStore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
@@ -114,7 +113,6 @@ const Homepage = () => {
   const { user, setUser } = useContext(ImpactStore);
   const { feedDialog, setFeedDialog } = useContext(ImpactStore);
   const [posts, setPosts] = useState([]);
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [zone, setZone] = useState(() => defaultFilter("zone"));
   const [filter, setFilter] = useState(() => defaultFilter("filter"));
   const [time, setTime] = useState(() => defaultFilter("time"));
@@ -130,7 +128,7 @@ const Homepage = () => {
         {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
@@ -155,7 +153,7 @@ const Homepage = () => {
             {
               headers: {
                 accept: "application/json",
-                Authorization: `Bearer ${cookies.token}`,
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
               },
             }
           );
@@ -202,7 +200,7 @@ const Homepage = () => {
       .get(`/users?${zone.type}=${zone.id}&offset=0&limit=10&top=true`, {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
@@ -263,7 +261,7 @@ const Homepage = () => {
       .get(`/articles/${articleId}`, {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
