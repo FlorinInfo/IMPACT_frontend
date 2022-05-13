@@ -63,7 +63,7 @@ const SortPostsProfile = ({ activeFilter }) => {
   };
 
   const activeOptionIcon = () => {
-    if ("myPosts" === activeFilter)
+    if ("myPosts" === activeFilter || !activeFilter)
       return <RiFileUserLine className="sort-button__icon" />;
     else if ("sent" === activeFilter)
       return <AiOutlineSend className="sort-button__icon" />;
@@ -78,13 +78,14 @@ const SortPostsProfile = ({ activeFilter }) => {
   };
 
   const activeOptionName = () => {
-    if ("myPosts" === activeFilter) return "Postarile mele";
+    if ("myPosts" === activeFilter || !activeFilter) return "Postarile mele";
     else if ("sent" === activeFilter) return "Trimise";
     else if ("seen" === activeFilter) return "Vazute";
     else if ("inProgress" === activeFilter) return "In Lucru";
     else if ("completed" === activeFilter) return "Efectuate";
     else if ("favorites" === activeFilter) return "Favorite";
   };
+
 
   return (
     <div
@@ -106,7 +107,7 @@ const SortPostsProfile = ({ activeFilter }) => {
           style={{ transform: `translateX(-${activeIndex * 25}%)` }}
         >
           <SortButton
-            id={activeFilter}
+            id={activeFilter ? activeFilter : "myPosts"}
             active={true}
             leftIcon={activeOptionIcon()}
           >

@@ -24,14 +24,17 @@ const options = [
 ];
 
 const SignUpForm = () => {
-  const {user, setUser} = useContext(ImpactStore);
+  const { user, setUser } = useContext(ImpactStore);
   let navigate = useNavigate();
   const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "token",
+    "referralId",
+  ]);
 
   // Errors
   const [imageError, setImageError] = useState("");
@@ -171,6 +174,9 @@ const SignUpForm = () => {
           countyId: judet.id,
           villageId: oras.id,
           ...(localitate.id && { localityId: localitate.id }),
+          ...(cookies.referralId && {
+            referralId: parseInt(cookies.referralId),
+          }),
         },
         {
           headers: {
@@ -197,8 +203,8 @@ const SignUpForm = () => {
           setCookie("localityId", response.data.localityId);
           setCookie("admin", response.data.admin);
           setUser(response.data);
-          if (response.data.status == "IN_ASTEPTARE")
-            navigate('/pending'); else navigate("/");
+          if (response.data.status == "IN_ASTEPTARE") navigate("/pending");
+          else navigate("/");
         } else if (response.data.errors) {
           console.log(response.data.errors);
           if (response.data.errors.email)
@@ -299,7 +305,7 @@ const SignUpForm = () => {
               Oras / Comuna
             </label>
             <AsyncPaginate
-              isDisabled={judet.id == null || orase.length==0}
+              isDisabled={judet.id == null || orase.length == 0}
               key={judet.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}
@@ -323,7 +329,7 @@ const SignUpForm = () => {
               Localitate
             </label>
             <AsyncPaginate
-              isDisabled={oras.id == null || localitati.length==0}
+              isDisabled={oras.id == null || localitati.length == 0}
               key={oras.id}
               getOptionLabel={(option) => option.name}
               getOptionValue={(option) => option.id}

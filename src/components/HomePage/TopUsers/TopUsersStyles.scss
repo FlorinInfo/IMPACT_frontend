@@ -54,6 +54,7 @@
       height: 32px;
       width: 32px;
       border-radius: 50%;
+      cursor: pointer;
     }
 
     &__username {
@@ -62,6 +63,7 @@
       font-family: $font-medium;
       margin-top: 13px;
       color: #1a1a1b;
+      cursor: pointer;
     }
 
     &__button {

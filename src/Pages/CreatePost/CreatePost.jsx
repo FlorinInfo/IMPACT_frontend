@@ -397,7 +397,7 @@ const CreatePost = () => {
               <span className="error-default">{errorTitle}</span>
               <textarea
                 className="create-post__editor__textarea input-default"
-                placeholder="Text (opțional)"
+                placeholder="Descriere"
                 onChange={(e) => setDescription(e.target.value)}
               />
               <span className="error-default">{errorDescription}</span>

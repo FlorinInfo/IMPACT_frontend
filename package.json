@@ -34,6 +34,7 @@
     "react-inner-image-zoom": "^3.0.0",
     "react-lottie": "^1.2.3",
     "react-onclickoutside": "^6.12.1",
+    "react-qr-code": "^2.0.7",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",

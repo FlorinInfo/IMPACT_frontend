@@ -34,6 +34,7 @@ import axios from "../../assets/axios/axios";
 import { Cookies, useCookies } from "react-cookie";
 import FilterDialog from "../../components/Admin/FilterDialog/FilterDialog";
 import { ImpactStore } from "../../store/ImpactStore";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const columns = [
 	{ field: "id", headerName: "ID" },
@@ -108,6 +109,7 @@ const Users = () => {
 		return null;
 	}
 
+	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
 	const [notification, setNotification] = useState("");
 	const [users, setUsers] = useState("");
@@ -296,7 +298,7 @@ const Users = () => {
 											{user.id}
 										</TableCell>
 										<TableCell align="left" className="users-list__row">
-											{user.lastName} {user.firstName}
+											<span className="users-list__name" onClick={()=>navigate("/user/"+user.id)}>{user.lastName} {user.firstName}</span>
 										</TableCell>
 										<TableCell align="left" className="users-list__row">
 											{timeConverter(user.createTime)}

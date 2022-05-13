@@ -1,0 +1,51 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.referral {
+  @include logged-page;
+  padding-top: 2rem;
+
+  &__container {
+    @include default-logged-container;
+    display: flex;
+    flex-direction: column
+  }
+
+
+  &__title {
+    font-family: $font-regular;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  &__qr {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__subtitle {
+    font-family: $font-light;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+    .referral__title {
+        font-size: 1.7rem;
+    }
+    .referral__subtitle {
+        font-size: 1.2rem;
+    }
+    .referral__link {
+        flex-direction: column;
+    }
+}

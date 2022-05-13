@@ -10,6 +10,7 @@ import { GiLevelThreeAdvanced } from "react-icons/gi";
 import { IoMdContact } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
+import { FaRegHandshake } from "react-icons/fa";
 
 import { ImpactStore } from "../../../store/ImpactStore";
 
@@ -27,7 +28,7 @@ const DropDownMenuProfile = () => {
     removeCookie("localityId");
     removeCookie("admin");
     setUser({});
-    navigate("/");
+    navigate("/login")
     // return;
   };
   const handleSelectedAction = (e) => {
@@ -36,6 +37,8 @@ const DropDownMenuProfile = () => {
 
     if (action === "log-out") logOut();
     else if (action === "profile") navigate(`/user/${user.id}`);
+    else if (action === "settings") navigate(`/profile-settings`);
+    else if (action === "referral") navigate(`/referral`);
   };
 
   function DropDownItemProfile(props) {
@@ -86,6 +89,12 @@ const DropDownMenuProfile = () => {
       >
         <span className="menu-item-text__profile">Contact</span>
       </DropDownItemProfile> */}
+      <DropDownItemProfile
+        leftIcon={<FaRegHandshake className="icon-left__profile" />}
+        action="referral"
+      >
+        <span className="menu-item-text__profile">Recomanda</span>
+      </DropDownItemProfile>
       <DropDownItemProfile
         leftIcon={<BiLogOut className="icon-left__profile" />}
         action="log-out"

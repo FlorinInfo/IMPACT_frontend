@@ -54,6 +54,10 @@
     }
   }
 
+  &__name {
+    cursor: pointer; 
+  }
+
   &__proof-btn {
     svg {
       font-size: 16px !important;

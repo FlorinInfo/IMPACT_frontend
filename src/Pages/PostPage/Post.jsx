@@ -28,7 +28,7 @@ const PostPage = ()=> {
 		)
 		.then((response) => {
 		  // handle success
-		  if(response.data.errors&&response.data.errors.article) navigate("/");
+		  if(response.data.errors) navigate("/");
 		  else setPost(response.data);
 		  console.log(response);
 		})

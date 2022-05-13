@@ -23,6 +23,9 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import ProtectedAdminRoute from "./utils/ProtectedAdminRoute";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import UserSettings from "./Pages/UserSettings/UserSettings";
+import Referral from "./Pages/Referral/Referral";
+import Invite from "./Pages/Invite/Invite";
 
 function App() {
   const { user, setUser } = useContext(ImpactStore);
@@ -177,6 +180,28 @@ function App() {
                 <ProtectedRoute>
                   <ProfilePage />
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile-settings"
+              element={
+                <ProtectedRoute>
+                  <UserSettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/referral"
+              element={
+                <ProtectedRoute>
+                  <Referral />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/invite/:id"
+              element={
+                <Invite />
               }
             />
             <Route

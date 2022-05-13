@@ -57,8 +57,8 @@ const Pending = () => {
     removeCookie("villageId");
     removeCookie("localityId");
     removeCookie("admin");
-    // setUser(null);
-    navigate("/login");
+    // setUser({});
+    navigate("/login")
     return;
   };
 
