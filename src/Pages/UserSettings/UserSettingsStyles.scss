@@ -1,0 +1,38 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.user-settings {
+    @include logged-page;
+    padding-top: 2rem;
+
+    &__container {
+        @include default-logged-container;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__title {
+        font-family: $font-regular;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    &__subtitle {
+        font-family: $font-light;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    &__input-cnt {
+        max-width: 60rem;
+        margin: 0 auto;
+    }
+
+    &__btn {
+        display: block;
+        margin: 0 auto;
+        margin-top: 2rem;
+        max-width: 30rem;
+    }
+}
