@@ -30,7 +30,7 @@
   &__counter {
     position: absolute;
     font-size: 1.2rem;
-    z-index: 1000;
+    z-index: 999;
     right: 3rem;
     top: 1rem;
     font-family: $font-regular;
@@ -47,25 +47,25 @@
     transform: translateY(-50%);
     background: #fff;
     border-radius: 40px;
-	outline: none;
-	border: none;
-	height: 4.4rem;
-	width: 4.4rem;
-	// display: flex;
-	
-	box-shadow: 0 4px 14px rgb(0 0 0 / 10%);
-	cursor: pointer;
+    outline: none;
+    border: none;
+    height: 4.4rem;
+    width: 4.4rem;
+    // display: flex;
 
-	&--invisible {
-		visibility: hidden;
-		opacity: 0;
-	}
+    box-shadow: 0 4px 14px rgb(0 0 0 / 10%);
+    cursor: pointer;
 
-	&-icon {
-		font-size: 2rem; 
-		margin-top: .3rem;
-		fill:#878a8c!important;
-	}
+    &--invisible {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    &-icon {
+      font-size: 2rem;
+      margin-top: 0.3rem;
+      fill: #878a8c !important;
+    }
 
     &--next {
       right: 2rem;
@@ -77,9 +77,8 @@
   }
 }
 
-
 @media only screen and (max-width: 850px) {
-	.slider__btn {
-		display: none!important;
-	}
+  .slider__btn {
+    display: none !important;
   }
+}
