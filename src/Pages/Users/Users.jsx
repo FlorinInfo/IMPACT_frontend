@@ -156,8 +156,6 @@ const Users = () => {
 				// handle success
 				setUsers(response.data.users);
 				setLimit(response.data.limit)
-				console.log(users);
-				console.log(response);
 				setLoader(false);
 			})
 			.catch((error) => {
@@ -191,7 +189,6 @@ const Users = () => {
 				setUsers(response.data.users);
 				setLimit(response.data.limit);
 				setPage(0);
-				console.log(response);
 				setLoader(false);
 			})
 			.catch((error) => {

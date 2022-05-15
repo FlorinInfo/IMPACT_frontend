@@ -84,7 +84,6 @@ const UnderNavigationBar = () => {
         if (elSplit[0] == "localityId") return elSplit[0];
         if (elSplit[0] == "villageId") return elSplit[0];
         if (elSplit[0] == "countyId") return elSplit[0];
-        console.log({ [elSplit[0]]: elSplit[1] });
       }
     } else {
       if (user.localityId) return "localityId";

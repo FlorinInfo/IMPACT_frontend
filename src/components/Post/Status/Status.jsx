@@ -31,7 +31,6 @@ const Status = ({status, id, changeStatus}) => {
     )
     .then((response) => {
       // handle success
-      console.log(response);
       changeStatus();
       handleShowStatusCH();
     })

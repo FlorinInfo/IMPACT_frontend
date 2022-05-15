@@ -55,8 +55,6 @@ const ProfilePage = () => {
                 image: "default.jpg",
               }
         );
-
-        console.log(response);
       })
       .catch((error) => {
         // handle error
@@ -82,10 +80,8 @@ const ProfilePage = () => {
       )
       .then(async (response) => {
         // handle success
-        console.log("aaaaaaaaaaaaaaaaaaaaA", response);
         if (response.data.errors) navigate("/");
 
-        // console.log(response);
 
         // Removing dublicates
         // verifyArray = verifyArray.filter(
@@ -134,7 +130,6 @@ const ProfilePage = () => {
         newPosts[index] = response.data;
         setPosts(newPosts);
         // getTop();
-        console.log(response);
       })
       .catch((error) => {
         // handle error
@@ -151,7 +146,6 @@ const ProfilePage = () => {
   const deleteArticle = (articleId) => {
     setPosts(posts.filter((p) => p.id != articleId));
   };
-
 
   return (
     <div className="profile-page">
@@ -229,7 +223,11 @@ const ProfilePage = () => {
                 </div>
               </InfiniteScroll>
             ) : (
-              <h4 className="scroll-text">{loader==false&&posts.length == 0 ? "Nu exista postari" : ""}</h4>
+              <h4 className="scroll-text">
+                {loader == false && posts.length == 0
+                  ? "Nu exista postari"
+                  : ""}
+              </h4>
             )}
           </div>
           <div className="profile-page__right"></div>

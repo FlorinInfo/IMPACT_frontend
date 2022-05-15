@@ -94,7 +94,6 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 		// Verify if it's not an id in search
 		if(!isNaN(search)) search = "";
 		const response = await axios.get(`/villages?countyId=${judet.id}`);
-		console.log(response )
 		let options = [];
 		if (Array.isArray(response.data)) {
 			options = response.data.filter((l) =>
@@ -132,7 +131,6 @@ const FilterDialog = ({ open, closeFilter, filterUsers }) => {
 		setLocalitate(setLocalitateDefault());
 		setOras(setOrasDefault());
 		loadOrase(judet.id);
-		console.log(orase)
 	}, [judet.id]);
 
 	const deleteFilters = () => {

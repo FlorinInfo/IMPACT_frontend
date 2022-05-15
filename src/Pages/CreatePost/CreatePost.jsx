@@ -95,7 +95,6 @@ const ZoneSelect = ({ error, updateZone }) => {
       type: zone,
       id: zoneId
     })
-    console.log(zoneId);
   }, [oras.id, localitate.id, zone, zoneId])
 
   if (user.admin == true) return <></>
@@ -263,7 +262,6 @@ const CreatePost = () => {
   const [errorZone, setErrorZone] = useState("");
 
   const updateZone = (z) => {
-    console.log(z);
     setZone(z);
   }
 
@@ -315,17 +313,6 @@ const CreatePost = () => {
   }
 
   const addPost = () => {
-    console.log(zone);
-    console.log({
-      title,
-      description,
-      articleGallery: [
-        ...images,
-        ...videos
-      ],
-      ...(zone.type&&zone.id && { zone: zone.type }),
-      ...(zone.id&&zone.type && { zoneId: zone.id }),
-    })
     axios
       .post("/articles", {
         title,
@@ -344,7 +331,6 @@ const CreatePost = () => {
       })
       .then((response) => {
         // handle success
-        console.log(response)
         if (response.data.errors) {
           if (response.data.errors.description) setErrorDescription(response.data.errors.description.details); else setErrorDescription("");
           if (response.data.errors.title) setErrorTitle(response.data.errors.title.details); else setErrorTitle("");

@@ -59,7 +59,6 @@ function App() {
         })
         .then((response) => {
           // handle success
-          console.log(response);
           localStorage.setItem("status", response.data.status);
           localStorage.setItem("zoneRole", response.data.zoneRole);
           localStorage.setItem("zoneRoleOn", response.data.zoneRoleOn);
@@ -68,7 +67,7 @@ function App() {
           localStorage.setItem("localityId", response.data.localityId);
           setUser({
             ...response.data,
-            token: localStorage.getItem("token")
+            token: localStorage.getItem("token"),
           });
         })
         .catch((error) => {
@@ -86,9 +85,7 @@ function App() {
     }
   }, [location]);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   // const redirectCheck = (page) => {
   //   // alert(user.token)
@@ -111,7 +108,10 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/forgot-password/:token" element={<ForgotPassword />} />
+            <Route
+              path="/forgot-password/:token"
+              element={<ForgotPassword />}
+            />
             <Route
               path="/"
               element={
@@ -200,12 +200,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/invite/:id"
-              element={
-                <Invite />
-              }
-            />
+            <Route path="/invite/:id" element={<Invite />} />
             <Route
               path="/post/:id"
               element={

@@ -28,7 +28,6 @@ const Comments = ({updateArticle})=> {
           setComment("");
           getComments();
           updateArticle(id);
-          console.log(response);
         })
         .catch((error) => {
           // handle error
@@ -54,7 +53,6 @@ const Comments = ({updateArticle})=> {
           // handle success
         //   setComment("");
         setComments(response.data)
-          console.log(response);
         })
         .catch((error) => {
           // handle error

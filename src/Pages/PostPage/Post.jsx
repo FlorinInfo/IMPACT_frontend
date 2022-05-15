@@ -28,7 +28,6 @@ const PostPage = ()=> {
 		  // handle success
 		  if(response.data.errors) navigate("/");
 		  else setPost(response.data);
-		  console.log(response);
 		})
 		.catch((error) => {
 		  // handle error

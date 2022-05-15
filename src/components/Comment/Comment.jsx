@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import { ImpactStore } from "../../store/ImpactStore";
 import rankPerform from "../../utils/rank";
+import { useEffect } from "react";
 
 
 const Comment = ({ data, replies, updateArticle, updateComments }) => {
@@ -70,7 +71,6 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
       )
       .then((response) => {
         // handle success
-        console.log(response);
         updateComments();
         updateArticle(id);
         setReply(false);
@@ -98,7 +98,6 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
     )
     .then((response) => {
       // handle success
-      console.log(response);
       updateComments();
       updateArticle(id);
       setReply(false);
@@ -112,6 +111,15 @@ const Comment = ({ data, replies, updateArticle, updateComments }) => {
       // always executed
     });
   }
+
+  // const showRemoveComment = ()=> {
+  //   if(user.id == data.authorId) return true;
+  //   if(user.admin == true) return true;
+  // }
+
+  // useEffect(()=> {
+  //   console.log(data);
+  // })
 
   return (
     <div className="comment">

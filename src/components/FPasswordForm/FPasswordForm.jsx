@@ -89,7 +89,6 @@ const FPasswordForm = () => {
         .then((response) => {
           // handle success
           setPasswordError("");
-          console.log(response);
           if(response.data.errors) {
             if(response.data.errors.newPassword) setPasswordError(response.data.errors.newPassword.details);else setPasswordError("");
           }

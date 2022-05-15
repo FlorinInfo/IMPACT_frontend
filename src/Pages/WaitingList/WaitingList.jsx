@@ -173,7 +173,6 @@ const WaitingList = () => {
         )
         .then((response) => {
           // handle success
-          console.log(response);
           loadUsers();
           // // const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
           // setUsers(Users);
@@ -199,7 +198,6 @@ const WaitingList = () => {
         )
         .then((response) => {
           // handle success
-          console.log(response);
           loadUsers();
           // const Users = users.map((u) => u.id == userId ? { ...u, status: userStatus } : u);
           // setUsers(Users);
@@ -252,8 +250,7 @@ const WaitingList = () => {
         // handle success
         setUsers(response.data.users);
         setLimit(response.data.limit)
-        console.log(users);
-        console.log(response);
+
         setLoader(false);
       })
       .catch((error) => {
@@ -287,7 +284,6 @@ const WaitingList = () => {
         setUsers(response.data.users);
         setLimit(response.data.limit);
         setPage(0);
-        console.log(response);
         setLoader(false);
       })
       .catch((error) => {
@@ -299,7 +295,6 @@ const WaitingList = () => {
       });
   }
   const filterUsers = (judetId, orasId, localitateId) => {
-    console.log(judetId, orasId, localitateId);
     setJudet(judetId);
     setOras(orasId);
     setLocalitate(localitateId);

@@ -79,7 +79,6 @@ const SortPosts = ({ emitSort, selectedSort, time }) => {
 
   if (vw <= 631) maxIndex = 3;
   else if (vw < 390) maxIndex = 4;
-  // console.log(vw, maxIndex, "fdsfsdfs");
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -89,7 +88,6 @@ const SortPosts = ({ emitSort, selectedSort, time }) => {
     setActiveIndex(newIndex);
   };
 
-  // console.log(activeOption);
   // update time selector UI
 
   let path = window.location.pathname;
@@ -100,10 +98,7 @@ const SortPosts = ({ emitSort, selectedSort, time }) => {
       path.length
     );
 
-    // console.log(path.includes("time"));
-
     if (currentSelection === "today") {
-      console.log("astazi");
       // setSelectedTime("today");
       // setActiveOption(selectedOption);
     }

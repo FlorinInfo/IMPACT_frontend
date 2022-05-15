@@ -22,7 +22,7 @@ const AdminFeedSelect = () => {
   const [judet, setJudet] = useState("");
   const [orase, setOrase] = useState([]);
   const [localitati, setLocalitati] = useState([]);
-  const [expand, setExpand] = useState(window.innerWidth <=780 ? true : false);
+  const [expand, setExpand] = useState(window.innerWidth <= 780 ? true : false);
 
   const setJudetDefault = () => {
     if (
@@ -75,7 +75,6 @@ const AdminFeedSelect = () => {
     setLocalitate(setLocalitateDefault());
     setOras(setOrasDefault());
     loadOrase(judet.id);
-    console.log(orase);
   }, [judet.id]);
 
   const loadJudete = async (search) => {
@@ -97,7 +96,6 @@ const AdminFeedSelect = () => {
     // Verify if it's not an id in search
     if (!isNaN(search)) search = "";
     const response = await axios.get(`/villages?countyId=${judet.id}`);
-    console.log(response);
     let options = [];
     if (Array.isArray(response.data)) {
       options = response.data.filter((l) =>
@@ -210,7 +208,6 @@ const FeedSelect = () => {
           return { type: elSplit[0], id: elSplit[1] };
         if (elSplit[0] == "countyId")
           return { type: elSplit[0], id: elSplit[1] };
-        // console.log({[elSplit[0]]:elSplit[1]})
       }
     } else {
       if (user.localityId)
@@ -287,7 +284,6 @@ const FeedSelect = () => {
     if (user.zoneRoleOn == "VILLAGE") orasId = user.villageId;
     if (user.zoneRoleOn == "COUNTY" && oras) orasId = oras.id;
     // alert("oras " + orasId);
-    console.log(orasId);
     const response = await axios.get(`/localities?villageId=${orasId}`);
 
     let options = [];
@@ -300,7 +296,6 @@ const FeedSelect = () => {
         l.name.toLowerCase().startsWith(search.toLowerCase())
       );
     }
-    console.log("xxxxxxxxxxxxxxxxxxxxxx", options);
     setLocalitati(options);
     return {
       options,
@@ -361,7 +356,6 @@ const FeedSelect = () => {
           // alert(idLoc )
           const v = await loadOrase("");
           setOras(v.options.find((e) => e.id == idVill));
-          console.log(idVill);
           //   setLocalitate(l.options.find((e) => e.id == idLoc));
         }
       }

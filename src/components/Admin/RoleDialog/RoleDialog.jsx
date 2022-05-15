@@ -88,7 +88,6 @@ const RoleDialog = ({ open, user, closeDialog }) => {
       setZoneRole(user.zoneRole);
       setZoneRoleOn(user.zoneRoleOn);
     }
-    console.log(user);
   }, [user]);
 
   const updateRole = () => {
@@ -109,7 +108,6 @@ const RoleDialog = ({ open, user, closeDialog }) => {
       )
       .then((response) => {
         // handle success
-        console.log(response);
         if (response.status == 204) handleClose("save");
         else {
           if (response.data.errors) {

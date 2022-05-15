@@ -43,7 +43,6 @@ const UserSettings = () => {
         .then((response) => {
           // handle success
           setRepeatErr("");
-          console.log(response);
           if(response.data.errors) {
             if(response.data.errors.oldPassword) setErrOpass(response.data.errors.oldPassword.details);else setErrOpass("");
             if(response.data.errors.newPassword) setErrNpass(response.data.errors.newPassword.details);else setErrNpass("");

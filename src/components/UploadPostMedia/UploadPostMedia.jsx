@@ -59,7 +59,6 @@ const UploadPostMedia = ({ getImages, getVideos }) => {
               url: response.data.url,
             },
           ]);
-          console.log(response);
           setLoading(false);
         })
         .catch((error) => {
@@ -98,7 +97,6 @@ const UploadPostMedia = ({ getImages, getVideos }) => {
               url: response.data.url,
             },
           ]);
-          console.log(response);
           setLoading(false);
         })
         .catch((error) => {

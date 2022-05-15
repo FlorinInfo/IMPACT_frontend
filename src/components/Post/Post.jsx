@@ -34,7 +34,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
   const [showPostOptions, setShowOptions] = useState(false);
   let postOptionsRef = useRef();
   const navigate = useNavigate();
-  // console.log(article);
   const [rank, setRank] = useState(
     article.author.monthlyPoints >= 0
       ? () =>
@@ -49,8 +48,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
           image: "default.jpg",
         }
   );
-
-  // console.log(article, "fsdfs");
 
   const handleFavorite = () => {
     const userId = jwt_decode(localStorage.getItem("token")).userId;
@@ -69,7 +66,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         )
         .then((response) => {
           // handle success
-          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -89,7 +85,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         })
         .then((response) => {
           // handle success
-          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -137,7 +132,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         )
         .then((response) => {
           // handle success
-          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -158,7 +152,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         })
         .then((response) => {
           // handle success
-          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -185,7 +178,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
         )
         .then((response) => {
           // handle success
-          // console.log(response);
           updateArticle(article.id);
         })
         .catch((error) => {
@@ -208,7 +200,6 @@ const Post = ({ article, updateArticle, deleteArticle, comments }) => {
       })
       .then((response) => {
         // handle success
-        // console.log(response);
         deleteArticle(article.id);
       })
       .catch((error) => {

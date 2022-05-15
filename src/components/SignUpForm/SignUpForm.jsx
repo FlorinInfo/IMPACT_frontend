@@ -142,7 +142,6 @@ const SignUpForm = () => {
       .then((response) => {
         // handle success
         setImage(response.data.url);
-        console.log(response);
       })
       .catch((error) => {
         // handle error
@@ -201,7 +200,6 @@ const SignUpForm = () => {
           if (response.data.status == "IN_ASTEPTARE") navigate("/pending");
           else navigate("/");
         } else if (response.data.errors) {
-          console.log(response.data.errors);
           if (response.data.errors.email)
             setEmailError(response.data.errors.email.details);
           if (response.data.errors.firstName)
@@ -219,7 +217,6 @@ const SignUpForm = () => {
           if (response.data.errors.locality)
             setLocalitateError(response.data.errors.locality.details);
         }
-        console.log(response);
       })
       .catch((error) => {
         // handle error

@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useState, useContext } from "react";
 
 import "./SortPostsProfileStyles.scss";
 import "./../HomePage/SortPosts/SortPostsStyles.scss";
@@ -13,6 +13,7 @@ import { RiFileUserLine } from "react-icons/ri";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { ImpactStore } from "../../store/ImpactStore";
 
 function SortButton(props) {
   return (
@@ -30,6 +31,7 @@ function SortButton(props) {
 }
 
 const SortPostsProfile = ({ activeFilter }) => {
+  const { user, setUser } = useContext(ImpactStore);
   let navigate = useNavigate();
   let { id } = useParams();
   const location = useLocation();
@@ -52,7 +54,6 @@ const SortPostsProfile = ({ activeFilter }) => {
 
   if (vw < 643 && vw >= 454) maxIndex = 3;
   else if (vw < 454) maxIndex = 4;
-  console.log(vw, maxIndex);
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -78,7 +79,7 @@ const SortPostsProfile = ({ activeFilter }) => {
   };
 
   const activeOptionName = () => {
-    if ("myPosts" === activeFilter || !activeFilter) return "Postarile mele";
+    if ("myPosts" === activeFilter || !activeFilter) return ` ${id==user.id ? "Postarile mele" : "Postari"}`;
     else if ("sent" === activeFilter) return "Trimise";
     else if ("seen" === activeFilter) return "Vazute";
     else if ("inProgress" === activeFilter) return "In Lucru";
@@ -119,7 +120,7 @@ const SortPostsProfile = ({ activeFilter }) => {
               active={!activeFilter || activeFilter == "myPosts"}
               leftIcon={<RiFileUserLine className="sort-button__icon" />}
             >
-              <span className="sort-button__text">Postarile mele </span>
+              <span className="sort-button__text">{id==user.id ? "Postarile mele" : "Postari"} </span>
             </SortButton>
           )}
           {!("sent" === activeFilter) && (

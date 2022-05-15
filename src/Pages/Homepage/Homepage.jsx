@@ -76,14 +76,12 @@ const Homepage = () => {
             return { type: elSplit[0], id: elSplit[1] };
           if (elSplit[0] == "countyId")
             return { type: elSplit[0], id: elSplit[1] };
-          // console.log({[elSplit[0]]:elSplit[1]})
         }
       }
       if (filterType == "filter") {
         for (const el of filterSplit) {
           let elSplit = el.split("=");
           if (elSplit[0] == "filter") return elSplit[1];
-          // console.log({[elSplit[0]]:elSplit[1]})
         }
         return "recent";
       }
@@ -91,7 +89,6 @@ const Homepage = () => {
         for (const el of filterSplit) {
           let elSplit = el.split("=");
           if (elSplit[0] == "time") return elSplit[1];
-          // console.log({[elSplit[0]]:elSplit[1]})
         }
         return "";
       }
@@ -135,7 +132,6 @@ const Homepage = () => {
       .then(async (response) => {
         // handle success
        if(filter!="best")  setLoader(false);
-        console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzz",response)
         if (response.data.errors) navigate("/");
 
         // Logic for mixing best posts with new posts
@@ -158,9 +154,7 @@ const Homepage = () => {
             }
           );
           setLoader(false);
-        console.log("ssssssssssss", newPosts.data.articles);
         
-        // console.log(response);
         
         let verifyArray = [
           ...posts,
@@ -182,7 +176,6 @@ const Homepage = () => {
         //     )
         // );
         //
-        console.log(verifyArray);
         setLimit(response.data.limit);
         setPosts([...verifyArray]);
       })
@@ -206,7 +199,6 @@ const Homepage = () => {
       .then((response) => {
         // handle success
         if (response.data.errors) navigate("/");
-        console.log("hhhhhhhhhh", response);
         setTop(response.data);
       })
       .catch((error) => {
@@ -239,7 +231,6 @@ const Homepage = () => {
         let elSplit = el.split("=");
         if (elSplit[0] != "filter" && elSplit[0] != "time")
           newParams = elSplit[0] + "=" + elSplit[1] + "&" + newParams;
-        // console.log({[elSplit[0]]:elSplit[1]})
       }
     } else {
       if (user.localityId) newParams = "localityId=" + user.localityId + "&";
@@ -252,7 +243,6 @@ const Homepage = () => {
     // } else {
     //   let filterSplit = routeFilter.split("-");
     //   navigate(`/${filterSplit[0]}-${filterSplit[1]}-${filter}`);
-    //   console.log(filterSplit);
     // }
   };
 
@@ -271,7 +261,6 @@ const Homepage = () => {
         newPosts[index] = response.data;
         setPosts(newPosts);
         getTop();
-        console.log(response);
       })
       .catch((error) => {
         // handle error

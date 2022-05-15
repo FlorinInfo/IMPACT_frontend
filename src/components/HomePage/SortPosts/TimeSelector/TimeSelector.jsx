@@ -68,7 +68,6 @@ const TimeSelector = ({
   // let path = window.location.pathname;
   // let currentSelection = path.substring(path.indexOf("time=") + 5, path.length);
 
-  // console.log(currentSelection);
 
   // if (currentSelection === "today") {
   //   // console.log("astazi");
