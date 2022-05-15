@@ -8,7 +8,7 @@
   &__container {
     @include default-logged-container;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
   }
 
 
