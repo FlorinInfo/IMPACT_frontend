@@ -6,3 +6,16 @@
 * [Aplicația utilizatorului](#user)
 * [Cerințe tehnice comune](#tehnic)
 * [Cerințe Design](#design)
+* [Puncte Bonus](#bonus)
+
+
+## :dvd: Demo
+
+Conturi default pentru fiecare tip de utilizator:
+
+| url                      | tip cont       | login | parola |
+| ------------------------ | -------------- | -------- |---------|
+| https://imp-act.ml/login |admin  |  admin@admin.com   |adminadmin|
+| https://imp-act.ml/login |administrator |  admin@admin.com   |adminadmin|
+| https://imp-act.ml/login |moderator  |  admin@admin.com   |adminadmin|
+| https://imp-act.ml/login |cetatean  |  admin@admin.com   |adminadmin|
