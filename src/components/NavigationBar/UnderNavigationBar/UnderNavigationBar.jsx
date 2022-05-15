@@ -105,6 +105,8 @@ const UnderNavigationBar = () => {
   if (search.pathname === "/create-post") showUnderNavigationBar = false;
   if (search.pathname.includes("user")) showUnderNavigationBar = false;
   if (search.pathname === "/waiting-list") showUnderNavigationBar = false;
+  if (search.pathname === "/profile-settings") showUnderNavigationBar = false;
+  if (search.pathname === "/referral") showUnderNavigationBar = false;
 
   return (
     <>

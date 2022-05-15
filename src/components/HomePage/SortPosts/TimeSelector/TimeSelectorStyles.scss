@@ -56,3 +56,15 @@
     transform: translate(0px, 40px);
   }
 }
+
+@media only screen and (max-width: 410px) {
+  .time-options {
+    &__item {
+      padding: 10px;
+      &__text {
+        font-size: 11px;
+        margin-left: 5px;
+      }
+    }
+  }
+}
