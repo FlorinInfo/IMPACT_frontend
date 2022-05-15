@@ -12,6 +12,7 @@ import { useEffect } from "react";
 
 
 const Comment = ({ data, replies, updateArticle, updateComments }) => {
+  console.log(data);
   
   const timeConverter = (UNIX_timestamp) => {
     let a = new Date(UNIX_timestamp);

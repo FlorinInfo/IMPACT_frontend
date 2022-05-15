@@ -89,7 +89,7 @@ const TimeSelector = ({
       <TimeOptionItem id="today">
         <span className="time-options__item__text">Astazi</span>
       </TimeOptionItem>
-      <TimeOptionItem id="this__week">
+      <TimeOptionItem id="this_week">
         <span className="time-options__item__text">Saptamana aceasta</span>
       </TimeOptionItem>
       <TimeOptionItem id="this_month"> 
