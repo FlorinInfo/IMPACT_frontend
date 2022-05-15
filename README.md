@@ -2,6 +2,7 @@
 
 ## :bookmark_tabs: Meniu
 
+* [Prezentare video ](https://youtu.be/NVWbm-vht9M)
 * [Demo](#demo)
 * [Aplicatia pe local](#local)
 * [Panou de administrare](#admin)
