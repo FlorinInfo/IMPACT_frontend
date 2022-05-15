@@ -28,9 +28,9 @@ const Login = () => {
             <span className="login__signup-redirect">
               Nu ai inca cont? <Link to="/signup">Inregistreaza-te</Link>{" "}
             </span>
-            {/* <span className="login__signup-redirect">
-              Ai uitat parola? <Link to="/signup">Reseteaza parola</Link>{" "}
-            </span> */}
+            <span className="login__signup-redirect">
+              Ai uitat parola? <Link to="/forgot-password">Reseteaza parola</Link>{" "}
+            </span>
           </div>
         </div>
       )}

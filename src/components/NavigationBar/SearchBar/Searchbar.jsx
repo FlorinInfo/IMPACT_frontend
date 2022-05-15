@@ -24,7 +24,8 @@ const SearchBar = () => {
           <SearchIcon />
         </label>
         <input
-          autoComplete="off"
+          name="search"
+          type="text"
           className="input-default"
           id="searchbar"
           placeholder="Caută"

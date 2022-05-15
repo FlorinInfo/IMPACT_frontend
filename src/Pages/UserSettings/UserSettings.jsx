@@ -78,6 +78,8 @@ const UserSettings = () => {
               Parola veche
             </label>
             <input
+                      autoComplete="new-password"
+                      autocomplete="new-password"
             value={opassword}
               type="password"
               className="input-default"

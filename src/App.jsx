@@ -25,6 +25,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import UserSettings from "./Pages/UserSettings/UserSettings";
 import Referral from "./Pages/Referral/Referral";
 import Invite from "./Pages/Invite/Invite";
+import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 
 function App() {
   const { user, setUser } = useContext(ImpactStore);
@@ -109,6 +110,8 @@ function App() {
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password/:token" element={<ForgotPassword />} />
             <Route
               path="/"
               element={

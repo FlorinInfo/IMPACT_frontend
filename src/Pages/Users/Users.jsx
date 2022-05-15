@@ -310,7 +310,8 @@ const Users = () => {
 												<SettingsIcon sx={{ mr: 1 }} />
 												<span className="users-list__role">
 													{user.zoneRole}  &nbsp;
-													{user.zoneRoleOn == "COUNTY" ? "JUDET" : user.zoneRoleOn == "VILLAGE" && user.LocalityId ? "COMUNA" : user.zoneRoleOn == "VILLAGE" && !user.LocalityId ? "ORAS" : "LOCALITATE"}
+													{user.zoneRoleOn == "COUNTY" ? "JUDET" : user.zoneRoleOn == "VILLAGE" && user.Locality ? "COMUNA" : user.zoneRoleOn == "VILLAGE" && !user.Locality ? "ORAS" : "LOCALITATE"}
+													
 												</span>
 											</Fab>
 
